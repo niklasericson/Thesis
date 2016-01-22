@@ -3,3 +3,12 @@
 *.idx
 *.out
 *.toc
+*.fdb_latexmk
+*.fls
+main.bbl
+main.blg
+main.brf
+main.ilg
+main.ind
+main.synctex.gz
+
