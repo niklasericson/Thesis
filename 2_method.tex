@@ -16,8 +16,6 @@ This paper discusses the identification procedure of the linear dynamic part of 
 
 The authors state that for the identification of the linear part of the actuator, a careful choice of the driving signal has to be made to avoid modifying the characteristics of the excitation. They show that a choice of a \abbrPBRS signal allows the decoupling of the identification of the linear and nonlinear part, since the nonlinear part only transforms the \abbrPBRS signal into another \abbrPBRS.
 
-
-
 \subsection*{\citep*{ButcherController:2015} {\small \emph{- Controller Design and Verification for a Rotational Piezo-based Actuator for Accurate Positioning Applications in Noisy Environments}} }
 This paper presents the modeling and controller design of a piezo actuated rotational stage operating in a noisy environment at CERN. The authors have adopted a Hammerstein structure, allowing them, in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The extracted linear dynamics is identified as an OE system using several pseudo random binary signals (\abbrPBRS) as excitation signals. By adding different voltage biases to the PBRS it is also verified that the operating voltage point influences the identified transfer function (\abbrTF). The DC gain and the first resonance frequency and amplitude is affected due to the nonlinear piezo properties.
 
@@ -31,9 +29,16 @@ This paper reviews the control-related research in nanopositioning, covering nan
 This tutorial by Physik Instrumente (PI) gives the reader an overview of the fundamentals of piezoelectricity, piezomechanics and piezo actuators as well as detailed information regarding control approaches, environmental dependencies and design of piezoelectric positioning drives/systems. The electrical, mechanical and thermal behavior of piezoelectric actuators is described by basic equations presented in this paper. Several methods to improve the piezo dynamics are also discussed, such as linearization, signal preshaping and InputShaping® which is a patented real-time feedforward technology.
 
 \subsection*{\citep*{FlemingLeang:2014} {\small \emph{- Design, Modeling and Control of Nanopositioning Systems}} }
-This book covers the complete design cycle of nanopositioning systems. Some relevant chapters with respect to this thesis are Hysteresis Modeling and Control, Noise in Nanopositioning, Mechanical Design: Flexure-Based Nanopositioners. 
+This book covers the complete design cycle of nanopositioning systems. Some relevant chapters with respect to this thesis are Hysteresis Modeling and Control, Noise in Nanopositioning and Mechanical Design: Flexure-Based Nanopositioners.
 
 
 \section{Timeplan}
-A timeplan for the thesis will be added here.
 %en tidplan för examensarbetets genomförande inklusive planerade datum för halvtidskontroll och framläggning
+Figure~\ref{fig:timeplan} shows the timeplan for the master thesis project. \emph{HP} and \emph{FP} stands for halftime presentation and fulltime presentation, respectively. In addition to the master thesis work, some hardware testing will be carried out from time to time, throughout the whole thesis period.
+
+\begin{figure}[h] %tbp
+ \centering %crop: left bottom right top
+ \includegraphics[trim=1cm 12cm 5cm 5.5cm, clip=true, scale=0.42]{fig/timeplan}
+ \caption{\label{fig:timeplan}%
+ Master Thesis timeplan}
+ \end{figure}
