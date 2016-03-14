@@ -11,10 +11,15 @@ High precision positioning systems are vital in e.g. scanning tunneling microsco
 
 The Equipment Controls and Electronics section in the Engineering Department at \abbrCERN (European Organization for Nuclear Research) is developing a high precision positioning system for the control of a piezo-actuated rotational stage used in the UA9 Crystal Collimation study. The stage uses a piezo electric linear stack actuator to displace a flexible lever arm mechanism which generates the rotational movement.
 
-\section{Purpose and Goal}
+\section{Motivation}
 Crystalline solids have the ability to constrain the directions that particles take as they pass through, this is commonly called the "channelling" property. The UA9 collaboration at \abbrCERN is investigating how tiny bent crystals can help to steer particle beams in modern hadron colliders such as the Large Hadron Collider (\abbrLHC) \citep{WebsiteUA9:2016}. In high energy colliders, such as the \abbrLHC, particles tends to drift outwards creating a beam halo. These particles surrounding the beam, can be lost and cause damage to sensitive parts in the accelerator. By using bent crystals, halo particles can be efficiently extracted from the beam and collected by absorbers further away, reducing the complexity of the system. One major difficulty that aries is that the higher the energy of the particle, the lower the angular acceptance for channeling. Hence, a high precision positioning mechanism with a high angular accuracy is required. The rotational stage (with a range of \unit{20}{\milli\rad}) is of necessity to be able to track reference trajectories at ramp rates of \unit{100}{\micro\radianpersecond} and reject external disturbances to maintain a maximum tracking error of $\pm$\unit{1}{\micro\rad}.
 
 This project aims to identify the possible control approaches that could be applicable to this problem to achieve the desired performance.
+
+\section{Related work}
+One attempt to achieve the desired performance has already been made. The proposed controller, presented in \citep{ButcherController:2015} delivers reasonable performance but does not fulfill the requirements during movement. The authors proposes a PID controller in combination with a pre-filter, and a hysteresis compensator. The controller has shown high disturbance rejection at the first resonance peak as well as good tracking performance.
+
+\section{Approach}
 
 \section{Prospective challenges}
 First of all, piezoelectric  actuators show strong nonlinear properties such as hysteresis and creep (drift), which have to be compensated for. Moreover, the mechanical flexural structure in combination with the piezo electric characteristics leads to a highly resonant structure, making it difficult to achieve the desired performance while operating the rotational stage within noisy environments with external disturbances such as ground vibrations.
@@ -23,8 +28,7 @@ Furthermore this rotational stage is attached to a linear stage which is compose
 
 Finally the system dynamics also show linear position dependence requiring a controller that is robust to such variations.
 
-\section{Related work}
-One attempt to achieve the desired performance has already been made. The proposed controller, presented in \citep{ButcherController:2015} delivers reasonable performance but does not fulfill the requirements during movement. The authors proposes a PID controller in combination with a pre-filter, and a hysteresis compensator. The controller has shown high disturbance rejection at the first resonance peak as well as good tracking performance.
+\section{Limitations}
 
 \section{Outline}
 This thesis plan presents an overview of the thesis, including method, literature base and expected results. The method and work flow of the thesis as well as a comprehensive literature review is given in Chapter~\ref{cha:method}. In Chapter~\ref{cha:result} the results that can be expected half way through the project is discussed while a brief summary of the thesis can be found in Chapter~\ref{cha:conclusion}.

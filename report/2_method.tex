@@ -1,44 +1,8 @@
 % !TEX root = main.tex
-% en preliminär beskrivning av angreppssätt
-\chapter{Method}\label{cha:method}
+\chapter{Piezoelectric actuators}\label{cha:}
 This thesis will identify possible control approaches that could be applicable to the rotational stage at \abbrCERN in order to meet the performance requirements.
 First of all, a brief analysis of the already developed controller will be done in order to point out the drawbacks and determine which controller qualities that have to be improved in order to achieved the desired performance during linear movement of the rotational stage. The main work will then consist of investigating different control approaches such as feedforward, H-infinity, iterative or state feedback control. The most promising approaches will be benchmarked in simulations and compared to the existing algorithm. Finally, the most promising alternative will be implemented and tested on the real rotational stage.
 
-\section{Literature review}
-Here follows a review of the preliminary literature base that will be used in this thesis. It will most likely be extended with more articles, papers and books during the work with this thesis.
+\section{}
 
-\subsection*{\citep*{Biggio:2014} {\small \emph{- Memory characteristics of hysteresis and creep in multi-layer piezoelectric actuators: An experimental analysis}}}
-The aim of this article is to provide an explanation of peculiar features of the piezoelectric actuator (\abbrPEA) response. It presents an experimental characterization of the nonlinear effects i.e. hysteresis and creep in a \abbrPEA. The authors find that both the instantaneous and delayed response of the PEA have hysteric dependence on the applied voltage level.
-Moreover, they present experimental evidence for that the two observed hysteretic relationships share a common memory structure i.e. they are not truly independent nonlinear phenomenas.
-
-\subsection*{\citep*{ButcherIdentification:2015}{\small \emph{- On the identification of Hammerstein systems in the presence of an input hysteretic nonlinearity with nonlocal memory: Piezoelectric actuators – an experimental case study}}}
-This paper discusses the identification procedure of the linear dynamic part of piezo based actuators. A Hammerstein structure, consisting of a static (rate independent) hysteresis model with nonlocal memory (the current output does not only depend on the current input voltage but also on its history) and a linear dynamic model, is employed in order to model the hysteretic and dynamic behavior of the actuator.
-
-The authors state that for the identification of the linear part of the actuator, a careful choice of the driving signal has to be made to avoid modifying the characteristics of the excitation. They show that a choice of a \abbrPBRS signal allows the decoupling of the identification of the linear and nonlinear part, since the nonlinear part only transforms the \abbrPBRS signal into another \abbrPBRS.
-
-\subsection*{\citep*{ButcherController:2015} {\small \emph{- Controller Design and Verification for a Rotational Piezo-based Actuator for Accurate Positioning Applications in Noisy Environments}} }
-This paper presents the modeling and controller design of a piezo actuated rotational stage operating in a noisy environment at CERN. The authors have adopted a Hammerstein structure, allowing them, in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The extracted linear dynamics is identified as an OE system using several pseudo random binary signals (\abbrPBRS) as excitation signals. By adding different voltage biases to the PBRS it is also verified that the operating voltage point influences the identified transfer function (\abbrTF). The DC gain and the first resonance frequency and amplitude is affected due to the nonlinear piezo properties.
-
-A 2-\abbrDOF controller (feedback and prefilter) and a hysteresis compensator are adopted in order to obtain the desired tracking and disturbance rejection. The proposed controller is designed as a series combination of a \abbrPID controller, a lead network and a 4\textsuperscript{th} order notch filter according to the quantitative feedback theorem (\abbrQFT). The proposed controller is experimentally tested and shows both disturbance rejection and good tracking capability.
-
-\subsection*{\citep*{SurveyOfControlIssues:2007} {\small \emph{- A survey of control issues in nanopositioning}} }
-This paper reviews the control-related research in nanopositioning, covering nanopositioning applications, actuators and sensors as well as control challenges. It focuses on piezoelectric actuators discussing both issues in control and different control techniques. Modeling techniques for the nonlinear effects i.e. creep and hysteresis as well as issues such as vibrations and modeling errors are presented in this work. Finally, different control schemes to mitigate the impact from these issues are reviewed such as feedback, forward, iterative and sensor less control.
-
-
-\subsection*{\citep*{Piezo:2008} {\small \emph{- Piezoelectrics in Positioning, Tutorial on Piezotechnology in Nanopositioning Applications}} }
-This tutorial by Physik Instrumente (PI) gives the reader an overview of the fundamentals of piezoelectricity, piezomechanics and piezo actuators as well as detailed information regarding control approaches, environmental dependencies and design of piezoelectric positioning drives/systems. The electrical, mechanical and thermal behavior of piezoelectric actuators is described by basic equations presented in this paper. Several methods to improve the piezo dynamics are also discussed, such as linearization, signal preshaping and InputShaping® which is a patented real-time feedforward technology.
-
-\subsection*{\citep*{FlemingLeang:2014} {\small \emph{- Design, Modeling and Control of Nanopositioning Systems}} }
-This book covers the complete design cycle of nanopositioning systems. Some relevant chapters with respect to this thesis are Hysteresis Modeling and Control, Noise in Nanopositioning and Mechanical Design: Flexure-Based Nanopositioners.
-
-
-\section{Timeplan}
-%en tidplan för examensarbetets genomförande inklusive planerade datum för halvtidskontroll och framläggning
-Figure~\ref{fig:timeplan} shows the timeplan for the master thesis project. \emph{HP} and \emph{FP} stands for halftime presentation and fulltime presentation, respectively. In addition to the master thesis work, some hardware testing will be carried out from time to time, throughout the whole thesis period.
-
-\begin{figure}[h] %tbp
- \centering %crop: left bottom right top
- \includegraphics[trim=1cm 12cm 5cm 5.5cm, clip=true, scale=0.42]{fig/timeplan}
- \caption{\label{fig:timeplan}%
- Master Thesis timeplan}
- \end{figure}
+\section{}
