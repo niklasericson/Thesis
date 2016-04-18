@@ -1,59 +1,32 @@
 % !TEX root = main.tex
-\chapter{Control approaches}\label{cha:modelling}
+\chapter{Theory}\label{cha:modelling}
 This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis, including the present control loop.
-
-\section{Present control loop}
-The original controller for the rotaional stage is a PID controller which is used in combination with a pre-filter and a hysteresis compensator.
 
 \section{Model Reference Adaptive Control}
 An adaptive controller has the ability to adjust the system repsonse by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (MRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The MRAC scheme can be extended to include perturbation estimation (MRACPE), giving the controller the ability to compensate for various unmodelled effects, including both linear and nonlinear perturbations. Nonlinear effect such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and outputsignal. The MRACPE also allows the maximum tracking error to be predefined.
 
 
-\subsection{Perturbation Estimation}
-Using a second order model, the adaptive laws can be derived as follows. Consider the system model stated in~\eqref{eq:sysmodel}.
+\subsection{Perturbation Estimation}\label{sec:pertest}
+Using a second order model, the adaptive laws can be derived as follows. Consider the system model stated below.
 \begin{equation}
   \label{eq:sysmodel}
   \ddot{x}(t) + \alpha_1\dot{x}(t) +  \alpha_0x(t) = \beta_0u(t) + f(t)
 \end{equation}
 
-where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect.
-
-In order to estimate the perturbation function consider the following nonlinear system in one dimension, described more thoroughly in \cite{Elmali:1996}.
-
-\begin{equation}
-  \label{eq:perturbation}
-  x^{(n)} = f(\mathbf{X}) + \Delta f(\mathbf{X}) + [B(\mathbf{X}) + \Delta B(\mathbf{X})]u(t) + d(t)
-\end{equation}
-
-where the $x^{(n)} \in \mathbb{R}$ denotes the $n$th order of time derivative, and $\mathbf{X} = $\\ $[x, \dot{x}, \hdots, x^{n-1}]^T\in \mathbb{R}^n$ denotes the state vector. $f(\mathbf{X})$ and $\Delta f(\mathbf{X})$ corresponds to a nonlinear term and its perturbation, $B(\mathbf{X})$ and $\Delta B(\mathbf{X})$
-represents the control gain and its uncertainty, while $u(t)$ and $d(t)$ corresponds to the driving signal and the system disturbance, respectively.
-
-By using Eq.~\eqref{eq:perturbation} one can express the perturbation $\Psi(t)$ as ~\eqref{eq:perturbation_2} and forming its estimate according to ~\eqref{eq:estimate} as follows.
-
-\begin{equation}
-  \label{eq:perturbation_2}
-  \Psi(t) = \Delta f + \Delta Bu(t) + d(t) = x^{(n)} -f - Bu(t)
-\end{equation}
-
-\begin{equation}
-  \label{eq:estimate}
-  \Psi_{est}(t) = x_{cal}^{(n)} -f - Bu(t-Ts)
-\end{equation}
-
-where $x_{cal}^{(n)}$ denotes the calculated state vector, $T_s$ is the sampling time interval and $u(t-T_s)$ is the control input in the previus timestep. $u(t-T_s)$ is often approximated to $u(t)$ in practice which is valid approximation if $T_s$ is sufficiently small.
-
-The state vector is, for simplicity and its computational efficiency, computed by a simple backward different equation depicted below.
-
-\begin{equation}
-  \label{eq:backward}
-  x_{cal}^{(n)}(t) = \frac{x_{cal}^{(n-1)}(t) - x_{cal}^{(n-1)}(t-T_s)}{T_s}
-\end{equation}
-
-Applying ~\eqref{eq:estimate} to the model in~\eqref{eq:sysmodel} and setting $f = 0$ since the nonlinearities are treated solely as a distrubance gives the following perturbation estimation. Denote that $x(t)$ here is the sensor input, i.e. the measured yaw angle.
+where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\cite{Elmali:1996}, for a simple second order SISO model the perturbation estimation is derived to
 
 \begin{equation}
   \label{eq:perturbation}
   \hat{f}(t) = \ddot{x}_{cal}(t) + \alpha_1\dot{x}_{cal}(t) +  \alpha_0x(t) - \beta_0u(t-T_s)
+\end{equation}
+
+where $x_{cal}^{(n)}$ denotes the calculated state, $T_s$ is the sampling time interval and $u(t-T_s)$ is the control input in the previus timestep. $u(t-T_s)$ is often approximated to $u(t)$ in practice which is valid approximation if $T_s$ is sufficiently small. Denote that $x(t)$ here is the sensor input, i.e. the measured yaw angle.
+
+Each state is, for its computational efficiency, computed by a simple backward different equation depicted below.
+
+\begin{equation}
+  \label{eq:backward}
+  x_{cal}^{(n)}(t) = \frac{x_{cal}^{(n-1)}(t) - x_{cal}^{(n-1)}(t-T_s)}{T_s}
 \end{equation}
 
 \subsection{Adaptive laws}
@@ -66,33 +39,87 @@ The objective of the adaptive laws is to calculate the control parameter so that
 
 where $x_m(t)$ denotes the output rotation, $u(t)$ the input voltage and $a_0, a_1, b_0$ are known positive constants.
 
-The tracking error is defined as $e=x-x_m$. Recalling~\eqref{eq:sysmodel}, replacing $f(t)$ with the estimation $\hat{f}(t)$ and subtracting it from the ~\eqref{eq:refmodel} gives the following expression, more details can be found in~\ref{Qingson:2016}.
+The tracking error is defined as below.
+\begin{equation}
+  \label{eq:stateerror}
+  e(t) = x(t) - x_m(t)
+\end{equation}
+
+Recalling~\eqref{eq:sysmodel}, replacing $f(t)$ with the estimation $\hat{f}(t)$ and subtracting it from~\eqref{eq:refmodel} gives the following expression, more details can be found in~\cite{Qingson:2016}.
 
 \begin{equation}
-  \label{eq:refmodel}
   \ddot{e}(t) + a_1\dot{e}(t) + a_0\dot{e}(t) =  (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) - \beta_0u(t) + \hat{f}(t)
 \end{equation}
 
-This can easily be written on state-space form as follows.
-
+Transforming it into state-space form
 \begin{equation}
   \label{eq:refmodel}
-  \ddot{e}(t) + a_1\dot{e}(t) + a_0\dot{e}(t) =  (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) - \beta_0u(t) + \hat{f}(t)
+  \mathbf{\dot{E} = AE} + \beta_0\mathbf{B}u + \Delta
+\end{equation}
+where
+\begin{equation}
+  \label{eq:matrices}
+  \mathbf{E} =
+    \begin{bmatrix}
+       e\\[0.3em]
+       \dot{e}
+     \end{bmatrix},
+  \mathbf{A} =
+    \begin{bmatrix}
+       0 & 1\\[0.3em]
+       -a_0 & -a_1
+     \end{bmatrix},
+  \mathbf{B} =
+    \begin{bmatrix}
+        0\\[0.3em]
+        1
+    \end{bmatrix},
+    \mathbf{\Delta} =
+      \begin{bmatrix}
+          0\\[0.3em]
+          \delta
+      \end{bmatrix}
+\end{equation}
+with $\delta = (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) + \hat{f}(t)$.
+
+If all the eigenvalues of A have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Morover, according to Lyaponov  theory \cite{Ljung:2003}, for each positive-semidefinite matrix Q, there exist one positive-semidefinite matrix P which solves \eqref{eq:lyap}.
+
+\begin{equation}
+  \label{eq:lyap}
+  \mathbf{A^TP + PA = -Q}
 \end{equation}
 
-\begin{theorem}
-  Hello
-\end{theorem}
+With the auxillary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws is given by
+
+\begin{equation}
+  \label{eq:adaplaws}
+  u = k_0u_d + k_1x + k_2\dot{x} + k_3\hat{f}
+\end{equation}
+where the control law parameters is calculated as
+\begin{equation}
+  \dot{k_0} = -\eta_0\hat{e}u_d
+\end{equation}
+\begin{equation}
+  \dot{k_1} = -\eta_1\hat{e}x
+\end{equation}
+\begin{equation}
+  \dot{k_2} = -\eta_2\hat{e}\dot{x}
+\end{equation}
+\begin{equation}
+  \dot{k_3} = -\eta_3\hat{e}\hat{f}
+\end{equation}
+
+the proof is provided in \cite{Qingson:2016}. Substituting $\hat{f}$ in \eqref{eq:perturbation} with the one in \eqref{eq:adaplaws} and rearranging the parameters results in the final MRACPE control law, stated below.
+
+\begin{equation}
+    \label{eq:adaplawsfinal}
+  u(t) = k_0u_d(t) + (k_1 + k_3\alpha_0)x(t) +  (k_2 + k_3\alpha_1)\dot{x}(t) + k_3\ddot{x}(t) - k_3\beta_0u(t-T_s)
+\end{equation}
 
 
+%\begin{chapter-appendix}
+%  \label{ap:lyaponov}
 
+%\section{MRACPE}
 
-
-
-\begin{chapter-appendix}
-  \label{ap:lyaponov}
-
-\section{MRACPE}
-
-
-\end{chapter-appendix}
+%\end{chapter-appendix}
