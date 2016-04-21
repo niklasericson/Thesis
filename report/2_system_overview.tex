@@ -96,10 +96,16 @@ Where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the r
   \caption{\label{tab:maxwell} Identified parameters of the Maxwell slip model.}
 \end{table}
 
-
 \subsection{Linear System Identification}
 \label{sec:linsys}
-The extracted linear dynamics has been identified as an Output-Error system using a (\abbrPRBS) as excitation signal, allowing for a valid extraction. The system transfer function has been derived in discrete-time using the the System Identification Toolbox in Matlab. A more detail description of the procdure is available in \cite{ButcherController:2015}. Figure~\ref{fig:model} shows a comparision with the model in the frequency domain, where the FFT identification is calculated by dividing the FFT of the output with the FFT of the input.  
+The extracted linear dynamics has been identified as an $6^{th}$ order Output-Error system using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. Figure~\ref{fig:model} shows a comparision between the model and the real system in the frequency domain, where the Fast Fourier Transform (\abbrFFT) identification is calculated by dividing the \abbrFFT of the output with the \abbrFFT of the input.
+
+ The transfer function of the model, discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
+
+\begin{equation}
+  \label{eq:tf}
+  G_o(z) = \frac{21.05z^{-1} - 6.85z^{-2} + 8.52z^{-3} - 0.71z^{-4} + 9.30z^{-5}}{1 - 1.85z^{-1} + 1.09z^{-2} + 0.016z^{-3} - 1.32z^{-4} + 1.55z^{-5} - 0.48z^{-6}}
+\end{equation}
 
 \begin{figure}[h]
   \centering
@@ -109,4 +115,26 @@ The extracted linear dynamics has been identified as an Output-Error system usin
 
 
 \section{Present Control Approach}
-The original controller for the rotaional stage is a PID controller which is used in combination with a pre-filter and a hysteresis compensator.
+The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and prefilter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotationalstage $G =G_oH^{-1}$, where $G_o, H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=1\textwidth, trim=4cm 3cm 2.1cm 10cm, clip=true]{fig/matlab/present_controller}
+  \caption{\label{fig:present}Block diagram of the present control loop, inlcuding controller, prefilter and hysteresis compensator.}
+\end{figure}
+
+The controller block (C) is a series combination of a \abbrPID controller, notch filter and a lead network, aiming to stabilize the system (\abbrPID), increase the sufficient phase margin (lead) and make the system robust to high frequency oscillations (notch). Since the bandwidth of the system is relatively low, $f_b = 58 Hz$ according to  Figure~\ref{fig:model}, it has been decided to exclude cancellation of the first resonance peak in order to keep the bandwith as high as possible and have a sufficient attenuation on the sensitivity function \citep{ButcherController:2015}. The PID controller, lead network and notch filter are all presented below in \eqref{eq:controller}.
+
+\begin{subequations}
+  \label{eq:controller}
+\begin{alignat}{2}
+  \label{eq:pre}
+  & F = \frac{0.0029z - 0.0029}{z^3 - 2.91z^2 + 2.816 z - 0.91} \\
+  \label{eq:pid}
+  & C_{PID} = \frac{0.47z^2 - 0.94z + 0.47}{z^2 - 1.78 z + 0.78} \\
+  \label{eq:lead}
+  & C_{lead} = \frac{4.20 z^2 - 7.72z + 3.55}{z^2 - 1.67z + 0.69} \\
+  \label{eq:notch}
+  & C_{notch} = \frac{0.28z^4 - 0.62z^3 + 0.75z^2 - 0.59z + 0.26}{z^4 - 1.95z^3 + 1.39z^2 - 0.40z + 0.039}
+\end{alignat}
+\end{subequations}
