@@ -1,10 +1,9 @@
 % !TEX root = main.tex
 \chapter{Theory}\label{cha:modelling}
-This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis, including the present control loop.
+This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis.
 
 \section{Model Reference Adaptive Control}
-An adaptive controller has the ability to adjust the system repsonse by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (MRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The MRAC scheme can be extended to include perturbation estimation (MRACPE), giving the controller the ability to compensate for various unmodelled effects, including both linear and nonlinear perturbations. Nonlinear effect such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and outputsignal. The MRACPE also allows the maximum tracking error to be predefined.
-
+An adaptive controller has the ability to adjust the system repsonse by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (MRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The MRAC scheme can be extended to include perturbation estimation (MRACPE), giving the controller the ability to compensate for various unmodelled effects, including both linear and nonlinear perturbations. Nonlinear effect such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and output signal. The MRACPE also allows the maximum tracking error to be predefined.
 
 \subsection{Perturbation Estimation}\label{sec:pertest}
 Using a second order model, the adaptive laws can be derived as follows. Consider the system model stated below.
@@ -109,12 +108,25 @@ where the control law parameters is calculated as
   \dot{k_3} = -\eta_3\hat{e}\hat{f}
 \end{equation}
 
-the proof is provided in \cite{Qingson:2016}. Substituting $\hat{f}$ in \eqref{eq:perturbation} with the one in \eqref{eq:adaplaws} and rearranging the parameters results in the final MRACPE control law, stated below.
+the proof is provided in \citep{Qingson:2016}. Substituting $\hat{f}$ in \eqref{eq:perturbation} with the one in \eqref{eq:adaplaws} and rearranging the parameters results in the final MRACPE control law, stated below.
 
 \begin{equation}
     \label{eq:adaplawsfinal}
   u(t) = k_0u_d(t) + (k_1 + k_3\alpha_0)x(t) +  (k_2 + k_3\alpha_1)\dot{x}(t) + k_3\ddot{x}(t) - k_3\beta_0u(t-T_s)
 \end{equation}
+
+
+\section{Integral Resonanace Control}
+The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $Df<0$ and an integral controller $C$. The negative feed-forward term will, if it is sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=1\textwidth, trim=5.5cm 3cm 5.1cm 9.5cm, clip=true]{fig/matlab/irc}
+  \caption{\label{fig:irc}Block diagram of IRC control loop}
+\end{figure}
+
+The phase response is now located between 0 and -180 degrees, due to the negative sign in $Gd$. The phase margin could then easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in highly desired properties such as a large phase margin and infinte gain margin.   
+
 
 
 %\begin{chapter-appendix}
