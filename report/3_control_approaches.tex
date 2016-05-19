@@ -116,16 +116,55 @@ the proof is provided in \citep{Qingson:2016}. Substituting $\hat{f}$ in \eqref{
 \end{equation}
 
 
-\section{Integral Resonanace Control}
-The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $Df<0$ and an integral controller $C$. The negative feed-forward term will, if it is sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}.
+\section{Integral Resonance Control}
+The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $D_f<0$ and an integral controller $C=\frac{k}{s}$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can be easily increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase margin between  $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinte gain margin.
+
+The negative gain $D_f$ is straight forward to manually select for introducing a complex pair of zeros below the first resonance. The integral gain $k$ can be choosen by using the root locus technique and select a gain that maximizes damping.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim=5.5cm 3cm 5.1cm 9.5cm, clip=true]{fig/matlab/irc}
-  \caption{\label{fig:irc}Block diagram of IRC control loop}
+  \caption{\label{fig:irc}Block diagram of IRC damping loop}
 \end{figure}
 
-The phase response is now located between 0 and -180 degrees, due to the negative sign in $Gd$. The phase margin could then easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in highly desired properties such as a large phase margin and infinte gain margin.   
+The IRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ and $D_f$ in the same block, the resulting scheme is shown in the inner loop in Figure~\ref{fig:irc_int}, where $C_2 = \frac{C}{1+CD_f}$. For tracking reference trajectories, the IRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negtive gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=1\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{fig/matlab/irc_int}
+  \caption{\label{fig:irc_int}Block diagram of the tracking control system with IRC included}
+\end{figure}
+
+Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros. To give the reader further information about the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.
+
+Let G be represented as a transfer function with a relative degree of one, with 2 poles and 1 zero as written below,
+
+\begin{equation}
+  \label{eq:irc_sys}
+  G = \frac{s + \alpha_0}{s^2 + \beta_1s + \beta_0}
+\end{equation}
+
+where  $\alpha_i > 0$ and  $\beta_i > 0$, i.e. a stable and minimum phase system.  Using $G_d = G + D_f$  ~\eqref{eq:irc_sys} and rearranging the terms gives
+
+\begin{equation}
+  \label{eq:irc_sys_d}
+  \begin{split}
+  G_d & = \frac{s + \alpha_0}{s^2 + \beta_1s + \beta_0} + D_f \\
+      & = \frac{D_fs^2 + (1 + D_f\beta_1)s + \alpha_0 + D_f\beta_0}{s^2 + \beta_1s + \beta_0} \\
+      & = \frac{D_f(s^2 + (\frac{1}{D_f} + \beta_1)s + \frac{\alpha_0}{D_f} + \beta_0)}{s^2 + \beta_1s + \beta_0}
+  \end{split}
+\end{equation}
+
+which illustrates that the number of introduced zeros is equal to the relative degree of the transfer function and that the zeros ($s^z_i$) will have a negative real part if the following conditions are fullfilled.
+
+\begin{equation}
+  \label{eq:irc_cond}
+  Re(s^z_i) < 0 \quad \text{if }
+  \begin{cases}
+    D_f < -\frac{1}{\beta_1}\\
+    D_f < -\frac{\alpha_0}{\beta_0}\\
+  \end{cases}
+\end{equation}
 
 
 

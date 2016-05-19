@@ -1,10 +1,15 @@
 % !TEX root = main.tex
 %preliminära resultat som kan demonstreras vid halvtidskontroll
 \chapter{Result}\label{cha:result}
-This section describes future results that could be expected half way through the project.
+This section describes the results considering performance, robustness and stability with respect to the different control approaches. The performance of each approach will first be presented individually and in a comparison in the end.
 
-\section{Control Approaches}
-Half way through the project, all control approaches that have been identified should be presented here. Furthermore, all control approaches that at the time have been simulated will be presented with a schematic structure, transfer functions or state space model, a bode plot of the closed loop system and additional plots for illustration of the trajectory tracking capability and the robustness.
 
-\section{Benchmark tests}
-Benchmark tests will be carried out on all simulated control approaches and presented here. Comparisons between the new control approaches and the existing algorithm with respect to disturbance rejection, trajectory tracking and closed loop bandwidth will be illustrated in this section with plots and tables.
+\section{Simulation Results}
+\subsection{Model Reference Adaptive Control}
+
+
+
+
+\section{Experimental Results}
+\subsection{Setup}
+The experiments have been conducted on the considered rotational stage described in Section~\ref{sec:rotational_stage}. A National Instruments PXI communicates with the Collimator and the rotaional stage, responsible for acquisition and control. To drive the rotaional stage it outputs a voltage between [-1, 7.5] V, this is amplified by a linear amplifier with a gain of \unit{20}{\volt/\volt} resulting in a [-20, 150] V signal input on the rotaional stage. The yaw angle, measured by the interferometric system is converted and sent to the PXI. The control loop is running at \unit{2}{\kilo\hertz}.
