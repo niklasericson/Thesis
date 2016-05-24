@@ -96,15 +96,19 @@ With the auxillary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws is given b
 \end{equation}
 where the control law parameters is calculated as
 \begin{equation}
+  \label{eq:adaplaws1}
   \dot{k_0} = -\eta_0\hat{e}u_d
 \end{equation}
 \begin{equation}
+  \label{eq:adaplaws2}
   \dot{k_1} = -\eta_1\hat{e}x
 \end{equation}
 \begin{equation}
+  \label{eq:adaplaws3}
   \dot{k_2} = -\eta_2\hat{e}\dot{x}
 \end{equation}
 \begin{equation}
+  \label{eq:adaplaws4}
   \dot{k_3} = -\eta_3\hat{e}\hat{f}
 \end{equation}
 
@@ -115,6 +119,13 @@ the proof is provided in \citep{Qingson:2016}. Substituting $\hat{f}$ in \eqref{
   u(t) = k_0u_d(t) + (k_1 + k_3\alpha_0)x(t) +  (k_2 + k_3\alpha_1)\dot{x}(t) + k_3\ddot{x}(t) - k_3\beta_0u(t-T_s)
 \end{equation}
 
+A block diagram of the final controller, with inspiration from Figure 9.1 in ~\citep{Qingson:2016}, is depicted in Figure~\ref{fig:adaptive}. The adaptive controller consists of 4 blocks. One reference model that calcultats the desired states $Xm=[\dot{x}_m, x_m]^T$ from the input signal according to \eqref{eq:refmodel}, one adaptive mechanism that implements \eqref{eq:adaplaws1}-\eqref{eq:adaplaws4} and calculates $K=[k_1, k_2, k_3, k_4]^T$, one state calculator that uses \eqref{eq:backward} to calculate $X=[\ddot{x}, \dot{x}, x]^T$ and finaly one controller block that uses \eqref{eq:adaplawsfinal} to calcuate the control signal $u$ that is sent to the rotaional stage.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=0.7\textwidth, trim=4cm 0cm 3.8cm 0cm, clip=true]{fig/matlab/adaptive_scheme}
+  \caption{\label{fig:adaptive}Block diagram of the adaptive controller}
+\end{figure}
 
 \section{Integral Resonance Control}
 The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $D_f<0$ and an integral controller $C=\frac{k}{s}$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can be easily increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase margin between  $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinte gain margin.
