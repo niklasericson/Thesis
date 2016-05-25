@@ -1,21 +1,22 @@
 % !TEX root = main.tex
 %preliminära resultat som kan demonstreras vid halvtidskontroll
 \chapter{Results}\label{cha:result}
-This section describes the results considering performance, robustness and stability with respect to the different control approaches. The benchmark results of each approach will first be presented individually and then in a comparison in the end.
+This section describes the results considering performance, robustness and stability with respect to the different control approaches. All approaches will first be benchmarked with the present control approach and presented individually in the following subsections. A comparison between all approaches is presented in the end of this chapter.
 
 \section{Benchmark test}
-Each of the control approaches have been evaluated with respect to robustness to model errors, disturbance rejection, closed loop bandwidth and response to step, ramp and sinusoidal input summarized below.
+Each of the control approaches have been evaluated with respect to robustness to model errors, disturbance rejection, closed loop bandwidth and response to step, ramp and sinusoidal input, all summarized below. The prospective challanges, described in \ref{sec:prospectiveChallanges} shall be kept in mind while reading the results. Since the required ramprates are relatively low, the disturbance rejection and the robustness to model errors are more of interest when evaluating each method.
 
 \begin{itemize}
 \item {\bf Step, ramp and periodical tracking} - A step, ramp and periodic input is applied on the input to benchmark the tracking capability of the controller.
 \item {\bf Disturbance rejection} - Modified step responses with added noise is applied to the input to benchmark how sensitive the system is to system disturbances.
-\item {\bf Robustness to model errors} - During operation with a periodic input signal, the dynamical model is changed and the output is studied to characterize the robustness to model errors.
+\item {\bf Robustness to model errors} - During operation with a periodic input signal, the dynamical model is changed and the output is studied to characterize the robustness to model errors. This test is of importance since this is exactly what happens when the linear stage moves the rotational stage further out.
 \end{itemize}
 
 \section{Simulation Results}
-\subsection{Model Reference Adaptive Control}
+For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. The high order system model in \eqref{eq:tf} was used to model the rotational stage dynamics linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect.
 
-For the comparison between the adaptive and the present control approach, the adaptive control laws were discretized by using Tustin's formula with a sampling frequency of 2kHz. The high order system model in \eqref{eq:tf} was used to model the rotational stage dynamics. However, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables is summerized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for stepsizes below 20mrad.
+\subsection{Model Reference Adaptive Control}
+Even though the rotaional stage has been modelled by \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables is summerized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for stepsizes below 20mrad.
 
 \begin{equation}
   \label{eq:sys_gm}
@@ -45,8 +46,7 @@ For the comparison between the adaptive and the present control approach, the ad
   \caption{\label{tab:adaptive_param} Parameters of the system model and the tuned adaptive controller.}
 \end{table}
 
-Figure~\ref{fig:step_adaptive} shows the step repsonse to different stepsizes. Here it is clear that the system becomes unstable if the stepsize $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum stepsize, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller stepsizes. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response can be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
-
+Figure~\ref{fig:step_adaptive} shows the step repsonse to different stepsizes. Here it is clear that the system becomes unstable if the stepsize $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum stepsize, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller stepsizes. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response could be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
 
 \begin{figure}[h!]
   \centering
@@ -54,30 +54,53 @@ Figure~\ref{fig:step_adaptive} shows the step repsonse to different stepsizes. H
   \caption{\label{fig:step_adaptive} Step responses to stepsizes of 10, 15, 20 and 26 mrad.}
 \end{figure}
 
+The adaptation process of the control parameters $k_i$, for a stepresponse resulting from a 20mrad step, can be seen in Figure~\ref{fig:adapt_process}. All of the coefficients have converged within 1 second.
+
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/k.eps}
-  \caption{\label{fig:hysteresis} Adaptation process of control parameters $k_i$ with a 20 mrad step.}
+  \caption{\label{fig:adapt_process} Adaptation process of control parameters $k_i$ with a 20 mrad step.}
 \end{figure}
 
+To illustrate the adaptation process better, a periodic response is depicted in Figure~\ref{fig:periodic_resp}, here it is clear that after the adaptation process is finished the controller performs better for the second and third period. One can see that the adaptation process is slower for the periodic response corresponding to the amplitude of \unit{10}{\milli\radian}, hence the lower the step, the longer the adaptation time. The present controller performs well for all amplitudes.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/periodicresponse.eps}
-  \caption{\label{fig:periodic_resp}Illustration of the hysteresis effect.}
+  \caption{\label{fig:periodic_resp} Periodic responses for the adaptive and present controller with amplitudes of 10, 15, 20 mrad.}
 \end{figure}
 
+The tracking error corresponding to the \emph{Adaptive 20mrad} and \emph{Present 20mrad} in Figure~\ref{fig:periodic_resp} can be seen in Figure~\ref{fig:adapt_trackingerror}. The adaptive controller performs better than the present controller after the adaptation process has finished.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/trackingerror.eps}
-  \caption{\label{fig:hysteresis}Illustration of the hysteresis effect.}
+  \caption{\label{fig:adapt_trackingerror} Tracking error (difference between reference and output) for the periodic response from an input signal with an amplitude of 20 mrad.}
+\end{figure}
+
+A periodic repsonse with model parameter drift is presented in Figure~\ref{fig:modeldrift}. It shows how the adaptive controller manages to adapt to the change in the system dynamics, while the present controller fails to do so, resulting in an unstable system. The change of the model was performed over 2 seconds, resulting in a movement of the first resonance peak, from 38 Hz to 66 Hz in frequency and from 30.1 dB to 23.5 dB in magnitude. Note that the change of the model is relatively big and for a smaller movement of the resonance peak, the present controller could still be sufficient as illustrated in Figure~\ref{fig:modelerror}.
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:modeldriftresponse}Periodic response with model parameter drift.]{
+  \includegraphics[width=0.45\textwidth]{fig/matlab/driftofmodelparameterover2s.eps}}
+  \qquad
+  \subfloat[][\label{fig:modeldriftbode}Original model (G) and the resulting model after drift ($G_mod$).]{
+  \includegraphics[width=0.45\textwidth]{fig/matlab/bode_drift_pole.eps}}
+  \caption{\label{fig:modeldrift} Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) while the model change is presented in (b).}
 \end{figure}
 
 \begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.7\textwidth]{fig/matlab/driftofmodelparameterover05s.eps}
-  \caption{\label{fig:hysteresis}Illustration of the hysteresis effect.}
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:modelerrorresponse}Periodic response with model parameter drift.]{
+  \includegraphics[width=0.45\textwidth]{fig/matlab/modelerrorperiodic.eps}}
+  \qquad
+  \subfloat[][\label{fig:modelerrorbode}Original model (G) and the resulting model after drift ($G_mod$).]{
+  \includegraphics[width=0.47\textwidth]{fig/matlab/bode_modelerror_pole.eps}}
+  \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) while the model change is presented in (b).}
 \end{figure}
+
+In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved to 45.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller.
+
+Figure~\ref{fig:distrejection} shows the disturbance rejection capability of the controllers. A small glitch was added on the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without prefilter. The present controller managed to attenuated the highest peak of the glitch by 3 times more than the adaptive with prefilter and 5 times more than the adaptive without prefilter.  The settling time was also approximately 12 times worse for the adaptive controllers.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -88,17 +111,6 @@ Figure~\ref{fig:step_adaptive} shows the step repsonse to different stepsizes. H
   \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection_zoom.eps}}
   \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area in (a) is presented in (b).}
 \end{figure}
-
-\begin{figure}[h]
-  \centering %crop: left bottom right top
-  \subfloat[][\label{fig:dist}Step response]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/modelerror.eps}}
-  \qquad
-  \subfloat[][\label{fig:distzoom}Bode plot of perturbed model]{
-  \includegraphics[width=0.47\textwidth]{fig/matlab/bode_modelerror_pole.eps}}
-  \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area in (a) is presented in (b).}
-\end{figure}
-
 
 \section{Experimental Results}
 \subsection{Setup}

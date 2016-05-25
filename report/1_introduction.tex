@@ -20,14 +20,18 @@ One major difficulty that aries with the use of bent crystals is that, the highe
   \item hava a total range of \unit{20}{\milli\rad}
   \item be able to track reference trajectories at ramp rates of \unit{100}{\micro\radianpersecond}
   \item reject external disturbances to maintain a maximum tracking error of $\pm$\unit{1}{\micro\rad}
+  \item main the maximum tracking error even though the linear axis is moving.
 \end{itemize}
 
 \section{Prospective challenges}\label{sec:prospectiveChallanges}
 First of all, piezoelectric  actuators show strong nonlinear properties such as hysteresis and creep (drift), which have to be compensated for. Moreover, the mechanical flexural structure in combination with the piezo electric characteristics leads to a highly resonant structure, making it difficult to achieve the desired performance while operating the rotational stage within noisy environments with external disturbances such as ground vibrations. Furthermore this rotational stage is attached to a linear stage which is composed by a leadscrew, a stepping motor and an axel. The linear movement adds additional perturbation to the rotational stage due to imperfections in the leadscrew and detent torque and stepping nature of the motor. Finally the system dynamics also show linear position dependence requiring a controller that is robust to such variations.
 
+
+
 Moving center of rotataion,
 Disturbad yaw, pitch and roll during linear movement.
-2 main drawbacks limiting accuracy and speed of nanopositioning stages. Inherent hysteresis nonlinearity in the piezoceramic material and low damped resonant modes due to the mechanical dynmaics. 
+2 main drawbacks limiting accuracy and speed of nanopositioning stages. Inherent hysteresis nonlinearity in the piezoceramic material and low damped resonant modes due to the mechanical dynmaics.
+
 
 \section{Related work}
 One attempt to achieve the desired performance has already been made. The proposed controller, presented in \citep{ButcherController:2015} delivers reasonable performance but does not fulfill the requirements during movement. The authors proposes a PID controller in combination with a pre-filter, and a hysteresis compensator. The controller has shown high disturbance rejection at the first resonance peak as well as good tracking performance.
