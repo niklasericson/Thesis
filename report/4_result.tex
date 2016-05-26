@@ -1,14 +1,13 @@
 % !TEX root = main.tex
-%preliminära resultat som kan demonstreras vid halvtidskontroll
 \chapter{Results}\label{cha:result}
 This section describes the results considering performance, robustness and stability with respect to the different control approaches. All approaches will first be benchmarked with the present control approach and presented individually in the following subsections. A comparison between all approaches is presented in the end of this chapter.
 
-\section{Benchmark test}
-Each of the control approaches have been evaluated with respect to robustness to model errors, disturbance rejection, closed loop bandwidth and response to step, ramp and sinusoidal input, all summarized below. The prospective challanges, described in \ref{sec:prospectiveChallanges} shall be kept in mind while reading the results. Since the required ramprates are relatively low, the disturbance rejection and the robustness to model errors are more of interest when evaluating each method.
+\section{Benchmark tests}
+Each of the control approaches have been evaluated with respect to robustness to model errors, disturbance rejection, closed loop bandwidth and response to step, ramp and sinusoidal input, all summarized below. The prospective challenges, described in \ref{sec:prospectiveChallanges} shall be kept in mind while reading the results. Since the required ramp rates are relatively low, the disturbance rejection and the robustness to model errors are more of interest when evaluating each method.
 
 \begin{itemize}
 \item {\bf Step, ramp and periodical tracking} - A step, ramp and periodic input is applied on the input to benchmark the tracking capability of the controller.
-\item {\bf Disturbance rejection} - Modified step responses with added noise is applied to the input to benchmark how sensitive the system is to system disturbances.
+\item {\bf Disturbance rejection} - Modified step responses with impulses added to the input and measurement signal to benchmark how sensitive the system is to system disturbances.
 \item {\bf Robustness to model errors} - During operation with a periodic input signal, the dynamical model is changed and the output is studied to characterize the robustness to model errors. This test is of importance since this is exactly what happens when the linear stage moves the rotational stage further out.
 \end{itemize}
 
@@ -16,7 +15,7 @@ Each of the control approaches have been evaluated with respect to robustness to
 For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. The high order system model in \eqref{eq:tf} was used to model the rotational stage dynamics linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect.
 
 \subsection{Model Reference Adaptive Control}
-Even though the rotaional stage has been modelled by \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables is summerized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for stepsizes below 20mrad.
+Even though the rotational stage has been modeled by \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables is summarized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for step sizes below 20mrad.
 
 \begin{equation}
   \label{eq:sys_gm}
@@ -46,15 +45,15 @@ Even though the rotaional stage has been modelled by \eqref{eq:tf}, a second ord
   \caption{\label{tab:adaptive_param} Parameters of the system model and the tuned adaptive controller.}
 \end{table}
 
-Figure~\ref{fig:step_adaptive} shows the step repsonse to different stepsizes. Here it is clear that the system becomes unstable if the stepsize $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum stepsize, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller stepsizes. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response could be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
+Figure~\ref{fig:step_adaptive} shows the step response to different step sizes. Here it is clear that the system becomes unstable if the step size $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum step size, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller step sizes. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response could be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/stepresponse.eps}
-  \caption{\label{fig:step_adaptive} Step responses to stepsizes of 10, 15, 20 and 26 mrad.}
+  \caption{\label{fig:step_adaptive} Step responses to step sizes of 10, 15, 20 and 26 mrad.}
 \end{figure}
 
-The adaptation process of the control parameters $k_i$, for a stepresponse resulting from a 20mrad step, can be seen in Figure~\ref{fig:adapt_process}. All of the coefficients have converged within 1 second.
+The adaptation process of the control parameters $k_i$, for a step response resulting from a 20mrad step, can be seen in Figure~\ref{fig:adapt_process}. All of the coefficients have converged within 1 second.
 
 \begin{figure}[h!]
   \centering
@@ -77,7 +76,7 @@ The tracking error corresponding to the \emph{Adaptive 20mrad} and \emph{Present
   \caption{\label{fig:adapt_trackingerror} Tracking error (difference between reference and output) for the periodic response from an input signal with an amplitude of 20 mrad.}
 \end{figure}
 
-A periodic repsonse with model parameter drift is presented in Figure~\ref{fig:modeldrift}. It shows how the adaptive controller manages to adapt to the change in the system dynamics, while the present controller fails to do so, resulting in an unstable system. The change of the model was performed over 2 seconds, resulting in a movement of the first resonance peak, from 38 Hz to 66 Hz in frequency and from 30.1 dB to 23.5 dB in magnitude. Note that the change of the model is relatively big and for a smaller movement of the resonance peak, the present controller could still be sufficient as illustrated in Figure~\ref{fig:modelerror}.
+A periodic response with model parameter drift is presented in Figure~\ref{fig:modeldrift}. It shows how the adaptive controller manages to adapt to the change in the system dynamics, while the present controller fails to do so, resulting in an unstable system. The change of the model was performed over 2 seconds, resulting in a movement of the first resonance peak, from 38 Hz to 66 Hz in frequency and from 30.1 dB to 23.5 dB in magnitude. Note that the change of the model is relatively big and for a smaller movement of the resonance peak, the present controller could still be sufficient as illustrated in Figure~\ref{fig:modelerror}.
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:modeldriftresponse}Periodic response with model parameter drift.]{
@@ -100,7 +99,7 @@ A periodic repsonse with model parameter drift is presented in Figure~\ref{fig:m
 
 In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved to 45.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller.
 
-Figure~\ref{fig:distrejection} shows the disturbance rejection capability of the controllers. A small glitch was added on the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without prefilter. The present controller managed to attenuated the highest peak of the glitch by 3 times more than the adaptive with prefilter and 5 times more than the adaptive without prefilter.  The settling time was also approximately 12 times worse for the adaptive controllers.
+Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 3 times more than the adaptive with pre-filter and 5 times more than the adaptive without pre-filter. The settling time was also approximately 12 times worse for the adaptive controllers. The pre-filter used with the adaptive controller is the one presented in \eqref{eq:lead}. Hence it is not optimal for the adaptive controller since its closed loop system differs from the present controller. However, since the closed loop bode plot for the adaptive controller is hard to attain, the filter in \eqref{eq:lead} provides a quick way to see that a better attenuation can be achieved with a properly designed pre-filter.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -112,6 +111,23 @@ Figure~\ref{fig:distrejection} shows the disturbance rejection capability of the
   \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area in (a) is presented in (b).}
 \end{figure}
 
+In Figure~\ref{fig:distmeasrejection} the small input was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:distmeas}Step response]{
+  \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection_meas.eps}}
+  \qquad
+  \subfloat[][\label{fig:distmeaszoom}Zoom in on disturbance]{
+  \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection_meas_zoom.eps}}
+  \caption{\label{fig:distmeasrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area in (a) is presented in (b).}
+\end{figure}
+
+\subsection{Integral Resonance Control}
+
+
+
+
 \section{Experimental Results}
 \subsection{Setup}
-The experiments have been conducted on the considered rotational stage described in Section~\ref{sec:rotational_stage}. A National Instruments PXI communicates with the Collimator and the rotaional stage, responsible for acquisition and control. To drive the rotaional stage it outputs a voltage between [-1, 7.5] V, this is amplified by a linear amplifier with a gain of \unit{20}{\volt/\volt} resulting in a [-20, 150] V signal input on the rotaional stage. The yaw angle, measured by the interferometric system is converted and sent to the PXI. The control loop is running at \unit{2}{\kilo\hertz}.
+The experiments have been conducted on the considered rotational stage described in Section~\ref{sec:rotational_stage}. A National Instruments PXI communicates with the Collimator and the rotational stage, responsible for acquisition and control. To drive the rotational stage it outputs a voltage between [-1, 7.5] V, this is amplified by a linear amplifier with a gain of \unit{20}{\volt/\volt} resulting in a [-20, 150] V signal input on the rotational stage. The yaw angle, measured by the interferometric system is converted and sent to the PXI. The control loop is running at \unit{2}{\kilo\hertz}.
