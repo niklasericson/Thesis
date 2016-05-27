@@ -57,7 +57,7 @@ The adaptation process of the control parameters $k_i$, for a step response resu
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.7\textwidth]{fig/matlab/k.eps}
+  \includegraphics[width=1\textwidth]{fig/matlab/k.eps}
   \caption{\label{fig:adapt_process} Adaptation process of control parameters $k_i$ with a 20 mrad step.}
 \end{figure}
 
@@ -80,20 +80,20 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:modeldriftresponse}Periodic response with model parameter drift.]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/driftofmodelparameterover2s.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/driftofmodelparameterover2s.eps}}
   \qquad
   \subfloat[][\label{fig:modeldriftbode}Original model (G) and the resulting model after drift ($G_mod$).]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/bode_drift_pole.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_drift_pole.eps}}
   \caption{\label{fig:modeldrift} Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) while the model change is presented in (b).}
 \end{figure}
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:modelerrorresponse}Periodic response with model parameter drift.]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/modelerrorperiodic.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/modelerrorperiodic.eps}}
   \qquad
   \subfloat[][\label{fig:modelerrorbode}Original model (G) and the resulting model after drift ($G_mod$).]{
-  \includegraphics[width=0.47\textwidth]{fig/matlab/bode_modelerror_pole.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_modelerror_pole.eps}}
   \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) while the model change is presented in (b).}
 \end{figure}
 
@@ -104,11 +104,11 @@ Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturb
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:dist}Step response]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection.eps}}
   \qquad
   \subfloat[][\label{fig:distzoom}Zoom in on disturbance]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection_zoom.eps}}
-  \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area in (a) is presented in (b).}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection_zoom.eps}}
+  \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
 \end{figure}
 
 In Figure~\ref{fig:distmeasrejection} the small input was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
@@ -116,11 +116,11 @@ In Figure~\ref{fig:distmeasrejection} the small input was instead added to the m
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:distmeas}Step response]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection_meas.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection_meas.eps}}
   \qquad
   \subfloat[][\label{fig:distmeaszoom}Zoom in on disturbance]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/distrejection_meas_zoom.eps}}
-  \caption{\label{fig:distmeasrejection} Disturbance rejection to impulses (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The step response is shown in (a) while a zoom in on the boxed area in (a) is presented in (b).}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection_meas_zoom.eps}}
+  \caption{\label{fig:distmeasrejection} Disturbance rejection to impulses (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
 \end{figure}
 
 \newpage
@@ -130,10 +130,10 @@ The \abbrIRC design procedure presented in \ref{sec:irc} was carried out in cont
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:pzbefore}Origianl system]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/pzbefore.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/pzbefore.eps}}
   \qquad
   \subfloat[][\label{fig:pzafter}After feedforward]{
-  \includegraphics[width=0.45\textwidth]{fig/matlab/pzafter.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/pzafter.eps}}
   \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
 \end{figure}
 
@@ -174,8 +174,7 @@ The resulting closed loop system and the sensitivity function is shown in Figure
   \caption{\label{fig:irc_totalclosed} Closed loop system of the \abbrIRC and the present approach}
 \end{figure}
 
-The IRC sensitivity function also shows that the \abbrIRC scheme attenuates model disturbances better in the low frequency range and in the region within 24-64 Hz.
-
+The \abbrIRC sensitivity function also shows that the \abbrIRC scheme attenuates model disturbances better in the low frequency range and in the region within 24-64 Hz.
 
 \begin{figure}[h!]
   \centering
@@ -183,6 +182,41 @@ The IRC sensitivity function also shows that the \abbrIRC scheme attenuates mode
   \caption{\label{fig:sensitivity_irc} Sensitivity function of the \abbrIRC and the present approach}
 \end{figure}
 
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:pzbefore}Origianl system]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_periodic.eps}}
+  \qquad
+  \subfloat[][\label{fig:pzafter}After feedforward]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irctrackingerror.eps}}
+  \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:pzbefore}Origianl system]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ircdistrej_pole.eps}}
+  \qquad
+  \subfloat[][\label{fig:pzafter}After feedforward]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ircdistrej_drift.eps}}
+  \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:pzbefore}Origianl system]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_meas.eps}}
+  \qquad
+  \subfloat[][\label{fig:pzafter}After feedforward]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_meas_zoom.eps}}
+  \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/whitenoisetest.eps}
+  \caption{\label{fig:sensitivity_irc} Sensitivity function of the \abbrIRC and the present approach}
+\end{figure}
 
 \newpage
 \section{Experimental Results}
