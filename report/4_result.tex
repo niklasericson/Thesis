@@ -82,9 +82,9 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
   \subfloat[][\label{fig:modeldriftresponse}Periodic response with model parameter drift.]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/driftofmodelparameterover2s.eps}}
   \qquad
-  \subfloat[][\label{fig:modeldriftbode}Original model (G) and the resulting model after drift ($G_mod$).]{
+  \subfloat[][\label{fig:modeldriftbode}Original model (G) and the resulting model after drift ($G_{mod}$).]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_drift_pole.eps}}
-  \caption{\label{fig:modeldrift} Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) while the model change is presented in (b).}
+  \caption{\label{fig:modeldrift} Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) with the model change in (b).}
 \end{figure}
 
 \begin{figure}[h!]
@@ -92,35 +92,32 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
   \subfloat[][\label{fig:modelerrorresponse}Periodic response with model parameter drift.]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/modelerrorperiodic.eps}}
   \qquad
-  \subfloat[][\label{fig:modelerrorbode}Original model (G) and the resulting model after drift ($G_mod$).]{
+  \subfloat[][\label{fig:modelerrorbode}Original model (G) and the resulting model after drift ($G_{mod}$).]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_modelerror_pole.eps}}
-  \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) while the model change is presented in (b).}
+  \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) with the model change in (b).}
 \end{figure}
 
 In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved to 45.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller.
 
-Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 3 times more than the adaptive with pre-filter and 5 times more than the adaptive without pre-filter. The settling time was also approximately 12 times worse for the adaptive controllers. The pre-filter used with the adaptive controller is the one presented in \eqref{eq:lead}. Hence it is not optimal for the adaptive controller since its closed loop system differs from the present controller. However, since the closed loop bode plot for the adaptive controller is hard to attain, the filter in \eqref{eq:lead} provides a quick way to see that a better attenuation can be achieved with a properly designed pre-filter.
+Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 3 times more than the adaptive with pre-filter and 5 times more than the adaptive without pre-filter. The settling time was also approximately 12 times worse for the adaptive controllers. The pre-filter used with the adaptive controller is the one presented in \eqref{eq:lead}. Hence it is not optimal for the adaptive controller since its closed loop system differs from the present controller. However, since the closed loop bode plot for the adaptive controller is hard to attain, the filter in \eqref{eq:lead} provides a quick way to see that a better attenuation can be achieved with a properly designed pre-filter. In Figure~\ref{fig:distmeasrejection} the small input was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:dist}Step response]{
-  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{fig/matlab/distrejection.eps}}
   \qquad
   \subfloat[][\label{fig:distzoom}Zoom in on disturbance]{
-  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection_zoom.eps}}
-  \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance glitch (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{fig/matlab/distrejection_zoom.eps}}
+  \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) with a zoom in on the disturbance in (b).}
 \end{figure}
-
-In Figure~\ref{fig:distmeasrejection} the small input was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
-
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:distmeas}Step response]{
-  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection_meas.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{fig/matlab/distrejection_meas.eps}}
   \qquad
   \subfloat[][\label{fig:distmeaszoom}Zoom in on disturbance]{
-  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrejection_meas_zoom.eps}}
-  \caption{\label{fig:distmeasrejection} Disturbance rejection to impulses (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{fig/matlab/distrejection_meas_zoom.eps}}
+  \caption{\label{fig:distmeasrejection} Disturbance rejection to impulses (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The step response is shown in (a)  with a zoom in on the disturbance in (b).}
 \end{figure}
 
 \newpage
@@ -179,46 +176,72 @@ The \abbrIRC sensitivity function also shows that the \abbrIRC scheme attenuates
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/sensitivity_irc.eps}
-  \caption{\label{fig:sensitivity_irc} Sensitivity function of the \abbrIRC and the present approach}
+  \caption{\label{fig:sensitivity_irc}Sensitivity function ($G_{dy}$) of the \abbrIRC and the present approach}
 \end{figure}
+
+The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}. One can conclude that the \abbrIRC approach is able to eliminate the constant ramp tracking error which the present doesn't handle, see Figure~\ref{fig:irc_periodic}. Hence the tracking error in Figure~\ref{fig:irc_tracking} is a lot lower for the \abbrIRC approach.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
-  \subfloat[][\label{fig:pzbefore}Origianl system]{
+  \subfloat[][\label{fig:irc_periodic}Periodic Response]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_periodic.eps}}
   \qquad
-  \subfloat[][\label{fig:pzafter}After feedforward]{
+  \subfloat[][\label{fig:irc_tracking_error}Tracking error]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irctrackingerror.eps}}
-  \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
+  \caption{\label{fig:irc_tracking} Periodic response of the \abbrIRC and the present controller. A zoom in on one period is shown in (a) while a the tracking error over three periods are shown in (b).}
 \end{figure}
+
+The robustness test perfromed for the adaptive controller was done for the \abbrIRC controller accordingly. Figure~\ref{fig:irc_dist_model} shows the response to minor model changes depicted in Figure~\ref{fig:modelerrorbode}. While Figure~\ref{fig:irc_dist_model_drift} shows the response corresponding to a larger drift in the model according to Figure~\ref{fig:modeldrift}. The \abbrIRC handles the model drift better than the present controller in both cases, even when the model change i major and the system with the present controller becomes unstable.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
-  \subfloat[][\label{fig:pzbefore}Origianl system]{
+  \subfloat[][\label{fig:irc_dist_model}Periodic response]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ircdistrej_pole.eps}}
   \qquad
-  \subfloat[][\label{fig:pzafter}After feedforward]{
+  \subfloat[][\label{fig:irc_dist_model_drift}Periodic response with model parameter drift.]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ircdistrej_drift.eps}}
-  \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
+  \caption{\label{fig:irc_dist} Shows the robustness to model changes over time. The model error is increased linearly from $t=3s$ to $t=5s$. The resulting responses is shown in (a) while the model change is presented in (b).}
 \end{figure}
+
+The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}. A pre-filter in form of a lowpass filter stated in \eqref{eq:F_irc} was designed for the \abbrIRC approach using Matlab's SISO-Tool. The effect of the pre-filter is obvious and shows that the \abbrIRC easily can be combined with a prefilter for a better attenuation of input disturbances.
+
+\begin{equation}
+  \label{eq:F_irc}
+  F_{irc} = \frac{0.0012}{(z - 0.965)^2}
+\end{equation}
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
-  \subfloat[][\label{fig:pzbefore}Origianl system]{
+  \subfloat[][\label{fig:irc_dist_input_step}Step response]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_dist_input.eps}}
+  \qquad
+  \subfloat[][\label{fig:irc_dist_input_zoom}Zoom in on disturbance]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_dist_input_zoom.eps}}
+  \caption{\label{fig:irc_dist_input} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
+\end{figure}
+
+The \abbrIRC capability of rejecting disturbances on the output signal is shown in Figure~\ref{fig:irc_dist_output}. Since the impulse is added directly on the output the steps response peaks accordingly at $t=3s$. It is hard to tell from Figure~\ref{fig:irc_dist_output_zoom}, but the peak is visible for both of the control approaches. After the peak, the methods perform similarly, with a slightly higher damping and amplitude for the \abbrIRC oscillations shown in the zoom in. To further verify the controller capability of handling disturbances with various frequencies, a white noise was added to the $d$ signal shown in Figure~\ref{fig:irc_int}. The \abbrFFT was then taken on the output to verify that the result was similar to the obtained sensitivity function in Figure~\ref{fig:sensitivity_irc}. The \abbrFFT result is shown in Figure~\ref{fig:fft_sens} and indeed shows a similar result.
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:irc_dist_output_step}Step response]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_meas.eps}}
   \qquad
-  \subfloat[][\label{fig:pzafter}After feedforward]{
+  \subfloat[][\label{fig:irc_dist_output_zoom}Zoom in on disturbance]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_meas_zoom.eps}}
-  \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
+  \caption{\label{fig:irc_dist_output} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
 \end{figure}
+
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/whitenoisetest.eps}
-  \caption{\label{fig:sensitivity_irc} Sensitivity function of the \abbrIRC and the present approach}
+  \caption{\label{fig:fft_sens} Sensitivity function ($G_{dy}$) of the \abbrIRC and the present approach}
 \end{figure}
 
-\newpage
-\section{Experimental Results}
-\subsection{Setup}
-The experiments have been conducted on the considered rotational stage described in Section~\ref{sec:rotational_stage}. A National Instruments PXI communicates with the Collimator and the rotational stage, responsible for acquisition and control. To drive the rotational stage it outputs a voltage between [-1, 7.5] V, this is amplified by a linear amplifier with a gain of \unit{20}{\volt/\volt} resulting in a [-20, 150] V signal input on the rotational stage. The yaw angle, measured by the interferometric system is converted and sent to the PXI. The control loop is running at \unit{2}{\kilo\hertz}.
+
+%
+% \newpage
+% \section{Experimental Results}
+% \subsection{Setup}
+% The experiments have been conducted on the considered rotational stage described in Section~\ref{sec:rotational_stage}. A National Instruments PXI communicates with the Collimator and the rotational stage, responsible for acquisition and control. To drive the rotational stage it outputs a voltage between [-1, 7.5] V, this is amplified by a linear amplifier with a gain of \unit{20}{\volt/\volt} resulting in a [-20, 150] V signal input on the rotational stage. The yaw angle, measured by the interferometric system is converted and sent to the PXI. The control loop is running at \unit{2}{\kilo\hertz}.
