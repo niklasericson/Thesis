@@ -75,7 +75,7 @@ Where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the r
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.5\textwidth]{fig/matlab/maxwell.eps}
-  \caption{\label{fig:maxwell} The plot shows the model fit of the Maxwell slip model to the aquiered hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
+  \caption{\label{fig:maxwell} The plot shows the model fit of the Maxwell slip model to the acquired hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
 \end{figure}
 
 \begin{table}[h!]
@@ -100,7 +100,7 @@ Where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the r
 
 \subsection{Linear System Identification}
 \label{sec:linsys}
-The extracted linear dynamics has been identified as an $6^{th}$ order Output-Error system using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. Figure~\ref{fig:model} shows a comparision between the model and the real system in the frequency domain, where the Fast Fourier Transform (\abbrFFT) identification is calculated by dividing the \abbrFFT of the output with the \abbrFFT of the input.
+The extracted linear dynamics has been identified as an $6^{th}$ order Output-Error system using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. Figure~\ref{fig:model} shows a comparison between the model and the real system in the frequency domain, where the Fast Fourier Transform (\abbrFFT) identification is calculated by dividing the \abbrFFT of the output with the \abbrFFT of the input.
 
  The transfer function of the model, discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
 
@@ -112,12 +112,11 @@ The extracted linear dynamics has been identified as an $6^{th}$ order Output-Er
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.5\textwidth]{fig/matlab/model.eps}
-  \caption{\label{fig:model} The plot shows the model fit of the Maxwell slip model to the aquiered hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
+  \caption{\label{fig:model} The plot shows the model fit of the Maxwell slip model to the acquired hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
 \end{figure}
 
-
 \section{Present Control Approach}
-The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and prefilter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotationalstage $G =G_oH^{-1}$, where $G_o$, $H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
+The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and pre-filter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotational stage $G =G_oH^{-1}$, where $G_o$, $H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top

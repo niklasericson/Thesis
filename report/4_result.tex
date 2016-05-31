@@ -11,6 +11,13 @@ Each of the control approaches have been evaluated with respect to robustness to
 \item {\bf Robustness to model errors} - During operation with a periodic input signal, the dynamical model is changed and the output is studied to characterize the robustness to model errors. This test is of importance since this is exactly what happens when the linear stage moves the rotational stage further out.
 \end{itemize}
 
+% \section{Linear dynamics characterization}
+% The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It plot shows that the system changes its first resonance peak as much as 5.3 Hz.
+%
+% Figure~\ref{fig:different_lin_pos} shows a comparison of the identified model when the rotational head is in 10 mrad (3.25V) and the linear axis position is in 1, 20, 40 and 57mm. The identified system are almost the same for the first 3 positions, but it changes drastically when the linear axis touches the outer switches in 57mm.
+%
+% Since the rotational stage controller needs to maintain the required tracking error even when the linear axis is moving, the disturbance during linear operation must be considered. Figure~\ref{fig:dist_diff_speed} shows the open loop response when the linear axis is moving. This figure shows how the operating speed of the stepping motor influences the spectrum of the angle with its different harmonics.
+
 \section{Simulation Results}
 For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. A normalized version of the high order system in \eqref{eq:tf} was used to model the rotational stage linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect. All simulations were performed in Matlab and Simulink.
 
@@ -99,7 +106,7 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
 
 In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved to 45.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller.
 
-Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 3 times more than the adaptive with pre-filter and 5 times more than the adaptive without pre-filter. The settling time was also approximately 12 times worse for the adaptive controllers. The pre-filter used with the adaptive controller is the one presented in \eqref{eq:lead}. Hence it is not optimal for the adaptive controller since its closed loop system differs from the present controller. However, since the closed loop bode plot for the adaptive controller is hard to attain, the filter in \eqref{eq:lead} provides a quick way to see that a better attenuation can be achieved with a properly designed pre-filter. In Figure~\ref{fig:distmeasrejection} the small input was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
+Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 1.5 times more than the adaptive. The settling time was also approximately 3 times worse for the adaptive controllers. In Figure~\ref{fig:distmeasrejection} the impulse was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -203,12 +210,7 @@ The robustness test perfromed for the adaptive controller was done for the \abbr
   \caption{\label{fig:irc_dist} Shows the robustness to model changes over time. The model error is increased linearly from $t=3s$ to $t=5s$. The resulting responses is shown in (a) while the model change is presented in (b).}
 \end{figure}
 
-The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}. A pre-filter in form of a lowpass filter stated in \eqref{eq:F_irc} was designed for the \abbrIRC approach using Matlab's SISO-Tool. The effect of the pre-filter is obvious and shows that the \abbrIRC easily can be combined with a prefilter for a better attenuation of input disturbances.
-
-\begin{equation}
-  \label{eq:F_irc}
-  F_{irc} = \frac{0.0012}{(z - 0.965)^2}
-\end{equation}
+The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
