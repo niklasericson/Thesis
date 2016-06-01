@@ -11,12 +11,12 @@ Each of the control approaches have been evaluated with respect to robustness to
 \item {\bf Robustness to model errors} - During operation with a periodic input signal, the dynamical model is changed and the output is studied to characterize the robustness to model errors. This test is of importance since this is exactly what happens when the linear stage moves the rotational stage further out.
 \end{itemize}
 
-% \section{Linear dynamics characterization}
-% The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It plot shows that the system changes its first resonance peak as much as 5.3 Hz.
-%
-% Figure~\ref{fig:different_lin_pos} shows a comparison of the identified model when the rotational head is in 10 mrad (3.25V) and the linear axis position is in 1, 20, 40 and 57mm. The identified system are almost the same for the first 3 positions, but it changes drastically when the linear axis touches the outer switches in 57mm.
-%
-% Since the rotational stage controller needs to maintain the required tracking error even when the linear axis is moving, the disturbance during linear operation must be considered. Figure~\ref{fig:dist_diff_speed} shows the open loop response when the linear axis is moving. This figure shows how the operating speed of the stepping motor influences the spectrum of the angle with its different harmonics.
+\section{Linear dynamics characterization}
+The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It plot shows that the system changes its first resonance peak as much as 5.3 Hz.
+
+Figure~\ref{fig:different_lin_pos} shows a comparison of the identified model when the rotational head is in 10 mrad (3.25V) and the linear axis position is in 1, 20, 40 and 57mm. The identified system are almost the same for the first 3 positions, but it changes drastically when the linear axis touches the outer switches in 57mm.
+
+Since the rotational stage controller needs to maintain the required tracking error even when the linear axis is moving, the disturbance during linear operation must be considered. Figure~\ref{fig:dist_diff_speed} shows the open loop response when the linear axis is moving. This figure shows how the operating speed of the stepping motor influences the spectrum of the angle with its different harmonics.
 
 \section{Simulation Results}
 For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. A normalized version of the high order system in \eqref{eq:tf} was used to model the rotational stage linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect. All simulations were performed in Matlab and Simulink.
@@ -101,10 +101,16 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
   \qquad
   \subfloat[][\label{fig:modelerrorbode}Original model (G) and the resulting model after drift ($G_{mod}$).]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_modelerror_pole.eps}}
-  \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) with the model change in (b).}
+  \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$. The resulting responses is shown in (a) with the model change in (b).}
 \end{figure}
 
-In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved to 45.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller.
+In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved 6.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller. Even though the adaptive is slower than the present controller it still produces a smaller tracking error after the adaption process is over, see Figure~\ref{fig:modelerror_trackingerror} Note that the change in the model is equivalent to the change between 0V and 6.5V presented in Figure~\ref{fig:different_angles}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/modelerrorperiodic_trackingerror.eps}
+  \caption{\label{fig:modelerror_trackingerror} Tracking error for the periodic response with a model error drift from $t=5s$ to $t=7s$.}
+\end{figure}
 
 Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 1.5 times more than the adaptive. The settling time was also approximately 3 times worse for the adaptive controllers. In Figure~\ref{fig:distmeasrejection} the impulse was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
 
@@ -186,7 +192,7 @@ The \abbrIRC sensitivity function also shows that the \abbrIRC scheme attenuates
   \caption{\label{fig:sensitivity_irc}Sensitivity function ($G_{dy}$) of the \abbrIRC and the present approach}
 \end{figure}
 
-The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}. One can conclude that the \abbrIRC approach is able to eliminate the constant ramp tracking error which the present doesn't handle, see Figure~\ref{fig:irc_periodic}. Hence the tracking error in Figure~\ref{fig:irc_tracking} is a lot lower for the \abbrIRC approach.
+The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}. One can conclude that neither the present nor the \abbrIRC eliminate the constant ramp tracking error. However the \abbrIRC performs better due to its high bandwidth, see Figure~\ref{fig:irc_periodic} for the response and the tracking error in Figure~\ref{fig:irc_tracking}.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -198,19 +204,19 @@ The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}. One
   \caption{\label{fig:irc_tracking} Periodic response of the \abbrIRC and the present controller. A zoom in on one period is shown in (a) while a the tracking error over three periods are shown in (b).}
 \end{figure}
 
-The robustness test perfromed for the adaptive controller was done for the \abbrIRC controller accordingly. Figure~\ref{fig:irc_dist_model} shows the response to minor model changes depicted in Figure~\ref{fig:modelerrorbode}. While Figure~\ref{fig:irc_dist_model_drift} shows the response corresponding to a larger drift in the model according to Figure~\ref{fig:modeldrift}. The \abbrIRC handles the model drift better than the present controller in both cases, even when the model change i major and the system with the present controller becomes unstable.
+The robustness test performed for the adaptive controller was done for the \abbrIRC controller accordingly. Figure~\ref{fig:irc_dist_model} shows the periodic response and its tracking error when the model is changed linearly according to Figure~\ref{fig:modelerrorbode}. The \abbrIRC handles the model drift better than the present controller.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:irc_dist_model}Periodic response]{
-  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ircdistrej_pole.eps}}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_periodic_drift.eps}}
   \qquad
   \subfloat[][\label{fig:irc_dist_model_drift}Periodic response with model parameter drift.]{
-  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ircdistrej_drift.eps}}
-  \caption{\label{fig:irc_dist} Shows the robustness to model changes over time. The model error is increased linearly from $t=3s$ to $t=5s$. The resulting responses is shown in (a) while the model change is presented in (b).}
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_periodic_trackingerror.eps}}
+  \caption{\label{fig:irc_dist} Shows the robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$.  A zoom in on one period is shown in (a) while a the tracking error over three periods are shown in (b).}
 \end{figure}
 
-The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}.
+The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}. As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. This ringing is also showing in the present controller but is less dominant. 
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -219,10 +225,10 @@ The \abbrIRC capability of rejecting disturbances on the input signal is shown i
   \qquad
   \subfloat[][\label{fig:irc_dist_input_zoom}Zoom in on disturbance]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/irc_dist_input_zoom.eps}}
-  \caption{\label{fig:irc_dist_input} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
+  \caption{\label{fig:irc_dist_input} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) with a zoom in on the disturbance in (b).}
 \end{figure}
 
-The \abbrIRC capability of rejecting disturbances on the output signal is shown in Figure~\ref{fig:irc_dist_output}. Since the impulse is added directly on the output the steps response peaks accordingly at $t=3s$. It is hard to tell from Figure~\ref{fig:irc_dist_output_zoom}, but the peak is visible for both of the control approaches. After the peak, the methods perform similarly, with a slightly higher damping and amplitude for the \abbrIRC oscillations shown in the zoom in. To further verify the controller capability of handling disturbances with various frequencies, a white noise was added to the $d$ signal shown in Figure~\ref{fig:irc_int}. The \abbrFFT was then taken on the output to verify that the result was similar to the obtained sensitivity function in Figure~\ref{fig:sensitivity_irc}. The \abbrFFT result is shown in Figure~\ref{fig:fft_sens} and indeed shows a similar result.
+The \abbrIRC capability of rejecting disturbances on the output signal is shown in Figure~\ref{fig:irc_dist_output}. Since the impulse is added directly on the output the steps response peaks accordingly at $t=3s$. It is hard to tell from Figure~\ref{fig:irc_dist_output_zoom}, but the peak is visible for both of the control approaches. After the peak, the methods perform similarly, with a slightly higher damping and amplitude for the \abbrIRC oscillations shown in the zoom in.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -231,15 +237,37 @@ The \abbrIRC capability of rejecting disturbances on the output signal is shown 
   \qquad
   \subfloat[][\label{fig:irc_dist_output_zoom}Zoom in on disturbance]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_meas_zoom.eps}}
-  \caption{\label{fig:irc_dist_output} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The whole step response is shown in (a) while a zoom in on the boxed area is presented in (b).}
+  \caption{\label{fig:irc_dist_output} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the output signal at $t=3s$. The whole step response is shown in (a) with a zoom in on the disturbance in (b).}
 \end{figure}
 
+To further verify the controller capability of handling disturbances with various frequencies, a white noise was added to the input and output signal of the rotational stage ($G$), illustrated in Figure~\ref{fig:irc_int} as $d_i$ and $d_o$, respectively. The \abbrFFT was then performed on the output ($y$) to verify the disturbance rejection for all frequencies, and the result is presented in Figure~\ref{fig:fft_in} and Figure~\ref{fig:fft_out}.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.7\textwidth]{fig/matlab/whitenoisetest.eps}
-  \caption{\label{fig:fft_sens} Sensitivity function ($G_{dy}$) of the \abbrIRC and the present approach}
+  \includegraphics[width=0.7\textwidth]{fig/matlab/whitenoiseoutput.eps}
+  \caption{\label{fig:fft_in} The \abbrFFT of the output signal for the \abbrIRC and the present approach, when applying a white noise to the input of G}
 \end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/whitenoiseinput.eps}
+  \caption{\label{fig:fft_out} The \abbrFFT of the output signal for the \abbrIRC and the present approach, when applying a white noise to the output of G}
+\end{figure}
+
+
+The standard deviations for the output signal with the disturbance added to both the output and input for the \abbrIRC and the present approach are summarized in
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{| l | l | l |}
+    \hline
+    Disturbance applied to: & input & output \\ \hline
+      $\sigma_{Present}$ & $6.8097 \times 10^{-7}$ & $1.4336 \times 10^{-6}$ \\
+      $\sigma_{IRC}$ & $4.5074 \times 10^{-7}$  & $ 1.4588 \times 10^{-6}$ \\
+    \hline
+  \end{tabular}
+  \caption{\label{tab:std} Standard deviations of the output signal}
+\end{table}
 
 
 %
