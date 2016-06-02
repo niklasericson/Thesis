@@ -164,7 +164,7 @@ The open and closed loop system of the \abbrIRC damping loop depicted in Figure~
   \caption{\label{fig:bodedamped} Open and closed loop of the IRC damping loop.}
 \end{figure}
 
-Finally, the damped system was enclosed in an outer loop with a second controller $C_1$ for reference tracking capability. $C_1$ was designed to be robust to model errors i.e. keep the sensitivity function $G_{dy}$, stated in \eqref{eq:Gyd}, low for the frequencies that the model changes with, (d and y in $G_{dy}$ can be found in the block scheme in Figure~\ref{fig:irc_int}). $C_1$ was designed in Matlab's  SISO-Tool and is presented in \eqref{eq:C_1}.
+Finally, the damped system was enclosed in an outer loop with a second controller $C_1$ for reference tracking capability. $C_1$ was designed to be robust to model errors i.e. keep the sensitivity function $G_{dy}$, stated in \eqref{eq:Gyd}, low for the frequencies that the model changes with, (d and y in $G_{dy}$ can be found in the block scheme in Figure~\ref{fig:irc_int}). It was also designed to attenuate higher order resonances using an inclusion of a notch filter.  $C_1$ was designed in Matlab's SISO-Tool and is presented in \eqref{eq:C_1}.
 
 \begin{equation}
   \label{eq:Gyd}
@@ -216,7 +216,9 @@ The robustness test performed for the adaptive controller was done for the \abbr
   \caption{\label{fig:irc_dist} Shows the robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$.  A zoom in on one period is shown in (a) while a the tracking error over three periods are shown in (b).}
 \end{figure}
 
-The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}. As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. This ringing is also showing in the present controller but is less dominant. 
+
+
+The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}. As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. This ringing is also showing in the present controller but is less dominant.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -269,6 +271,24 @@ The standard deviations for the output signal with the disturbance added to both
   \caption{\label{tab:std} Standard deviations of the output signal}
 \end{table}
 
+Since the \abbrIRC closed loop bandwidth is a lot higher than the present controller, it is expected that the \abbrIRC is more sensitive to measurement noise and to model errors in terms of stability. Both approaches uses a static notch filter to cancel higher order harmonics, which makes the cancellation sensitive for model changes in the higher resonances. Both make it interesting to see how robust the controller are to model changes in the higher frequencies. A disturbance rejection test was performed on the systems showed in Figure~\ref{fig:high_model_error}, where the highest resonance peak has been moved 83Hz and 97Hz, respectively. An impulse was applied to the output and the resulting response is presented in Figure~\ref{fig:model_dist_high_order}. The \abbrIRC is clearly more sensitive to model errors and becomes unstable when the highest resonance peak has moved by 97Hz.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/bode_high_model_error.eps}
+  \caption{\label{fig:high_model_error} The \abbrFFT of the output signal for the \abbrIRC and the present approach, when applying a white noise to the output of G}
+\end{figure}
+
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:model_83}Model change of 83hz]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_high_83hz.eps}}
+  \qquad
+  \subfloat[][\label{fig:model_97}Model change of 97hz]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_high_97hz.eps}}
+  \caption{\label{fig:model_dist_high_order} Shows how the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the output signal at $t=0.1s$. The highest resonance peak for the system model G has in (a) been moved by 83Hz and in (b) by 97Hz.}
+\end{figure}
 
 %
 % \newpage
