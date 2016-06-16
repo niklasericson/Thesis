@@ -12,11 +12,31 @@ Each of the control approaches have been evaluated with respect to robustness to
 \end{itemize}
 
 \section{Linear dynamics characterization}
-The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It plot shows that the system changes its first resonance peak as much as 5.3 Hz.
+The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It shows that the system changes its first resonance peak as much as 5.3 Hz.
 
 Figure~\ref{fig:different_lin_pos} shows a comparison of the identified model when the rotational head is in 10 mrad (3.25V) and the linear axis position is in 1, 20, 40 and 57mm. The identified system are almost the same for the first 3 positions, but it changes drastically when the linear axis touches the outer switches in 57mm.
 
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:different_angles}Zoom in]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.8cm 0cm, clip=true]{fig/matlab/modelcomparison_diffvolt2.eps}}
+  \qquad
+  \subfloat[][\label{fig:different_lin_pos}Open loop response]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.8cm 0cm, clip=true]{fig/matlab/modelcomparison2.eps}}
+  \caption{\label{fig:different_lin_angle} The resulting responses is shown in (a) with the model change in (b).}
+\end{figure}
+
 Since the rotational stage controller needs to maintain the required tracking error even when the linear axis is moving, the disturbance during linear operation must be considered. Figure~\ref{fig:dist_diff_speed} shows the open loop response when the linear axis is moving. This figure shows how the operating speed of the stepping motor influences the spectrum of the angle with its different harmonics.
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:dist_diff_speed_overview}Open loop response]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.8cm 0cm, clip=true]{fig/matlab/differentspeeds2.eps}}
+  \qquad
+  \subfloat[][\label{fig:dist_diff_speed_zoomin}Zoom in]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.8cm 0cm, clip=true]{fig/matlab/differentspeeds_Zoomin2.eps}}
+  \caption{\label{fig:dist_diff_speed} The resulting responses is shown in (a) with the model change in (b).}
+\end{figure}
 
 \section{Simulation Results}
 For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. A normalized version of the high order system in \eqref{eq:tf} was used to model the rotational stage linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect. All simulations were performed in Matlab and Simulink.
@@ -289,6 +309,65 @@ Since the \abbrIRC closed loop bandwidth is a lot higher than the present contro
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_high_97hz.eps}}
   \caption{\label{fig:model_dist_high_order} Shows how the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the output signal at $t=0.1s$. The highest resonance peak for the system model G has in (a) been moved by 83Hz and in (b) by 97Hz.}
 \end{figure}
+
+
+\newpage
+\section{Harmonic Cancellation}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:model_83}Impulse used as input signal]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/ff_impulse.eps}}
+  \qquad
+  \subfloat[][\label{fig:model_97} Impulse response from one step]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/yaw_angle_mean_1_step_s.eps}}
+  \caption{\label{fig:model_dist_high_order} Shows the input signal (a) and the mean of 50 acquired impulse responses (b) used in the identification.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:model_83} \abbrFFT at 0V ]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.9cm 0cm, clip=true]{fig/matlab/fft_mean_in_out_0V.eps}}
+  \qquad
+  \subfloat[][\label{fig:model_97} \abbrFFT at 3.25V]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.9cm 0cm, clip=true]{fig/matlab/fft_mean_in_out_3V.eps}}
+  \caption{\label{fig:model_dist_high_order} \abbrFFT of the response divided by the \abbrFFT of the impulse at two different voltages i.e. rotational positions, 0V - 0mrad (a) and 3.25 - 10mrad (b) with four different stepping speeds.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:model_83}\abbrFFT at 6.5V]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/fft_mean_in_out_6_5V.eps}}
+  \qquad
+  \subfloat[][\label{fig:model_97}Identified model]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_fit_1step_s.eps}}
+  \caption{\label{fig:model_dist_high_order} Shows the \abbrFFT of the response divided by the \abbrFFT at 6.5V - 0mrad (a) at different speeds and the corresponding identified model (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:model_83} Mean as disturbance]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/cancellation_1_step_s.eps}}
+  \qquad
+  \subfloat[][\label{fig:model_97} Acquired signal as disturbance ]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/cancellation_1_step_s_real_dist.eps}}
+  \caption{\label{fig:model_dist_high_order} Shows the effect of the feedforward disturbance cancellation with the mean of the acquired response added as disturbance (a) and one period of the acquired response added as disturbance (b).}
+\end{figure}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{| l | l | l | l | l |}
+    \hline
+      Speed & 1 step/s & 2 step/s & 5 step/s & 10 step/s\\ \hline
+      $\sigma_{Present}$ & 2.15 & 2.23 & 3.90 & 3.76\\
+      $\sigma_{Present + dist.FF.}$ & 1.19 & 2.04 & 2.06 & 2.59\\
+    \hline
+  \end{tabular}
+  \caption{\label{tab:std} Standard deviations of the output with and without disturbance feedforward for the different speeds with the mean of the acquired response added as disturbance. The model used in the disturbance feedforward was identified from the 6.5V and 1step/s data.}
+\end{table}
+
+
+
 
 %
 % \newpage
