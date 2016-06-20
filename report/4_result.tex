@@ -314,6 +314,8 @@ Since the \abbrIRC closed loop bandwidth is a lot higher than the present contro
 \newpage
 \section{Harmonic Cancellation}
 
+
+\subsection{Feedforward from modeled disturbance}
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:model_83}Impulse used as input signal]{
@@ -366,7 +368,53 @@ Since the \abbrIRC closed loop bandwidth is a lot higher than the present contro
   \caption{\label{tab:std} Standard deviations of the output with and without disturbance feedforward for the different speeds with the mean of the acquired response added as disturbance. The model used in the disturbance feedforward was identified from the 6.5V and 1step/s data.}
 \end{table}
 
+\subsection{Repetitive feedforward disturbance cancellation}
 
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:1_dist} Time domain]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/1_dist.eps}}
+  \qquad
+  \subfloat[][\label{fig:1_dist_fft} \abbrFFT]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/1_dist_fft.eps}}
+  \caption{\label{fig:model_dist_high_order} Cancellation of the 200Hz component. The time domain response is shown in (a) where the cancellation is added after 2s. The \abbrFFT of (a) from t=2.5s to t=5s is shown in (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:1_dist} Time domain]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/3_dist.eps}}
+  \qquad
+  \subfloat[][\label{fig:1_dist_fft} \abbrFFT]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/3_dist_fft.eps}}
+  \caption{\label{fig:model_dist_high_order} Cancellation of the 60Hz, 90Hz and the 200Hz component. The time domain response is shown in (a) where the cancellation is added after 2s. The \abbrFFT of (a) from t=2.5s to t=5s is shown in (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/3real_dist_fft.eps}
+  \caption{\label{fig:high_model_error} \abbrFFT of the added perturbation with and without cancellation of the 60Hz, 90Hz and the 200Hz component.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:1_dist} Time domain]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_conv.eps}}
+  \qquad
+  \subfloat[][\label{fig:1_dist_fft} \abbrFFT]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_conv_fft.eps}}
+  \caption{\label{fig:model_dist_high_order} Shows the convergence (a) of the 200Hz observed harmonic with $Q_1 = diag(10, 0)$. The \abbrFFT of (a) is shown in (b), showing a clean model of the 200 Hz component.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][\label{fig:1_dist} Time domain]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_conv_w.eps}}
+  \qquad
+  \subfloat[][\label{fig:1_dist_fft} \abbrFFT]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_conv_fft_w.eps}}
+  \caption{\label{fig:model_dist_high_order} Shows the convergence (a) of the 200Hz observed harmonic with $Q_1 = diag(70, 0)$. The \abbrFFT of (a) is shown in (b), including a lot of other frequency components in the 200 Hz harmonic model.}
+\end{figure}
 
 
 %
