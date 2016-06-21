@@ -173,7 +173,7 @@ where  $\alpha_i > 0$ and  $\beta_i > 0$, i.e. a stable and minimum phase system
   \end{split}
 \end{equation}
 
-which illustrates that the number of introduced zeros is equal to the relative degree of the transfer function and that the zeros ($s^z_i$) will have a negative real part if the following conditions are fullfilled.
+which illustrates that the number of introduced zeros is equal to the relative degree of the transfer function and that the zeros ($s^z_i$) will have a negative real part if the following conditions are fulfilled.
 
 \begin{equation}
   \label{eq:irc_cond}
@@ -184,7 +184,131 @@ which illustrates that the number of introduced zeros is equal to the relative d
   \end{cases}
 \end{equation}
 
+\section{Harmonic cancellation}
+Cancellation of specific harmonics can be utilized to increase the tracking capability of the controller. A known or estimated disturbance can be in many cases be efficiently eliminated by a number of methods, \citep{fujimoto2009rro} \citep{fujimoto2004repetitive} \citep{vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP), using an internal model to simulate the system response and to estimate the behavior of an applied disturbance. However including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel the periodic disturbances that are introduced by the movement of the linear stage. The introduced frequencies are even known before operation since they easily can be calculated from the stepping rate of the linear axis motor.
 
+\subsection{Feedforward from modeled disturbance}
+If a disturbance is known and measurable during operation, a feedforward of the disturbance model response can be used to eliminate the disturbance before it gets present in the output signal \citep{industrial}. A simple block diagram of the structure is shown in Figure~\ref{fig:ffdist}, where $G, C, P_d$ and $K_f$ represents the system, the controller, the disturbance model and the feedforward block respectively.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=1\textwidth, trim=8cm 4.5cm 5.97cm 8cm, clip=true]{fig/matlab/ffdist}
+  \caption{\label{fig:ffdist}Block diagram of a control structure with feedforward from a known modeled disturbance.}
+\end{figure}
+
+The output is described by the following expression
+
+\begin{equation}
+  \label{eq:ffdist}
+  Y = \frac{CG}{1+CG}R + \frac{P_d - K_fG}{1+CG}D_0
+\end{equation}
+
+and hence a ideal choice of $K_f$ would be $Kf=P_d/G$ which would eliminate the disturbance completely. It is worth noting that the ideal $K_f$ might not be fully implementable (stable, proper and causal) and that the inverse of G has to be approximated, leading to solely partial cancellation of the disturbance. This approximation can still be sufficient if the inverse is constructed in a way so that $(P_d - K_fG)/(1+CG)$ becomes small for the frequencies where the disturbance has the most impact on the system.
+
+\subsection{Repetitive feedforward disturbance cancellation}
+Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed for maintaining stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include the discrete time disturbance model in the feedback controller and although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. With respect to this drawback, a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the novel control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=1\textwidth, trim=6cm 5.5cm 5.2cm 3cm, clip=true]{fig/matlab/ffrep}
+  \caption{\label{fig:ffrep}Block diagram of the feedforward switching mechanism including observer and feedback controller.}
+\end{figure}
+
+This method uses an observer to estimate the states of a disturbance. When the states has converge the switch is turned on for one period $T_d$ of the disturbance. This period is then replicated and used to subtract the disturbance at the input of $G$. The delay constant $d$ and the switching on and off time have to be set in advance, hence $T_d$ must be known. Note that if the disturbance frequency is not a multiple of the sampling frequency $T_s$ then extra care has to be taken when setting the delay and switching times. Multiple periods should preferably be used to get a full number of oscillation within the switching timespan that is switched with a period of $T_s$.
+
+The continues time system in \citep{fujimoto2004repetitive} is defined with the $d_o$ added on the input. External disturbances are better modeled as disturbances added to the system output, therefore this approach has changed the position of $d_o$. However, the observer should still model $d_o$ as if it would be added to the input, see \eqref{eq:sys1}, to maintain cancellation of the harmonics at the input of the system. This assumes that $G$ is linear and that the disturbance is sufficiently described by a sinusoidal, since a sinusoidal added as input to a linear system only results in a change in phase and magnitude of the input.
+
+Using a continues time state space representation the system and the disturbance can be described as follows
+
+\begin{subequations}
+  \label{eq:sys12}
+  \begin{alignat}{2}
+    \label{eq:sys1}
+    & \mathbf{\dot{x}}(t) = \mathbf{A_cx}(t) + \mathbf{B_c}(u(t) + d_o(t)) \\
+    \label{eq:sys2}
+    & y(t) = \mathbf{C_cx}(t)
+  \end{alignat}
+\end{subequations}
+
+and the disturbance as
+
+\begin{subequations}
+  \label{eq:dist12}
+  \begin{alignat}{2}
+    \label{eq:dist1}
+    & \mathbf{\dot{x}}_d(t) = \mathbf{A_dx_d}(t) \\
+    \label{eq:dist2}
+    & d_o(t) = \mathbf{C_dx_d}(t)
+  \end{alignat}
+\end{subequations}
+
+where $\mathbf{x}$ and $\mathbf{x_d}$ is the system and disturbance state vector and $\mathbf{A_c, B_c, A_d, C_c}$ and $\mathbf{C_d}$ are known system and disturbance matrices. The Laplace transform of $\frac{1}{w}sin(wt)$ is $1/(s^2 + w^2)$, yielding the state space equations in \eqref{eq:sinm} with zero input.
+
+\begin{equation}
+  \label{eq:sinm}
+  \mathbf{A_d} =
+    \begin{bmatrix}
+       0 & 1\\[0.3em]
+       -w^2 & 0
+     \end{bmatrix}
+     \qquad
+  \mathbf{C_d} =
+    \begin{bmatrix}
+        1 & 0\\
+    \end{bmatrix}
+\end{equation}
+
+The discrete state space representations are obtain by using \eqref{eq:discr123} from \citep{industrial}
+
+\begin{equation}
+  \label{eq:discr123}
+  A_z = e^{AT_s}  \qquad B_z = \int_{0}^{Ts} e^{AT_s}B dt \qquad C_z = C
+\end{equation}
+
+yielding the equations in \eqref{eq:discrsys}
+
+\begin{subequations}
+  \label{eq:discrsys}
+  \begin{alignat}{2}
+    & \mathbf{x_{zs}}[n + 1] = \mathbf{A_{zs}x_{zs}}[n] + \mathbf{B_{zs}}(u_z[n] + d_{zo}[n]) \\
+    & y_{zs}[n] = \mathbf{C_{zs}x_{zs}}[n] \\
+    & \mathbf{x_{zd}}[n + 1] = \mathbf{A_{zd}x_{zd}}[n]\\
+    & d_{zo}[n] = \mathbf{C_{zd}x_{zd}}[n]
+  \end{alignat}
+\end{subequations}
+
+where the disturbance and input are assumed to be piecewise constant during each sampling period $T_s$.
+
+Lastly, the disturbance is estimated by an observer which is given as
+
+\begin{equation}
+  \label{eq:obs}
+  \mathbf{\hat{x}}[n + 1] = \mathbf{A\hat{x}}[n] + \mathbf{B}u[n] + \mathbf{K}(y[n] - \mathbf{C\hat{x}}[n])
+\end{equation}
+
+where $\mathbf{A, B}$ and $\mathbf{C}$ are the augmented system matrices and $\mathbf{K}$ is the observer gain.
+
+\begin{equation}
+  \label{eq:sinm}
+  \mathbf{A} =
+    \begin{bmatrix}
+       \mathbf{A_{zs}} & \mathbf{C_{zd}B_{zs}}\\[0.3em]
+       \mathbf{0} & \mathbf{A_{zd}}\\
+     \end{bmatrix}
+     \qquad
+  \mathbf{B} =
+    \begin{bmatrix}
+        \mathbf{B_{zs}}\\
+        \mathbf{0}
+    \end{bmatrix}
+     \qquad
+  \mathbf{C} =
+    \begin{bmatrix}
+        \mathbf{C_{zs}} & \mathbf{0}\\
+    \end{bmatrix}
+\end{equation}
+
+The observer gain should be tuned (placing the eigenvalues of $\mathbf{A-KC}$) with respect to the tradeoff between the quickness in the state reconstruction and the sensitivity to measurement noise. An optimal choice of K can be calculated by the Kalman filter if the noise intensities are known. By deriving the closed loop system, it is shown in \citep{fujimoto2004repetitive} that the disturbance rejection will be achieved at every sampling point in steady state.
 
 %\begin{chapter-appendix}
 %  \label{ap:lyaponov}
