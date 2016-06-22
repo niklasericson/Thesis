@@ -1,0 +1,4 @@
+% !TEX root = main.tex
+\chapter{Experimental Results}\label{cha:exp_result}
+\section{Setup}\label{sec:setup}
+The experiments have been conducted on the considered rotational stage described in Section~\ref{sec:rotational_stage}. A National Instruments PXI communicates with the Collimator and the rotational stage, responsible for acquisition and control. To drive the rotational stage it outputs a voltage between [-1, 7.5] V, this is amplified by a linear amplifier with a gain of \unit{20}{\volt/\volt} resulting in an input signal ranging from -20 to 150V. The yaw angle, measured by the interferometric system is converted and sent to the PXI. The control loop is running at \unit{2}{\kilo\hertz}.
