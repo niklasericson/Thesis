@@ -11,6 +11,7 @@
   noparts, % Use option 'noparts' if you do not make use of part divisions.
 ]{rtthesis}
 
+\usepackage{placeins}
 \usepackage{epstopdf}
 \epstopdfsetup{update} % only regenerate pdf files when eps file is newer
 \usepackage{mythesis}
@@ -43,7 +44,8 @@
 \include{report/2_system_overview}
 \include{report/3_control_approaches}
 \include{report/4_result}
-\include{report/5_conclusion}
+\include{report/5_exp_result}
+\include{report/6_conclusion}
 
 % THESIS PLAN
 % \include{plan/1_plan_introduction}
@@ -52,11 +54,11 @@
 % \include{plan/3_plan_prelresult}
 % \include{plan/4_plan_conclusion}
 
-% \part*{Appendix}
-% \appendix
+\part*{Appendix}
+\appendix
 % %
-% \include{report/appendixA}
-% \clearemptydoublepage
+\include{report/7_appendixA}
+\clearemptydoublepage
 
 \backmatter
 
