@@ -38,6 +38,7 @@ Since the rotational stage controller needs to maintain the required tracking er
   \caption{\label{fig:dist_diff_speed} The resulting responses is shown in (a) with the model change in (b).}
 \end{figure}
 
+\newpage
 \FloatBarrier
 \section{Model Reference Adaptive Control}
 Even though the rotational stage has been modeled by \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables is summarized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for step sizes below 20mrad.
@@ -86,6 +87,7 @@ The adaptation process of the control parameters $k_i$, for a step response resu
   \caption{\label{fig:adapt_process} Adaptation process of control parameters $k_i$ with a 20 mrad step.}
 \end{figure}
 
+\FloatBarrier
 To illustrate the adaptation process better, a periodic response is depicted in Figure~\ref{fig:periodic_resp}, here it is clear that after the adaptation process is finished the controller performs better for the second and third period. One can see that the adaptation process is slower for the periodic response corresponding to the amplitude of \unit{10}{\milli\radian}, hence the lower the step, the longer the adaptation time. The present controller performs well for all amplitudes.
 
 \begin{figure}[h!]
@@ -94,12 +96,13 @@ To illustrate the adaptation process better, a periodic response is depicted in 
   \caption{\label{fig:periodic_resp} Periodic responses for the adaptive and present controller with amplitudes of 10, 15, 20 mrad.}
 \end{figure}
 
-The tracking error corresponding to the \emph{Adaptive 20mrad} and \emph{Present 20mrad} in Figure~\ref{fig:periodic_resp} can be seen in Figure~\ref{fig:adapt_trackingerror}. The adaptive controller performs better than the present controller after the adaptation process has finished.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/trackingerror.eps}
   \caption{\label{fig:adapt_trackingerror} Tracking error (difference between reference and output) for the periodic response from an input signal with an amplitude of 20 mrad.}
 \end{figure}
+
+The tracking error corresponding to the \emph{Adaptive 20mrad} and \emph{Present 20mrad} in Figure~\ref{fig:periodic_resp} can be seen in Figure~\ref{fig:adapt_trackingerror}. The adaptive controller performs better than the present controller after the adaptation process has finished.
 
 A periodic response with model parameter drift is presented in Figure~\ref{fig:modeldrift}. It shows how the adaptive controller manages to adapt to the change in the system dynamics, while the present controller fails to do so, resulting in an unstable system. The change of the model was performed over 2 seconds, resulting in a movement of the first resonance peak, from 38 Hz to 66 Hz in frequency and from 30.1 dB to 23.5 dB in magnitude. Note that the change of the model is relatively big and for a smaller movement of the resonance peak, the present controller could still be sufficient as illustrated in Figure~\ref{fig:modelerror}.
 \begin{figure}[h!]
@@ -122,7 +125,7 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
   \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$. The resulting responses is shown in (a) with the model change in (b).}
 \end{figure}
 
-In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved 6.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller. Even though the adaptive is slower than the present controller it still produces a smaller tracking error after the adaption process is over, see Figure~\ref{fig:modelerror_trackingerror} Note that the change in the model is equivalent to the change between 0V and 6.5V presented in Figure~\ref{fig:different_angles}.
+In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved 6.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller. Even though the adaptive is slower than the present controller it still produces a smaller tracking error after the adaption process is over, see Figure~\ref{fig:modelerror_trackingerror}. Note that the change in the model is equivalent to the change between 0V and 6.5V presented in Figure~\ref{fig:different_angles}.
 
 \begin{figure}[h!]
   \centering
@@ -130,6 +133,7 @@ In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved 6.5 
   \caption{\label{fig:modelerror_trackingerror} Tracking error for the periodic response with a model error drift from $t=5s$ to $t=7s$.}
 \end{figure}
 
+\FloatBarrier
 Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 1.5 times more than the adaptive. The settling time was also approximately 3 times worse for the adaptive controllers. In Figure~\ref{fig:distmeasrejection} the impulse was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
 
 \begin{figure}[h!]
@@ -151,7 +155,7 @@ Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturb
   \caption{\label{fig:distmeasrejection} Disturbance rejection to impulses (amplitude of $5.1 \times 10^{-3}$) added to the measured signal at $t=3s$. The step response is shown in (a)  with a zoom in on the disturbance in (b).}
 \end{figure}
 
-\newpage
+\newpage~\newpage~
 \FloatBarrier
 \section{Integral Resonance Control}
 The \abbrIRC design procedure presented in \ref{sec:irc} was carried out in continues time, but each block in the scheme was individually discretized for the sake of comparison with the present controller. The continues time system of \eqref{eq:tf} consist of a system with 7 poles and 6 zeros. A negative feedforward would therefore introduce another zero and depending on the gain placing the zeros in a desired position. As seen in the pole-zero plot comparison in Figure~\ref{fig:negfeedpzmap}, a feedforward of $D_f=-1.2$ was sufficient to introduce one zero and place it and its complex conjugate below the first resonance frequency. This and the zero-pole interlacing for the higher order modes can be seen in Figure~\ref{fig:pzafter}, where the zoom-in shows the complex conjugate zeros below the first resonance mode.
@@ -165,7 +169,7 @@ The \abbrIRC design procedure presented in \ref{sec:irc} was carried out in cont
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/pzafter.eps}}
   \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
 \end{figure}
-
+\FloatBarrier
 The corresponding bode plot can be seen in Figure~\ref{fig:bodeafterfeedf}, showing the complex conjugate pair of zeros as a dip before the first resonance peak.
 
 \begin{figure}[h!]
@@ -174,6 +178,7 @@ The corresponding bode plot can be seen in Figure~\ref{fig:bodeafterfeedf}, show
   \caption{\label{fig:bodeafterfeedf} Bode plot of the system before and after the addition of the negative feedforward.}
 \end{figure}
 
+\FloatBarrier
 The integral controller $C=\frac{-k}{s}$ was added according to Section~\ref{sec:irc} and a gain of $k=314$ was found to maximize the damping, by using the root locus technique.
 The open and closed loop system of the \abbrIRC damping loop depicted in Figure~\ref{fig:irc} is shown in Figure~\ref{fig:bodedamped}. It is clear that the integral controller damps out the first resonance peak efficiently in closed loop.
 
@@ -211,6 +216,7 @@ The \abbrIRC sensitivity function also shows that the \abbrIRC scheme attenuates
   \caption{\label{fig:sensitivity_irc}Sensitivity function ($G_{dy}$) of the \abbrIRC and the present approach}
 \end{figure}
 
+\FloatBarrier
 The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}. One can conclude that neither the present nor the \abbrIRC eliminate the constant ramp tracking error. However the \abbrIRC performs better due to its high bandwidth, see Figure~\ref{fig:irc_periodic} for the response and the tracking error in Figure~\ref{fig:irc_tracking}.
 
 \begin{figure}[h!]
@@ -235,6 +241,7 @@ The robustness test performed for the adaptive controller was done for the \abbr
   \caption{\label{fig:irc_dist} Shows the robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$.  A zoom in on one period is shown in (a) while a the tracking error over three periods are shown in (b).}
 \end{figure}
 
+\FloatBarrier
 The \abbrIRC capability of rejecting disturbances on the input signal is shown in Figure~\ref{fig:irc_dist_input}. As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. This ringing is also showing in the present controller but is less dominant.
 
 \begin{figure}[h!]
@@ -258,7 +265,7 @@ The \abbrIRC capability of rejecting disturbances on the output signal is shown 
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_meas_zoom.eps}}
   \caption{\label{fig:irc_dist_output} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the output signal at $t=3s$. The whole step response is shown in (a) with a zoom in on the disturbance in (b).}
 \end{figure}
-
+\FloatBarrier
 To further verify the controller capability of handling disturbances with various frequencies, a white noise was added to the input and output signal of the rotational stage ($G$), illustrated in Figure~\ref{fig:irc_int} as $d_i$ and $d_o$, respectively. The \abbrFFT was then performed on the output ($y$) to verify the disturbance rejection for all frequencies, and the result is presented in Figure~\ref{fig:fft_in} and Figure~\ref{fig:fft_out}.
 
 \begin{figure}[h!]
@@ -288,6 +295,7 @@ The standard deviations for the output signal with the disturbance added to both
   \caption{\label{tab:std} Standard deviations of the output signal}
 \end{table}
 
+\FloatBarrier
 Since the \abbrIRC closed loop bandwidth is a lot higher than the present controller, it is expected that the \abbrIRC is more sensitive to measurement noise and to model errors in terms of stability. Both approaches uses a static notch filter to cancel higher order harmonics, which makes the cancellation sensitive for model changes in the higher resonances. Both make it interesting to see how robust the controller are to model changes in the higher frequencies. A disturbance rejection test was performed on the systems showed in Figure~\ref{fig:high_model_error}, where the highest resonance peak has been moved 83Hz and 97Hz, respectively. An impulse was applied to the output and the resulting response is presented in Figure~\ref{fig:model_dist_high_order}. The \abbrIRC is clearly more sensitive to model errors and becomes unstable when the highest resonance peak has moved by 97Hz.
 
 \begin{figure}[h!]
@@ -307,7 +315,7 @@ Since the \abbrIRC closed loop bandwidth is a lot higher than the present contro
   \caption{\label{fig:model_dist_high_order} Shows how the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the output signal at $t=0.1s$. The highest resonance peak for the system model G has in (a) been moved by 83Hz and in (b) by 97Hz.}
 \end{figure}
 
-\newpage
+\newpage~\newpage~
 \FloatBarrier
 \section{Harmonic Cancellation}
 The investigated harmonic cancellation methods aims to eliminate disturbances introduced by the linear axis movement. The setup described in \ref{sec:setup} was used to acquire data that later was used for disturbance identification and as a disturbance source for realistic benchmark tests. The yaw angle was acquired in open loop during a linear axis movement corresponding to 50 steps of the stepping motor. The movement was performed with four different speeds (1, 2, 5 and 10 steps/s) around the operating point on the linear axis, which is 3 mm out from the inner position with respect to the beam.
@@ -354,7 +362,7 @@ As seen in the figures, the disturbance model has clear resonance peaks at aroun
   \includegraphics[width=0.7\textwidth]{fig/matlab/fft_mean_in_out_3V_zoomin.eps}
   \caption{\label{fig:3vzoomin} Zoom in on the first resonance peak on the \abbrFFT performed on the data originating from the 3.25 - 40mrad. The resonance peaks are clearly multiples of the stepping rate.}
 \end{figure}
-
+\FloatBarrier
 Figure~\ref{fig:fft_6_5_modelfit} shows the identified model for the data acquired at 6.5V and 1 step/s. In order to sufficiently model four resonances, a 19 zeros and 20 poles transfer function was needed. The model is sufficient for simulations but have to be reduced for a reasonable implementation in terms of computational efficiency. The identification was performed using Matlab System Identification Toolbox with a selected frequency focus from 30-1000Hz. From the identified disturbance model ($P_d$), the feedforward block $K_f$ was calculated as $K_f=P_d/G$.
 The disturbance model was benchmarked with 2 slightly different disturbances, first with the mean shown in Figure~\ref{fig:stepout} (the signal used in the identification) and then with a signal picked out as one period from the original acquired data. The disturbance rejection results at 6.5V and 1 step/s can be seen in Figure~\ref{fig:benchmark_dist}. The feedforward of the modeled disturbance manages to mitigate the disturbance on the yaw angle by almost half of the amplitude, when the mean is fed as disturbance. However, with the more realistic disturbance, the disturbance on the yaw angle is at first amplified by almost the double but settles quickly after that to a level below the level of the controller without disturbance feedforward.
 
@@ -382,7 +390,7 @@ To illustrate the model efficiency with different step rates, a benchmark test w
   \caption{\label{tab:std_diff_speed} Standard deviations of the output with and without disturbance feedforward for the different speeds with the mean of the acquired response corresponding to each speed added as disturbance. The model used in the disturbance feedforward was identified from the 6.5V and 1step/s data.}
 \end{table}
 
-\newpage
+\newpage~\newpage~
 \FloatBarrier
 \subsection{Repetitive Feedforward Disturbance Cancellation}
 The Repetitive Feedforward Disturbance Cancellation (\abbrRFDC) method was implemented to reject three known disturbances. Hence, three second order disturbance models as given in \eqref{eq:sinm} were augmented as shown in \eqref{eq:augmentedres}. The chosen frequencies for cancellation were $w_1 = 2\pi60$, $w_2 = 2\pi90$ and $w_3 = 2\pi200$ rad/s.
@@ -412,20 +420,20 @@ The Repetitive Feedforward Disturbance Cancellation (\abbrRFDC) method was imple
   \end{alignat}
 \end{subequations}
 
-These equations where augmented according to \eqref{eq:augumented} with the discrete system matrices which can be seen in its full form in Appendix A. The observer was implemented in state space form, with the following equations.
+These equations where augmented according to \eqref{eq:augumented} with the discrete time system matrices which can be seen in its full form in Appendix A. The observer was implemented in state space form, with the following equations.
 
 \begin{subequations}
-\label{eq:augmentedres}
+\label{eq:augmented}
   \begin{alignat}{2}
     & \mathbf{A_{obs}} = \mathbf{A - KC} \\
-    & \mathbf{B_{obs}} = \mathbf{[B K]}^T \\
-    & \mathbf{C_{obs}} = diag(\mathbf{C_{zs} C_{zd} C_{zd} C_{zd}}) \\
+    & \mathbf{B_{obs}} = \mathbf{[B, K]}^T \\
+    & \mathbf{C_{obs}} = diag(\mathbf{C_{zs}, C_{zd}, C_{zd}, C_{zd}}) \\
     & \mathbf{D_{obs}} = zeros(4,2)
   \end{alignat}
 \end{subequations}
 
 
-A sufficient gain $K$ was calculated by using Kalman (\texttt{dlqe} in Matlab), with a high measurement to process noise ratio, trusting in the predefined model. The values provided to the \texttt{dlqe} function are listed in \ref{tab:kalman}.
+A sufficient gain $K$ was calculated by using Kalman (\texttt{dlqe} in Matlab), with a high measurement (R) to process noise (Q) ratio, trusting in the predefined model. The values provided to the \texttt{dlqe} function are listed in \ref{tab:kalman}.
 
 \begin{table}[h!]
   \centering
@@ -440,9 +448,9 @@ A sufficient gain $K$ was calculated by using Kalman (\texttt{dlqe} in Matlab), 
   \caption{\label{tab:kalman} Parameters used for calculating the observer gain.}
 \end{table}
 
-The \abbrRFDC method was benchmarked against the present controller in all tests. As a proof of concept, three sinusoidal disturbances with frequencies $w_1$, $w_2$ and $w_3$ were added to the output of the system. Even though all of them were observed only $w_3$ was feedforwarded to cancel out the 200Hz component to begin with. The result is shown in Figure~\ref{fig:1_dist_both}, where it is clear that the 200Hz disturbance is perfectly canceled by the feedforward algorithm. Since 200Hz is a multiple of the sampling frequency $F_s = 2000Hz$, one period is sufficient to capture a full number of periods within the switching times. The switch was set to turn on (load data) at $t=2s$ and to turn off at $t=2+1/200s$, which was the time when all the observed estimates had converged.
+The \abbrRFDC method was benchmarked against the present controller in all tests. As a proof of concept, three sinusoidal disturbances with frequencies $w_1$, $w_2$ and $w_3$ were added to the output of the system. Even though all of them were observed only $w_3$ was feedforwarded to cancel out the 200Hz component to begin with. The result is shown in Figure~\ref{fig:1_dist_both}, where it is clear that the 200Hz disturbance is perfectly canceled by the feedforward algorithm. Since 200Hz is a multiple of the sampling frequency $F_s = 2000Hz$, one period is sufficient to capture a full number of periods within the switching times. The switch was set to turn on (load on period) at $t_{on}=2s$ and to turn off at $t_{off}=2+1/200s$, which was the time when all the observed estimates had converged.
 
-To prove the concept for multiple harmonic cancellation, all three of the estimated disturbances were added and subtracted from the input. The result is presented in Figure~\ref{fig:3_dist_both}, which also illustrates a perfect cancellation.
+To prove the concept for multiple harmonic cancellation, all three of the estimated disturbances were added and subtracted from the input. To capture an even number of cycles, the switching times for the 60Hz an 90Hz were set to [$t_{on}=2s, t_{off}=2+6/60 s$] and [$t_{on}=2s, t_{off}=2+9/90 s$], respectively.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -464,7 +472,7 @@ To prove the concept for multiple harmonic cancellation, all three of the estima
   \caption{\label{fig:3_dist_both} The time response is shown in (a) with cancellation of 60, 90 and 200Hz after 2s. The \abbrFFT of (a) from t=2.5s to t=5s is shown in (b).}
 \end{figure}
 
-Note that the \abbrFFT analysis is performed on data from t=2.5 to t=5s i.e. at the time when the feedforward cancellation has been added and the response has settled.
+The result is presented in Figure~\ref{fig:3_dist_both}, which also illustrates a perfect cancellation. Note that the \abbrFFT analysis is performed on data from t=2.5 to t=5s i.e. at the time when the feedforward cancellation has been added and the response has settled.
 
 For a more realistic benchmark test, disturbance data collected at 10 steps/s was added to the output of the system. $w_1$, $w_2$ and $w_3$ are all major components of the acquired disturbance so the model in the observer were kept the same as before. The result presented in linear scale is shown in Figure~\ref{fig:fft_linear} where it is clear that modeled frequencies have been damped out efficiently. The gain of the 60Hz component for instance, is with the \abbrRFDC reduced to more than 1/8 of its original amplitude.
 
@@ -474,8 +482,7 @@ For a more realistic benchmark test, disturbance data collected at 10 steps/s wa
   \caption{\label{fig:fft_linear} \abbrFFT of the added perturbation with and without cancellation of the 60Hz, 90Hz and the 200Hz component.}
 \end{figure}
 
-A converging time of 2 seconds might be considered as fairly high. Increasing the gain in G in Table~\ref{tab:kalman} would lead to a quicker converge but would also imply in more noise added to the observed model, especially for high frequency models with frequencies close to the Nyquist frequency. This phenomenon is illustrated in Figure~\ref{fig:ph_lowgain} and \ref{fig:ph_highgain}, where the value of G for the 200Hz model was increased 7 times. Figure~\ref{fig:ph_lowgain} shows a clean representation in the frequency domain with a settling time longer than 5 seconds, Figure~\ref{fig:ph_highgain} shows a settling time around 2 seconds but with a less clean representation in the frequency domain. An even higher gain would lead to a more noise added to the model and a reduction in the cancellation performance.
-
+A converging time of 2 seconds might be considered as fairly high. Increasing the gain in G in Table~\ref{tab:kalman} would lead to a quicker convergence but would also imply in more noise added to the observed model, especially for high frequency models with frequencies close to the Nyquist frequency. This phenomenon is illustrated in Figure~\ref{fig:ph_lowgain} and \ref{fig:ph_highgain}, where the value of G for the 200Hz model was increased 7 times. Figure~\ref{fig:ph_lowgain} shows a clean representation in the frequency domain with a settling time longer than 5 seconds, Figure~\ref{fig:ph_highgain} shows a settling time around 2 seconds but with a less clean representation in the frequency domain.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -496,3 +503,24 @@ A converging time of 2 seconds might be considered as fairly high. Increasing th
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/model_conv_fft_w.eps}}
   \caption{\label{fig:ph_highgain} Shows the convergence (a) of the 200Hz observed harmonic with $G = [1, 0, 0, 0, 0, 0, 10, 0, 8, 0, 70, 0]^T$. The \abbrFFT of (a) is shown in (b), including a lot of other frequency components in the 200 Hz harmonic model.}
 \end{figure}
+
+\FloatBarrier
+An even higher gain would lead to a more noise added to the model and a reduction in cancellation performance which is illustrated in Figure~\ref{fig:convergence}, where it is clear that a shorter converge time implies in a reduction in cancellation performance. The figures show the cancellation of the 200Hz component with a converge time of 2s in (a) achieved with a gain of 70 as before and a converge time of 1s in (b) achieved with a gain of 140.
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][Converged within 2s]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/converge70.eps}}
+  \qquad
+  \subfloat[][Converged within 1s]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/converge140.eps}}
+  \caption{\label{fig:convergence} Shows the cancellation performance for 200Hz with a model state convergence of 2s in (a) and 1s in (b).}
+\end{figure}
+
+To overcome this issue, a bandpass filter for the selected frequency could be added to reduce the noise level of the model and thereby enabling for quicker convergence. However, this filter needs have zero-phase, at least for the selected frequencies, making the range of applicable filters much more narrow. One example of bandpass filter could be
+
+\begin{equation}
+  BP = k\frac{s^2 + 2\xi_aws + w^2}{s^2 + 2\xi_bws + w^2}
+\end{equation}
+
+where $k=1/100$, $\xi_a=1$ and $\xi_b=0.01$, which has zero phase shift for signals entering at 200Hz, but shifts all other frequencies. Tests where performed with this filter but without any increase in disturbance cancellation performance, this might be due to numerical problems that origin from an insufficient sampling rate.
