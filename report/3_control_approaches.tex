@@ -3,7 +3,7 @@
 This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis.
 
 \section{Model Reference Adaptive Control}
-An adaptive controller has the ability to adjust the system repsonse by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (MRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The MRAC scheme can be extended to include perturbation estimation (MRACPE), giving the controller the ability to compensate for various unmodelled effects, including both linear and nonlinear perturbations. Nonlinear effect such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and output signal. The MRACPE also allows the maximum tracking error to be predefined.
+An adaptive controller has the ability to adjust the system response by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (\abbrMRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The \abbrMRAC scheme can be extended to include perturbation estimation (\abbrMRACPE), giving the controller the ability to compensate for various non-modeled effects, including both linear and nonlinear perturbations. Nonlinear effects such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and output signal. The \abbrMRACPE also allows the maximum tracking error to be predefined.
 
 \subsection{Perturbation Estimation}\label{sec:pertest}
 Using a second order model, the adaptive laws can be derived as follows. Consider the system model stated below.
@@ -19,7 +19,7 @@ where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at 
   \hat{f}(t) = \ddot{x}_{cal}(t) + \alpha_1\dot{x}_{cal}(t) +  \alpha_0x(t) - \beta_0u(t-T_s)
 \end{equation}
 
-where $x_{cal}^{(n)}$ denotes the calculated state, $T_s$ is the sampling time interval and $u(t-T_s)$ is the control input in the previus timestep. $u(t-T_s)$ is often approximated to $u(t)$ in practice which is valid approximation if $T_s$ is sufficiently small. Denote that $x(t)$ here is the sensor input, i.e. the measured yaw angle.
+where $x_{cal}^{(n)}$ denotes the calculated state, $T_s$ is the sampling time interval and $u(t-T_s)$ is the control input in the previous time step. $u(t-T_s)$ is often approximated to $u(t)$ in practice which is valid approximation if $T_s$ is sufficiently small. Denote that $x(t)$ here is the sensor input, i.e. the measured yaw angle.
 
 Each state is, for its computational efficiency, computed by a simple backward different equation depicted below.
 
@@ -81,14 +81,14 @@ where
 \end{equation}
 with $\delta = (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) + \hat{f}(t)$.
 
-If all the eigenvalues of A have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Morover, according to Lyaponov  theory \cite{Ljung:2003}, for each positive-semidefinite matrix Q, there exist one positive-semidefinite matrix P which solves \eqref{eq:lyap}.
+If all the eigenvalues of A have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Moreover, according to Lyaponov theory \cite{Ljung:2003}, for each positive-semidefinite matrix Q, there exist one positive-semidefinite matrix P which solves \eqref{eq:lyap}.
 
 \begin{equation}
   \label{eq:lyap}
   \mathbf{A^TP + PA = -Q}
 \end{equation}
 
-With the auxillary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws is given by
+With the auxiliary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws are given by
 
 \begin{equation}
   \label{eq:adaplaws}
@@ -97,38 +97,40 @@ With the auxillary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws is given b
 where the control law parameters is calculated as
 \begin{equation}
   \label{eq:adaplaws1}
-  \dot{k_0} = -\eta_0\hat{e}u_d
+  \dot{k}_0 = -\eta_0\hat{e}u_d
 \end{equation}
 \begin{equation}
   \label{eq:adaplaws2}
-  \dot{k_1} = -\eta_1\hat{e}x
+  \dot{k}_1 = -\eta_1\hat{e}x
 \end{equation}
 \begin{equation}
   \label{eq:adaplaws3}
-  \dot{k_2} = -\eta_2\hat{e}\dot{x}
+  \dot{k}_2 = -\eta_2\hat{e}\dot{x}
 \end{equation}
 \begin{equation}
   \label{eq:adaplaws4}
-  \dot{k_3} = -\eta_3\hat{e}\hat{f}
+  \dot{k}_3 = -\eta_3\hat{e}\hat{f}
 \end{equation}
 
-the proof is provided in \citep{Qingson:2016}. Substituting $\hat{f}$ in \eqref{eq:perturbation} with the one in \eqref{eq:adaplaws} and rearranging the parameters results in the final MRACPE control law, stated below.
+the proof is provided in \citep{Qingson:2016}. Substituting $\hat{f}$ in \eqref{eq:perturbation} with the one in \eqref{eq:adaplaws} and rearranging the parameters results in the final \abbrMRACPE control law, stated below.
 
 \begin{equation}
     \label{eq:adaplawsfinal}
   u(t) = k_0u_d(t) + (k_1 + k_3\alpha_0)x(t) +  (k_2 + k_3\alpha_1)\dot{x}(t) + k_3\ddot{x}(t) - k_3\beta_0u(t-T_s)
 \end{equation}
 
-A block diagram of the final controller, with inspiration from Figure 9.1 in ~\citep{Qingson:2016}, is depicted in Figure~\ref{fig:adaptive}. The adaptive controller consists of 4 blocks. One reference model that calcultats the desired states $Xm=[\dot{x}_m, x_m]^T$ from the input signal according to \eqref{eq:refmodel}, one adaptive mechanism that implements \eqref{eq:adaplaws1}-\eqref{eq:adaplaws4} and calculates $K=[k_1, k_2, k_3, k_4]^T$, one state calculator that uses \eqref{eq:backward} to calculate $X=[\ddot{x}, \dot{x}, x]^T$ and finaly one controller block that uses \eqref{eq:adaplawsfinal} to calcuate the control signal $u$ that is sent to the rotaional stage.
+A block diagram of the final controller, with inspiration from Figure 9.1 in ~\citep{Qingson:2016}, is depicted in Figure~\ref{fig:adaptive}. The adaptive controller consists of 4 blocks. One reference model that calculates the desired states $Xm=[\dot{x}_m, x_m]^T$ from the input signal according to \eqref{eq:refmodel}, one adaptive mechanism that implements \eqref{eq:adaplaws1}-\eqref{eq:adaplaws4} and calculates $K=[k_1, k_2, k_3, k_4]^T$, one state calculator that uses \eqref{eq:backward} to calculate $X=[\ddot{x}, \dot{x}, x]^T$ and finaly one controller block that uses \eqref{eq:adaplawsfinal} to calcuate the control signal $u$ that is sent to the rotational stage.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
-  \includegraphics[width=0.7\textwidth, trim=4cm 0cm 3.8cm 0cm, clip=true]{fig/matlab/adaptive_scheme}
+  \includegraphics[width=1\textwidth, trim=4cm 0cm 3.8cm 0cm, clip=true]{fig/matlab/adaptive_scheme}
   \caption{\label{fig:adaptive}Block diagram of the adaptive controller}
 \end{figure}
 
+\newpage~\newpage~
+\FloatBarrier
 \section{Integral Resonance Control}\label{sec:irc}
-The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $D_f<0$ and an integral controller $C=\frac{k}{s}$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can be easily increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase margin between  $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinite gain margin.
+The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0 dB. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase between $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinite gain margin.
 
 The negative gain $D_f$ is straight forward to manually select for introducing a complex pair of zeros below the first resonance. The integral gain $k$ can be chosen by using the root locus technique and select a gain that maximizes damping.
 

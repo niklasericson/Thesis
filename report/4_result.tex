@@ -3,7 +3,7 @@
 This section describes the simulation results considering performance, robustness and stability with respect to the different control approaches. All approaches will first be benchmarked with the present control approach and presented individually in the following subsections. A comparison between the most interesting results will be presented in the end of this chapter.
 
 \section{Benchmark Tests}
-For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. A normalized version of the high order system in \eqref{eq:tf} was used to model the rotational stage linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect. All simulations were performed in Matlab and Simulink. Each of the control approaches have been evaluated with respect to robustness to model errors, disturbance rejection, closed loop bandwidth and response to step, ramp and sinusoidal input, all summarized below. The prospective challenges, described in \ref{sec:prospectiveChallanges} shall be kept in mind while reading the results. Since the required ramp rates are relatively low, the disturbance rejection and the robustness to model errors are more of interest when evaluating each method.
+For the comparison with the present control approach, all evaluated controllers were discretized with a sampling frequency of 2kHz. A normalized version of the high order system in \eqref{eq:tf} was used to model the rotational stage linear dynamics. The nonlinear dynamics, creep and hysteresis, were neglected in the simulations, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect. All simulations were performed in Matlab and Simulink. Each of the control approaches has been evaluated with respect to robustness to model errors, disturbance rejection, closed loop bandwidth and response to step, ramp and sinusoidal input, all summarized below. The prospective challenges, described in \ref{sec:prospectiveChallanges} shall be kept in mind while reading the results. Since the required ramp rates are relatively low, the disturbance rejection and the robustness to model errors are more of interest when evaluating each method.
 
 \begin{itemize}
 \item {\bf Step, ramp and periodical tracking} - A step, ramp and periodic input is applied on the input to benchmark the tracking capability of the controller.
@@ -12,18 +12,18 @@ For the comparison with the present control approach, all evaluated controllers 
 \end{itemize}
 
 \section{Linear Dynamics Characterization}
-The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It shows that the system changes its first resonance peak as much as 5.3 Hz.
+The linear dynamics of the rotational stage changes due to the a number of physical properties of the system, such as the current yaw-position, the linear axis position and speed and if the system is in contact with the end-switches. This phenomenas were characterized in a number of tests and summarized below. Figure~\ref{fig:different_angles} shows a comparison of the identified model when the linear axis is in its outer position and the rotational head has rotated 0 mrad (0V), 10 mrad (3.25V) and 20 mrad (6.5V). It shows that the system changes its first resonance peak as much as 15.3 Hz.
 
 Figure~\ref{fig:different_lin_pos} shows a comparison of the identified model when the rotational head is in 10 mrad (3.25V) and the linear axis position is in 1, 20, 40 and 57mm. The identified system are almost the same for the first 3 positions, but it changes drastically when the linear axis touches the outer switches in 57mm.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
-  \subfloat[][\label{fig:different_angles}Zoom in]{
+  \subfloat[][\label{fig:different_angles}Different rotational head positions]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.8cm 0cm, clip=true]{fig/matlab/modelcomparison_diffvolt2.eps}}
   \qquad
-  \subfloat[][\label{fig:different_lin_pos}Open loop response]{
+  \subfloat[][\label{fig:different_lin_pos}Different linear axis positions]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.8cm 0cm, clip=true]{fig/matlab/modelcomparison2.eps}}
-  \caption{\label{fig:different_lin_angle} The resulting responses is shown in (a) with the model change in (b).}
+  \caption{\label{fig:different_lin_angle} Identified models with different rotational positions (a) and linear axis positions (b).}
 \end{figure}
 
 Since the rotational stage controller needs to maintain the required tracking error even when the linear axis is moving, the disturbance during linear operation must be considered. Figure~\ref{fig:dist_diff_speed} shows the open loop response when the linear axis is moving. This figure shows how the operating speed of the stepping motor influences the spectrum of the angle with its different harmonics.
@@ -41,7 +41,7 @@ Since the rotational stage controller needs to maintain the required tracking er
 \newpage
 \FloatBarrier
 \section{Model Reference Adaptive Control}
-Even though the rotational stage has been modeled by \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables is summarized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for step sizes below 20mrad.
+Even though the rotational stage has been modeled by \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables are summarized in Table~\ref{tab:adaptive_param}. The controller is tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for step sizes below 20mrad.
 
 \begin{equation}
   \label{eq:sys_gm}
@@ -71,7 +71,7 @@ Even though the rotational stage has been modeled by \eqref{eq:tf}, a second ord
   \caption{\label{tab:adaptive_param} Parameters of the system model and the tuned adaptive controller.}
 \end{table}
 
-Figure~\ref{fig:step_adaptive} shows the step response to different step sizes. Here it is clear that the system becomes unstable if the step size $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum step size, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller step sizes. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response could be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
+Figure~\ref{fig:step_adaptive} shows the step response to different step sizes. Here it is clear that the system becomes unstable if the step size $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum step size, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller step sizes. The simulation was performed without any saturation on the input signal, indicating that amplitude dependent behavior might be due to numerical errors. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response could be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
 
 \begin{figure}[h!]
   \centering
@@ -88,7 +88,7 @@ The adaptation process of the control parameters $k_i$, for a step response resu
 \end{figure}
 
 \FloatBarrier
-To illustrate the adaptation process better, a periodic response is depicted in Figure~\ref{fig:periodic_resp}, here it is clear that after the adaptation process is finished the controller performs better for the second and third period. One can see that the adaptation process is slower for the periodic response corresponding to the amplitude of \unit{10}{\milli\radian}, hence the lower the step, the longer the adaptation time. The present controller performs well for all amplitudes.
+To illustrate the adaptation process better, a periodic response is depicted in Figure~\ref{fig:periodic_resp} where it is clear that after the adaptation process is finished the controller performs better for the second and third period. One can see that the adaptation process is slower for the periodic response corresponding to the amplitude of \unit{10}{\milli\radian}, hence the lower the step, the longer the adaptation time. The present controller performs well for all amplitudes.
 
 \begin{figure}[h!]
   \centering
@@ -112,7 +112,7 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
   \qquad
   \subfloat[][\label{fig:modeldriftbode}Original model (G) and the resulting model after drift ($G_{mod}$).]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_drift_pole.eps}}
-  \caption{\label{fig:modeldrift} Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses is shown in (a) with the model change in (b).}
+  \caption{\label{fig:modeldrift} Shows the robustness to model changes over time. The model error is increased linearly from $t=7s$ to $t=9s$. The resulting responses are shown in (a) with the model change in (b).}
 \end{figure}
 
 \begin{figure}[h!]
@@ -122,7 +122,7 @@ A periodic response with model parameter drift is presented in Figure~\ref{fig:m
   \qquad
   \subfloat[][\label{fig:modelerrorbode}Original model (G) and the resulting model after drift ($G_{mod}$).]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{fig/matlab/bode_modelerror_pole.eps}}
-  \caption{\label{fig:modelerror}Shows the robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$. The resulting responses is shown in (a) with the model change in (b).}
+  \caption{\label{fig:modelerror}Robustness to model changes over time. The model error is increased linearly from $t=5s$ to $t=7s$. The resulting responses are shown in (a) with the model change in (b).}
 \end{figure}
 
 In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved 6.5 Hz and the present controller is sufficient to suppresses the disturbance. It even does it more efficiently than the adaptive controller. Even though the adaptive is slower than the present controller it still produces a smaller tracking error after the adaption process is over, see Figure~\ref{fig:modelerror_trackingerror}. Note that the change in the model is equivalent to the change between 0V and 6.5V presented in Figure~\ref{fig:different_angles}.
@@ -134,7 +134,7 @@ In the case in Figure~\ref{fig:modelerror} the resonance peak is only moved 6.5 
 \end{figure}
 
 \FloatBarrier
-Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, receptively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without pre-filter. The present controller managed to attenuated the highest peak of the impulse by 1.5 times more than the adaptive. The settling time was also approximately 3 times worse for the adaptive controllers. In Figure~\ref{fig:distmeasrejection} the impulse was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
+Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturbance rejection capability to a disturbance on the input and output, respectively. In Figure~\ref{fig:distrejection} a small impulse was added to the input to see if the controllers would attenuate it sufficiently. The adaptive controller performed worse than the present controller both with and without prefilter. The present controller managed to attenuate the highest peak of the impulse by 1.5 times more than the adaptive. The settling time was also approximately 3 times worse for the adaptive controllers. In Figure~\ref{fig:distmeasrejection} the impulse was instead added to the measured signal. Even in this case the present controller was superior, attenuating the highest peak of the impulse by 3 times more than the adaptive controller.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -143,7 +143,7 @@ Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturb
   \qquad
   \subfloat[][\label{fig:distzoom}Zoom in on disturbance]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{fig/matlab/distrejection_zoom.eps}}
-  \caption{\label{fig:distrejection} Shows how well the controller attenuates a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) with a zoom in on the disturbance in (b).}
+  \caption{\label{fig:distrejection} Controller attenuation of a disturbance impulse (amplitude of $5.1 \times 10^{-3}$) added to the input signal at $t=3s$. The whole step response is shown in (a) with a zoom in on the disturbance in (b).}
 \end{figure}
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -158,7 +158,7 @@ Figure~\ref{fig:distrejection} and \ref{fig:distmeasrejection} shows the disturb
 \newpage~\newpage~
 \FloatBarrier
 \section{Integral Resonance Control}
-The \abbrIRC design procedure presented in \ref{sec:irc} was carried out in continues time, but each block in the scheme was individually discretized for the sake of comparison with the present controller. The continues time system of \eqref{eq:tf} consist of a system with 7 poles and 6 zeros. A negative feedforward would therefore introduce another zero and depending on the gain placing the zeros in a desired position. As seen in the pole-zero plot comparison in Figure~\ref{fig:negfeedpzmap}, a feedforward of $D_f=-1.2$ was sufficient to introduce one zero and place it and its complex conjugate below the first resonance frequency. This and the zero-pole interlacing for the higher order modes can be seen in Figure~\ref{fig:pzafter}, where the zoom-in shows the complex conjugate zeros below the first resonance mode.
+The \abbrIRC design procedure presented in \ref{sec:irc} was carried out in continuous time, but each block in the scheme was individually discretized for the sake of comparison with the present controller. The continuous time representation of the system in \eqref{eq:tf} contains 7 poles and 6 zeros i.e. a relative degree of 1. A negative feedforward would therefore introduce another zero that can be placed in a desired position by adjusting the gain $D_f$. As seen in the pole-zero plot comparison in Figure~\ref{fig:negfeedpzmap}, a feedforward of $D_f=-1.2$ was sufficient to introduce one zero and place it and its complex conjugate below the first resonance frequency. This and the zero-pole interlacing for the higher order modes can be seen in Figure~\ref{fig:pzafter}, where the zoom-in shows the complex conjugate zeros below the first resonance mode.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -170,7 +170,7 @@ The \abbrIRC design procedure presented in \ref{sec:irc} was carried out in cont
   \caption{\label{fig:negfeedpzmap} Comparison of pole-zero plot before and after adding the negative feedforward. After adding the feedforward to the system which poles and zeros are shown in (a) , the zeros and poles are interlacing as seen in (b).}
 \end{figure}
 \FloatBarrier
-The corresponding bode plot can be seen in Figure~\ref{fig:bodeafterfeedf}, showing the complex conjugate pair of zeros as a dip before the first resonance peak.
+The corresponding Bode plot can be seen in Figure~\ref{fig:bodeafterfeedf}, showing the complex conjugate pair of zeros as a dip before the first resonance peak.
 
 \begin{figure}[h!]
   \centering
@@ -524,3 +524,36 @@ To overcome this issue, a bandpass filter for the selected frequency could be ad
 \end{equation}
 
 where $k=1/100$, $\xi_a=1$ and $\xi_b=0.01$, which has zero phase shift for signals entering at 200Hz, but shifts all other frequencies. Tests where performed with this filter but without any increase in disturbance cancellation performance, this might be due to numerical problems that origin from an insufficient sampling rate.
+
+
+\newpage~\newpage~
+\FloatBarrier
+\section{Comparison}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{| p{4cm} | p{2cm} | p{2cm} | p{2cm} |}
+    \hline
+        & Present & \abbrIRC & \abbrMRACPE \\ \hline
+    Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
+    $\sigma$ - tracking error [mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
+    $\sigma$ - tracking error with model change [mrads] & $0.60$ & $0.22$ & $0.11$\\ \hline
+    Robustness model errors & $-$ & $-$ & $-$\\ \hline
+    Stability issues & $-$ & tuning for faster adaption easily leads to instability & $-$\\ \hline
+  \end{tabular}
+  \caption{\label{tab:comp} Key parameters for the stand-alone control approaches.}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{| l | l | l | l |}
+    \hline
+        & \abbrFDC & \abbrRFDC & \abbrIMP \\ \hline
+    Affecting closed loop system & No & No & Yes\\
+    Cancellation effectiveness & $1$ & $R$ & $1$\\
+    Robustness to model errors & $1$ & $R$ & $1$\\
+    Implementation simplicity & $1$ & $R$ & $1$\\
+    \hline
+  \end{tabular}
+  \caption{\label{tab:comp} Key parameters for the harmonic cancellation control approaches.}
+\end{table}

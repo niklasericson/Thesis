@@ -27,13 +27,13 @@ The rotational stage as shown in Figure~\ref{fig:rotationalstage}  is composed b
 \end{figure}
 
 
-This amplyfing structure gives the rotational stage a range of \unit{20}{\milli\rad}. For the measurement system, 3 interferometric heads are placed as in Figure ?, pointing towards a mirror mounted ontop of to the rotaional head, perpendicular to the plane of rotation. The setup allows for measurements of both the yaw and roll angle (the coordnate system is defined with respect to the beam). The yaw angle is used as feedback to the rotational stage control loop. The spring, depicted in Figure?, prestresses the \abbrPEA in order to enhace the overall stiffness of the stage as well as keeping the stackplates in place (the stack is nonglued to be sufficient in a radioactive area). This combinataion leads to an unmistaken resonsant structure, due to the characteristics of the \abbrPEA demanding in combination with the spring, demanding a properly designed controller. The system moving the crystal, i.e. the linear axis driven by \emph{M2} and the rotaional stage needs to be able to track reference trajectories at ramp rates of \unit{100}{\micro\radianpersecond} and reject external disturbances to maintain a maximum tracking error of $\pm$\unit{1}{\micro\rad}.
+This amplifying structure gives the rotational stage a range of \unit{20}{\milli\rad}. For the measurement system, 3 interferometric heads are placed as in Figure ?, pointing towards a mirror mounted on top of to the rotational head, perpendicular to the plane of rotation. The setup allows for measurements of both the yaw and roll angle (the coordinate system is defined with respect to the beam). The yaw angle is used as feedback to the rotational stage control loop. The spring, depicted in Figure?, prestresses the \abbrPEA in order to enhace the overall stiffness of the stage as well as keeping the stack in place (the stack is non-glued to be sufficient in a radioactive area). This combination leads to a clear resonant structure, due to the characteristics of the \abbrPEA demanding in combination with the spring, demanding a properly designed controller. The system moving the crystal, i.e. the linear axis driven by \emph{M2} and the rotaional stage needs to be able to track reference trajectories at ramp rates of \unit{100}{\micro\radianpersecond} and reject external disturbances to maintain a maximum tracking error of $\pm$\unit{1}{\micro\rad}.
 
 \section{Piezoelectric Stack Actuators}
-The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to 0 and 150V, respectively. The actuators are made of many thin, stacked electroactive cheramic disks, electrically connected in parallell. This construction allows for an actuator that can exhibit the highest stiffness of all actuators designs but still with a high displacement range \cite{Piezo:2008}.
+The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to 0 and 150V, respectively. The actuators are made of many thin, stacked electro-active ceramic disks, electrically connected in parallel. This construction allows for an actuator that can exhibit the highest stiffness of all actuators designs but still with a high displacement range \cite{Piezo:2008}.
 
 \subsection{Hysteresis Effect}
-The hysteresis effect is a nonlinear effect that is present during the operation of piezopelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezoceramic. It depends on the amplitude of the applied voltage but also on the frequency of input signals \cite{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage value, e.g. 60V corresponds to an angular position of \unit{5,2}{\micro\rad} in one direction and to \unit{7,2}{\micro\rad} in the opposite direction.
+The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of input signals \cite{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage value, e.g. 60V corresponds to an angular position of \unit{5,2}{\micro\rad} in one direction and to \unit{7,2}{\micro\rad} in the opposite direction.
 
 \begin{figure}[h]
   \centering
@@ -42,7 +42,7 @@ The hysteresis effect is a nonlinear effect that is present during the operation
 \end{figure}
 
 \subsection{Creep Effect}
-The creep effect is another nonlinear effect that is present during the operation of piezoelectric actuators. The effect is a slow elongation or contraction of the actuator displacement over time, with a constant driving signal and is caused by thermal effects in the piezoceramics. Figure~\ref{fig:creep} illustrates the creep effect. One can see how the rotational stage slightly drifts in rotation after the applied negative step.
+The creep effect is another nonlinear effect that is present during the operation of piezoelectric actuators. The effect is a slow elongation or contraction of the actuator displacement over time, with a constant driving signal and is caused by thermal effects in the piezo-ceramics. Figure~\ref{fig:creep} illustrates the creep effect. One can see how the rotational stage slightly drifts in rotation after the applied negative step.
 
 \begin{figure}[h]
   \centering
@@ -50,20 +50,20 @@ The creep effect is another nonlinear effect that is present during the operatio
   \caption{\label{fig:creep}Illustration of the creep effect. Note that the creep effect can last up to 10-15 minutes even if the plot only shows the development over 4 seconds.}
 \end{figure}
 
-The creep effect is in this project (and many others) effeciently suppressed by the feedback controller requiring no precise modeling and cancellation techniques.
+The creep effect is in this project (and many others) efficiently suppressed by the feedback controller requiring no precise modeling and cancellation techniques.
 
 \section{Rotational Stage Modeling}
-The piezoactuated rotational stage is modelled by a Hammerstein structure, adopted by the authors in \cite{ButcherController:2015}, allowing them in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The employed Hammerstein structure is depicted in Figure~\ref{fig:hammerstein} and consists of a \emph{Static Hysteresis} (rate independent) model and a \emph{Linear Dynamics} model. {\abbrPEA}s are known to show hysteretic behavior with a nonlocal memory (the current output does not only depend on the current input voltage but also on its history) as described in \cite{ButcherIdentification:2015}. This behvaiour is modeled by a generalised Maxwell-slip compensation model, described in \ref{sec:maxwell}. The extracted linear dynamics is identified using the described procedure in \ref{sec:linsys}
+The piezoactuated rotational stage is modelled by a Hammerstein structure, adopted by the authors in \cite{ButcherController:2015}, allowing them in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The employed Hammerstein structure is depicted in Figure~\ref{fig:hammerstein} and consists of a \emph{Static Hysteresis} (rate independent) model and a \emph{Linear Dynamics} model. {\abbrPEA}s are known to show hysteretic behavior with a nonlocal memory (the current output does not only depend on the current input voltage but also on its history) as described in \cite{ButcherIdentification:2015}. This behvaiour is modeled by a generalized Maxwell-slip compensation model, described in \ref{sec:maxwell}. The extracted linear dynamics is identified using the described procedure in \ref{sec:linsys}
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=0.7\textwidth, trim=8cm 8cm 7.73cm 8cm, clip=true]{fig/matlab/hammerstein}
-  \caption{\label{fig:hammerstein}Block diagram of the Hammerstein structure, consisting of two blocks in series, modeling the static hysteresis and the linear dynanamics, respectively.}
+  \caption{\label{fig:hammerstein}Block diagram of the Hammerstein structure, consisting of two blocks in series, modeling the static hysteresis and the linear dynamics, respectively.}
 \end{figure}
 
 \subsection{Maxwell-slip Model}
 \label{sec:maxwell}
-A generalized Maxwell-slip is used to model the hysteresis effect. It uses a parallell $n^{th}$ order elasto-slide element system with a friction force acting on each element, to create a nonlinear model. An elasto-slide element consist of a massless spring connected in series with a massless block that is subject to Coulomb friction. The model is summerized in the following equations and described more thourghly in \citep{Ru:2016}.
+A generalized Maxwell-slip is used to model the hysteresis effect. It uses a parallel $n^{th}$ order elasto-slide element system with a friction force acting on each element, to create a nonlinear model. An elasto-slide element consist of a massless spring connected in series with a massless block that is subject to Coulomb friction. The model is summarized in the following equations and described more thoroughly in \citep{Ru:2016},
 
 \begin{equation}
   \label{eq:maxwell_slip}
@@ -79,7 +79,7 @@ A generalized Maxwell-slip is used to model the hysteresis effect. It uses a par
   F = \displaystyle\sum_{i=1}^{n} F_i
 \end{equation}
 
-Where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the rotaional displacement, $x_b$ blocked displacement and $k_i, f_i$ are unkown parameters where $i=1 \hdots n$ . The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \cite{ButcherIdentification:2015,ButcherController:2015}. The result is presented in Figure~\ref{fig:maxwell} and Table~\ref{tab:maxwell} where $n=10$.
+where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the rotaional displacement, $x_b$ blocked displacement and $k_i, f_i$ are unkown parameters where $i=1 \hdots n$ . The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \cite{ButcherIdentification:2015,ButcherController:2015}. The result is presented in Figure~\ref{fig:maxwell} and Table~\ref{tab:maxwell} where $n=10$.
 
 \begin{figure}[h]
   \centering
@@ -109,13 +109,13 @@ Where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the r
 
 \subsection{Linear System Identification}
 \label{sec:linsys}
-The extracted linear dynamics has been identified as an $6^{th}$ order Output-Error system using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. Figure~\ref{fig:model} shows a comparison between the model and the real system in the frequency domain, where the Fast Fourier Transform (\abbrFFT) identification is calculated by dividing the \abbrFFT of the output with the \abbrFFT of the input.
+The extracted linear dynamics has been identified as an $6^{th}$ order Output-Error system using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. Figure~\ref{fig:model} shows a comparison between the model and the real system in the frequency domain, where the Fast Fourier Transform (\abbrFFT) identification is calculated by taking the \abbrFFT of the output divided by the \abbrFFT of the input.
 
  The transfer function of the model, discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
 
 \begin{equation}
   \label{eq:tf}
-  G_o(z) = \frac{21.05z^{-1} - 6.85z^{-2} + 8.52z^{-3} - 0.71z^{-4} + 9.30z^{-5}}{1 - 1.85z^{-1} + 1.09z^{-2} + 0.016z^{-3} - 1.32z^{-4} + 1.55z^{-5} - 0.48z^{-6}}
+  G_o(z) = \frac{21.05z^{-1} - 6.85z^{-2} + 8.52z^{-3} - 0.71z^{-4} + 9.30z^{-5}}{1344 - 2481z^{-1} + 1469z^{-2} + 21.64z^{-3} - 1767z^{-4} + 2084z^{-5} - 639.5z^{-6}}
 \end{equation}
 
 \begin{figure}[h]
@@ -125,7 +125,7 @@ The extracted linear dynamics has been identified as an $6^{th}$ order Output-Er
 \end{figure}
 
 \section{Present Control Approach}
-The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and pre-filter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotational stage $G =G_oH^{-1}$, where $G_o$, $H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
+The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and prefilter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotational stage $G =G_oH^{-1}$, where $G_o$, $H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
