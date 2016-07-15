@@ -529,31 +529,33 @@ where $k=1/100$, $\xi_a=1$ and $\xi_b=0.01$, which has zero phase shift for sign
 \newpage~\newpage~
 \FloatBarrier
 \section{Comparison}
-
+This section compares and summarizes the stand-alone control approaches (\abbrIRC and \abbrMRACPE) and the approaches that aims to cancel harmonics (\abbrFDC, \abbrRFDC and \abbrIMP).
 \begin{table}[h!]
   \centering
-  \begin{tabular}{| p{4cm} | p{2cm} | p{2cm} | p{2cm} |}
+  \begin{tabular}{| P{4cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
     \hline
-        & Present & \abbrIRC & \abbrMRACPE \\ \hline
+    \bf{Aspect}  & \bf{Present} & \bf{\abbrIRC} & \bf{\abbrMRACPE} \\ \hline
     Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
-    $\sigma$ - tracking error [mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
-    $\sigma$ - tracking error with model change [mrads] & $0.60$ & $0.22$ & $0.11$\\ \hline
-    Robustness model errors & $-$ & $-$ & $-$\\ \hline
-    Stability issues & $-$ & tuning for faster adaption easily leads to instability & $-$\\ \hline
+    Tracking error, $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
+    Robustness to model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.21\\ \hline
+    Robustness to model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
+    Disturbance rejection, attenuation-[\%] & $\infty$ & 0.03 & 0.11\\ \hline
+    Stability issues & Unstable when model error is to big & Handles model errors better than & Tuning for faster adaption easily leads to instability\\ \hline
+    Implementation simplicity & $1$ & $R$ & $1$\\ \hline
   \end{tabular}
   \caption{\label{tab:comp} Key parameters for the stand-alone control approaches.}
 \end{table}
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{| l | l | l | l |}
+  \begin{tabular}{| P{4cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
     \hline
-        & \abbrFDC & \abbrRFDC & \abbrIMP \\ \hline
-    Affecting closed loop system & No & No & Yes\\
-    Cancellation effectiveness & $1$ & $R$ & $1$\\
-    Robustness to model errors & $1$ & $R$ & $1$\\
-    Implementation simplicity & $1$ & $R$ & $1$\\
-    \hline
+      \bf{Aspect} & \bf{\abbrFDC} & \bf{\abbrRFDC} & \bf{\abbrIMP} \\ \hline
+    Affecting closed loop system & No & No & Yes\\ \hline
+    Cancellation effectiveness of major frequency, attenuation-[\%]                & 64.6 & 88.4 & 83.3\\ \hline
+    Robustness to model errors (model's 1st resonance at 28.2Hz), attenuation-[\%] & 40.5 & 26.6 & 73.5\\ \hline
+    Robustness to model errors (model's 1st resonance at 43.4Hz), attenuation-[\%] & 57.7 & 5.0 & 83.4\\ \hline
+    Implementation simplicity & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned when selecting another frequency. \\ \hline
   \end{tabular}
   \caption{\label{tab:comp} Key parameters for the harmonic cancellation control approaches.}
 \end{table}
