@@ -390,6 +390,68 @@ To illustrate the model efficiency with different step rates, a benchmark test w
   \caption{\label{tab:std_diff_speed} Standard deviations of the output with and without disturbance feedforward for the different speeds with the mean of the acquired response corresponding to each speed added as disturbance. The model used in the disturbance feedforward was identified from the 6.5V and 1step/s data.}
 \end{table}
 
+\FloatBarrier
+To benchmark how well the cancellation works with model errors, a simulation with 4 different perturbed models were performed with the disturbance feedforward tuned as before. The models including the original system itself is shown in Figure~\ref{fig:hc_me_bode}, where the first resonance peak has been perturbed. This models the previous identified behavior when the rotaional stage rotates from 0 to 20mrad.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/bode_rfdc_modelerror.eps}
+  \caption{\label{fig:hc_me_bode} Bode diagram of the 5 different models used for the simulation of model error, including the original model G - 38.1Hz.}
+\end{figure}
+
+The \abbrFFT of the simulation results can be seen in Figure~\ref{fig:hc_model_error}. The attenuation of the disturbance's major frequency is shown in (a) which shows that the cancellation is still efficient even with model errors being present. The original controller and system without disturbance cancellation is included in the plots as a reference and is named \emph{Present - 38.1 Hz}. The plot in (b) illustrates the impact that the model errors have to the attenuation of some other resonances present in the system. Here 130Hz is choosen as an example to illustrate that the cancellation with model errors can lead to amplification at some frequencies.   
+
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][Attenuation of major frequency]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/hc_model_error.eps}}
+  \qquad
+  \subfloat[][Impact on 130Hz component]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/hc_model_error92.eps}}
+  \caption{\label{fig:hc_model_error} Disturbance cancellation effectiveness with model errors. The attenuation of the major frequency is shown in (a) while the attenuation of the 130Hz component is shown in (b).}
+\end{figure}
+
+
+\FloatBarrier
+\subsection{Cancellation with Internal Model Principle}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][Attenuation of selected frequency]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/gc_imp.eps}}
+  \qquad
+  \subfloat[][Impact on 130Hz]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/s_imp.eps}}
+  \caption{\label{fig:rfdc_model_error} (a) and one period of the acquired response added as disturbance (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][Attenuation of selected frequency]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej.eps}}
+  \qquad
+  \subfloat[][Impact on 130Hz]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/distrej_fft.eps}}
+  \caption{\label{fig:rfdc_model_error} (a) and one period of the acquired response added as disturbance (b).}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/distrej_realstep_fft.eps}
+  \caption{\label{fig:3vzoomin} Zoom in on the first resonance peak on the \abbrFFT performed on the data originating from the 3.25 - 40mrad. The resonance peaks are clearly multiples of the stepping rate.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][Attenuation of selected frequency]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/imp_model_error_real50.eps}}
+  \qquad
+  \subfloat[][Impact on 130Hz]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/imp_model_error_real.eps}}
+  \caption{\label{fig:rfdc_model_error} Shows the effect of the feedforward disturbance cancellation with the mean of the acquired response added as disturbance (a) and one period of the acquired response added as disturbance (b).}
+\end{figure}
+
 \newpage~\newpage~
 \FloatBarrier
 \subsection{Repetitive Feedforward Disturbance Cancellation}
@@ -525,37 +587,49 @@ To overcome this issue, a bandpass filter for the selected frequency could be ad
 
 where $k=1/100$, $\xi_a=1$ and $\xi_b=0.01$, which has zero phase shift for signals entering at 200Hz, but shifts all other frequencies. Tests where performed with this filter but without any increase in disturbance cancellation performance, this might be due to numerical problems that origin from an insufficient sampling rate.
 
+\begin{figure}[h!]
+  \centering %crop: left bottom right top
+  \subfloat[][Attenuation of selected frequency]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/rfdc_model_error_real60.eps}}
+  \qquad
+  \subfloat[][Impact on 130Hz]{
+  \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/rfdc_model_error_real.eps}}
+  \caption{\label{fig:rfdc_model_error} Shows the effect of the feedforward disturbance cancellation with the mean of the acquired response added as disturbance (a) and one period of the acquired response added as disturbance (b).}
+\end{figure}
 
 \newpage~\newpage~
 \FloatBarrier
 \section{Comparison}
-This section compares and summarizes the stand-alone control approaches (\abbrIRC and \abbrMRACPE) and the approaches that aims to cancel harmonics (\abbrFDC, \abbrRFDC and \abbrIMP).
+This section compares and summarizes the stand-alone control approaches (\abbrIRC and \abbrMRACPE) and the approaches that aims to cancel harmonics (\abbrFDC, \abbrRFDC and \abbrIMP). Table~\ref{tab:comp_h} and \ref{tab:comp} summarizes comparable results presented in the previous sections. For the harmonic cancellation, test
+
 \begin{table}[h!]
   \centering
-  \begin{tabular}{| P{4cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
+  \begin{tabular}{| l | P{3.7cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
     \hline
-    \bf{Aspect}  & \bf{Present} & \bf{\abbrIRC} & \bf{\abbrMRACPE} \\ \hline
-    Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
-    Tracking error, $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
-    Robustness to model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.21\\ \hline
-    Robustness to model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
-    Disturbance rejection, attenuation-[\%] & $\infty$ & 0.03 & 0.11\\ \hline
-    Stability issues & Unstable when model error is to big & Handles model errors better than & Tuning for faster adaption easily leads to instability\\ \hline
-    Implementation simplicity & $1$ & $R$ & $1$\\ \hline
+      \bf{Nr} & \bf{Aspect} & \bf{\abbrFDC} & \bf{\abbrRFDC} & \bf{\abbrIMP} \\ \hline
+    1 & Affecting closed loop system & No & No & Yes\\ \hline
+    2 & Cancellation effectiveness of major frequency, attenuation-[\%]                & 64.6 & 88.4 & 83.3\\ \hline
+    3 & Robustness to model errors (model's 1st resonance at 28.2Hz), attenuation-[\%] & 40.5 & 26.6 & 73.5\\ \hline
+    4 & Robustness to model errors (model's 1st resonance at 43.4Hz), attenuation-[\%] & 57.7 & 5.0 & 83.4\\ \hline
+    5 & Implementation considerations & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned 6 when selecting another frequency. \\ \hline
   \end{tabular}
-  \caption{\label{tab:comp} Key parameters for the stand-alone control approaches.}
+  \caption{\label{tab:comp_h} Key parameters for the harmonic cancellation control approaches.}
 \end{table}
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{| P{4cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
+  \begin{tabular}{| l | P{4cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
     \hline
-      \bf{Aspect} & \bf{\abbrFDC} & \bf{\abbrRFDC} & \bf{\abbrIMP} \\ \hline
-    Affecting closed loop system & No & No & Yes\\ \hline
-    Cancellation effectiveness of major frequency, attenuation-[\%]                & 64.6 & 88.4 & 83.3\\ \hline
-    Robustness to model errors (model's 1st resonance at 28.2Hz), attenuation-[\%] & 40.5 & 26.6 & 73.5\\ \hline
-    Robustness to model errors (model's 1st resonance at 43.4Hz), attenuation-[\%] & 57.7 & 5.0 & 83.4\\ \hline
-    Implementation simplicity & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned when selecting another frequency. \\ \hline
+    \bf{Nr} & \bf{Aspect}  & \bf{Present} & \bf{\abbrIRC} & \bf{\abbrMRACPE} \\ \hline
+    1 & Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
+    2 & Tracking error, periodic input $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
+    3 & Robustness to model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$, unstable & 0.03 & 0.21\\ \hline
+    4 & Robustness to model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$, unstable & 0.03 & 0.11\\ \hline
+    5 & Robustness to model errors (model's 1st resonance at 17.6Hz), $\sigma$-[mrads] & $\infty$, unstable & $\infty$, unstable & 0.47\\ \hline
+    6 & Robustness to model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$, unstable & $\infty$, unstable & 0.11\\ \hline
+    7 & Output disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
+    8 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability\\ \hline
+    9 & Implementation considerations & Straightforward technique, allowing for basic stability and robustness analysis & Same as present & Hard to tune. No high order models. Stability only proven in continuous time. \\ \hline
   \end{tabular}
-  \caption{\label{tab:comp} Key parameters for the harmonic cancellation control approaches.}
+  \caption{\label{tab:comp} Key parameters for the stand-alone control approaches.}
 \end{table}

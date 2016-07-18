@@ -187,14 +187,14 @@ which illustrates that the number of introduced zeros is equal to the relative d
 \end{equation}
 
 \section{Harmonic cancellation}
-Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro} \citep{fujimoto2004repetitive} \citep{vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP), using an internal model to simulate the system response and to estimate the behavior of an applied disturbance. However including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel the periodic disturbances that are introduced by the movement of the linear stage. The period lengths of the introduced harmonics can be found  from characterizing tests and should correlate with the stepping rate of the linear axis motor.
+Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro} \citep{fujimoto2004repetitive} \citep{vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel the periodic disturbances that are introduced by the movement of the linear stage. The period lengths of the introduced harmonics can be found  from characterizing tests and should correlate with the stepping rate of the linear axis motor. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
 
 \subsection{Disturbance Feedforward}\label{subsec:distff}
 If a disturbance is measurable during operation, a feedforward of the disturbance model response can be used to eliminate the disturbance before it gets present in the output signal \citep{industrial}. A simple block diagram of the structure is shown in Figure~\ref{fig:ffdist}, where $G, C, P_d$ and $K_f$ represents the system, the controller, the disturbance model and the feedforward block respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=8cm 4.5cm 5.97cm 8cm, clip=true]{fig/matlab/ffdist}
+  \includegraphics[width=0.8\textwidth, trim=8cm 4.5cm 5.97cm 8.5cm, clip=true]{fig/matlab/ffdist}
   \caption{\label{fig:ffdist}Block diagram of a control structure with feedforward from a known modeled disturbance.}
 \end{figure}
 
@@ -206,6 +206,32 @@ The output is described by the following expression
 \end{equation}
 
 and hence a ideal choice of $K_f$ would be $K_f=P_d/G$ which would eliminate the disturbance completely. It is worth noting that the ideal $K_f$ might not be fully implementable (stable, proper and causal) and that the inverse of G has to be approximated, leading to merely partial cancellation of the disturbance. This approximation can still be sufficient if the inverse is constructed in a way so that $(P_d - K_fG)/(1+CG)$ becomes small for the frequencies where the disturbance has the most impact on the system.
+
+\subsection{Cancellation with Internal Model Principle}
+The \abbrIMP says that if a disturbance (entering the system on the output or input) can be described by a generating polynomial $\Gamma(s)$ then a standard one \abbrDOF-controller $C_{t}(s) = P(s)/\Gamma(s)\bar{L}(s)$ can be used to asymptotically reject the effect of a modeled disturbance.  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$, is derived by taking the Laplace transform of the differential equation describing the disturbance where f(0,s) arises from non-zero initial conditions. To show the principle of \abbrIMP parts of the evidence derived in \citep{IMP:Perry} is presented here.
+
+Consider the system model $G(s) = A(s)/B(s)$. Using this system with the controller $C_t$ in closed loop yields the sensitivity function in \eqref{eq:s_imp}, which is the transfer function from output disturbance to output.
+\begin{equation}
+  \label{eq:s_imp}
+  S(s) = \frac{A(s)\Gamma(s)\bar{L}(s)}{A(s)\Gamma(s)\bar{L}(s) + B(s)P(s)}
+\end{equation}
+
+The system response to an output disturbance can then be derived as shown in \eqref{eq:s_imp}.
+
+\begin{equation}
+  \label{eq:y_imp}
+  Y(s) = S(s)D_o(s) = \frac{S(s)f(o,s)}{\Gamma(s)} = \frac{A(s)\bar{L}(s)}{A(s)\Gamma(s)\bar{L}(s) + B(s)P(s)}f(o,s)
+\end{equation}
+
+The inverse Laplace transform y(t) converges to 0 if the controller has been tuned so that all roots to the characteristic polynomial $A(s)\Gamma(s)\bar{L}(s) + B(s)P(s)$ have negative real parts. Hence, the disturbance is asymptotically rejected.
+
+A basic block scheme is shown in Figure~\ref{fig:imp} where $G$ is the system, $C(s) = P(s)/\bar{L}(s)$ the tunable controller, $C_{imp} = 1/\Gamma(s)$ is the compensator and $d_o$ is the considered disturbance.
+
+\begin{figure}[h]
+  \centering %crop: left bottom right top
+  \includegraphics[width=1\textwidth, trim=6.5cm 5.5cm 5.97cm 11cm, clip=true]{fig/matlab/imp}
+  \caption{\label{fig:imp}Block diagram of the \abbrIMP control structure.}
+\end{figure}
 
 \subsection{Repetitive Feedforward Disturbance Cancellation}
 Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. With respect to this drawback, a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the novel control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
