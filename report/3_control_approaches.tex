@@ -189,7 +189,7 @@ which illustrates that the number of introduced zeros is equal to the relative d
 \section{Harmonic cancellation}
 Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro} \citep{fujimoto2004repetitive} \citep{vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel the periodic disturbances that are introduced by the movement of the linear stage. The period lengths of the introduced harmonics can be found  from characterizing tests and should correlate with the stepping rate of the linear axis motor. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
 
-\subsection{Disturbance Feedforward}\label{subsec:distff}
+\subsection{Feedforward Disturbance Cancellation}\label{subsec:distff}
 If a disturbance is measurable during operation, a feedforward of the disturbance model response can be used to eliminate the disturbance before it gets present in the output signal \citep{industrial}. A simple block diagram of the structure is shown in Figure~\ref{fig:ffdist}, where $G, C, P_d$ and $K_f$ represents the system, the controller, the disturbance model and the feedforward block respectively.
 
 \begin{figure}[h]
@@ -207,7 +207,7 @@ The output is described by the following expression
 
 and hence a ideal choice of $K_f$ would be $K_f=P_d/G$ which would eliminate the disturbance completely. It is worth noting that the ideal $K_f$ might not be fully implementable (stable, proper and causal) and that the inverse of G has to be approximated, leading to merely partial cancellation of the disturbance. This approximation can still be sufficient if the inverse is constructed in a way so that $(P_d - K_fG)/(1+CG)$ becomes small for the frequencies where the disturbance has the most impact on the system.
 
-\subsection{Cancellation with Internal Model Principle}
+\subsection{Cancellation with Internal Model Principle}\label{subsec:distimp}
 The \abbrIMP says that if a disturbance (entering the system on the output or input) can be described by a generating polynomial $\Gamma(s)$ then a standard one \abbrDOF-controller $C_{t}(s) = P(s)/\Gamma(s)\bar{L}(s)$ can be used to asymptotically reject the effect of a modeled disturbance.  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$, is derived by taking the Laplace transform of the differential equation describing the disturbance where f(0,s) arises from non-zero initial conditions. To show the principle of \abbrIMP parts of the evidence derived in \citep{IMP:Perry} is presented here.
 
 Consider the system model $G(s) = A(s)/B(s)$. Using this system with the controller $C_t$ in closed loop yields the sensitivity function in \eqref{eq:s_imp}, which is the transfer function from output disturbance to output.
