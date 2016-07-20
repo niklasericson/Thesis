@@ -361,7 +361,7 @@ As seen in the figures, the disturbance model has clear resonance peaks at aroun
   \caption{\label{fig:3vzoomin} Zoom in on the first resonance peak on the \abbrFFT performed on the data originating from the 3.25 - 40mrad. The resonance peaks are clearly multiples of the stepping rate.}
 \end{figure}
 \FloatBarrier
-Figure~\ref{fig:fft_6_5_modelfit} shows the identified model for the data acquired at 6.5V and 1 step/s. In order to sufficiently model four resonances, a 19 zeros and 20 poles transfer function was needed. The model is sufficient for simulations but have to be reduced for a reasonable implementation in terms of computational efficiency. The identification was performed using Matlab System Identification Toolbox with a selected frequency focus from 30-1000Hz. From the identified disturbance model ($P_d$), the feedforward block $K_f$ was calculated as $K_f=P_d/G$.
+Figure~\ref{fig:fft_6_5_modelfit} shows the identified model for the data acquired at 6.5V and 1 step/s. In order to sufficiently model four resonances, a 19 zeros and 20 poles transfer function was needed. The model is sufficient for simulations but have to be reduced for a reasonable implementation in terms of computational efficiency. The identification was performed using Matlab System Identification Toolbox with a selected frequency focus from 30-1000Hz. The identified disturbance model $P_d$ is presented in its final form in Appendix~\ref{cha:definition}. $K_f$ was calculated as $K_f=P_d/G$.
 The disturbance model was benchmarked with 2 slightly different disturbances, first with the mean shown in Figure~\ref{fig:stepout} (the signal used in the identification) and then with a signal picked out as one period from the original acquired data. The disturbance rejection results at 6.5V and 1 step/s can be seen in Figure~\ref{fig:benchmark_dist}. The feedforward of the modeled disturbance manages to mitigate the disturbance on the yaw angle by almost half of the amplitude, when the mean is fed as disturbance. However, with the more realistic disturbance, the disturbance on the yaw angle is at first amplified by almost the double but settles quickly after that to a level below the level of the controller without disturbance feedforward.
 
 \begin{figure}[h!]
@@ -507,7 +507,7 @@ The Repetitive Feedforward Disturbance Cancellation (\abbrRFDC) method was imple
   \end{alignat}
 \end{subequations}
 
-These equations where augmented according to \eqref{eq:augumented} with the discrete time system matrices which can be seen in its full form in Appendix A. The observer was implemented in state space form, with the following equations.
+These equations where augmented according to \eqref{eq:augumented} with the discrete time system matrices which can be seen in its full form in Appendix~\ref{cha:definition}. The observer was implemented in state space form, with the following equations.
 
 \begin{subequations}
 \label{eq:augmented}
