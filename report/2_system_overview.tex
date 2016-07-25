@@ -48,7 +48,7 @@ Figure~\ref{fig:collimator} shows the new collimator. In the top view the rotati
 \FloatBarrier
 \section{Rotational stage}
 \label{sec:rotational_stage}
-The rotational stage as shown in Figure~\ref{fig:rotationalstage} is composed by a monolithic amplifying structure, a prestressed piezoelectric stack actuator and an interferometer measurement system. The flexure-hinge based structure, avoids sliding parts and thereby enhance precision by reducing the number of nonlinear effects (e.g. backlash and friction). A prestressed piezoelectric stack actuator is exploited to generate the rotational movement by interacting on a amplifying bar that applies the force on the rotational head a few millimeters from the center of rotation, marked as a red "X" in the picture. This amplifying structure gives the rotational stage a range of \unit{20}{\milli\rad} from a nominal linear range of \unit{40}{\micro\rad}.
+The rotational stage as shown in Figure~\ref{fig:rotationalstage} is composed by a monolithic amplifying structure, a prestressed piezoelectric stack actuator and an interferometer measurement system. The flexure-hinge based structure, avoids sliding parts and thereby enhance precision by reducing the number of nonlinear effects (e.g. backlash and friction). A piezoelectric stack actuator is exploited to generate the rotational movement by interacting on a amplifying lever that applies the force on the rotational head a few millimeters from the center of rotation, marked as a red "X" in the picture. This amplifying structure gives the rotational stage a range of \unit{20}{\milli\rad} from a nominal linear range of \unit{40}{\micro\rad}.  The \abbrPEA is prestressed in order to enhance the overall stiffness as well as keeping the stack in place (the stack is non-glued to be sufficient in a radioactive area). This combination leads to a clear resonant structure, due to the characteristics of the \abbrPEA and the flexible structure, demanding a properly designed controller.
 
 \begin{figure}[h!]
   \centering
@@ -56,7 +56,7 @@ The rotational stage as shown in Figure~\ref{fig:rotationalstage} is composed by
   \caption{\label{fig:rotationalstage} Piezo-actuated rotational stage used in the new collimator.}
 \end{figure}
 
-For the measurement system, three interferometric heads are placed on top of the rotational stage as seen Figure~\ref{fig:rotationalstage-side}, pointing towards a mirror that is attached to the crystal support and to the rotational head, being perpendicular to the plane of rotation. The setup allows for measurements of both the yaw and roll angle (the coordinate system is defined with respect to the beam). The yaw angle is used as feedback to the rotational stage control loop. The \abbrPEA is prestressed in order to enhance the overall stiffness as well as keeping the stack in place (the stack is non-glued to be sufficient in a radioactive area). This combination leads to a clear resonant structure, due to the characteristics of the \abbrPEA and the flexible structure, demanding a properly designed controller. Note that the crystal is mounted below the rotational head and that only the top of the crystal support is shown in the picture.
+For the measurement system, three interferometric heads are placed on top of the rotational stage as seen Figure~\ref{fig:rotationalstage-side}, pointing towards a mirror that is attached to the crystal support and to the rotational head, perpendicular to the plane of rotation. The setup allows for measurements of both the yaw and roll angle (the coordinate system is defined with respect to the beam), but only the yaw angle is used in the feedback to the rotational stage control loop. Note that the crystal is mounted below the rotational head and that only the top of the crystal support is shown in the picture.
 
 \begin{figure}[h!]
   \centering
@@ -112,7 +112,8 @@ A generalized Maxwell-slip is used to model the hysteresis effect. It uses a par
   F = \displaystyle\sum_{i=1}^{n} F_i
 \end{equation}
 
-where $F_i$ is (in terms of the rotational stage) the applied voltage, $x$ the rotational displacement, $x_b$ blocked displacement and $k_i, f_i$ are unknown parameters where $i=1 \hdots n$ . The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \cite{ButcherIdentification:2015,ButcherController:2015}. The result is presented in Figure~\ref{fig:maxwell} and Table~\ref{tab:maxwell} where $n=10$.
+where $F_i$ is the output force, $k_i$ the spring constant, $f_i$ the break-away force and $x_b$ is the block position where $i=1 \hdots n$. In terms of the rotational stage $F_i$ represents the applied voltage, $x$ the input (rotational) displacement, $x_b$ angular position and $k_i, f_i$ are unknown parameters
+The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \cite{ButcherIdentification:2015,ButcherController:2015}. The result is presented in Figure~\ref{fig:maxwell} and Table~\ref{tab:maxwell} where $n=10$.
 
 \begin{figure}[h]
   \centering
@@ -152,12 +153,12 @@ The transfer function of the model, discretized with a sampling time of \unit{0.
 
 \begin{equation}
   \label{eq:tf}
-  G_o(z) = \frac{21.05z^{-1} - 6.85z^{-2} + 8.52z^{-3} - 0.71z^{-4} + 9.30z^{-5}}{1344 - 2481z^{-1} + 1469z^{-2} + 21.64z^{-3} - 1767z^{-4} + 2084z^{-5} - 639.5z^{-6}}
+  G(z) = \frac{21.05z^{-1} - 6.85z^{-2} + 8.52z^{-3} - 0.71z^{-4} + 9.30z^{-5}}{1344 - 2481z^{-1} + 1469z^{-2} + 21.64z^{-3} - 1767z^{-4} + 2084z^{-5} - 639.5z^{-6}}
 \end{equation}
 
 \FloatBarrier
 \section{Present Control Approach}
-The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and prefilter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotational stage $G =G_oH^{-1}$, where $G_o$, $H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
+The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and prefilter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotational stage $G = GH^{-1}$, where $G$ and $H^{-1}$ is the linear dynamics and the hysteresis compensator, respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
@@ -165,7 +166,7 @@ The original controller for the rotational stage is a 2-\abbrDOF structure (feed
   \caption{\label{fig:present}Block diagram of the present control loop, inlcuding controller, prefilter and hysteresis compensator.}
 \end{figure}
 
-The controller block (C) is a series combination of a \abbrPID controller, notch filter and a lead network, aiming to stabilize the system (\abbrPID), increase the sufficient phase margin (lead) and make the system robust to high frequency oscillations (notch). Since the open loop bandwidth is relatively low, $f_b = 58 Hz$ according to Figure~\ref{fig:model}, it has been decided to exclude cancellation of the first resonance peak in order to keep the bandwidth as high as possible and to have sufficient attenuation of the resonance peak \citep{ButcherController:2015}. Finally, to enhance the tracking performance, a prefilter (F) was also added to the system. The PID controller, lead network, notch filter and prefilter are all presented below in \eqref{eq:controller}.
+The controller block (C) is a series combination of a \abbrPID controller, notch filter and a lead network, aiming to stabilize the system (\abbrPID), increase the sufficient phase margin (lead) and make the system robust to high frequency oscillations (notch). Since the open loop bandwidth is relatively low, $f_b = 58 Hz$ according to Figure~\ref{fig:model}, it was decided to exclude cancellation of the first resonance peak in order to maintain the bandwidth as high as possible and to have sufficient attenuation of the resonance peak \citep{ButcherController:2015}. Finally, to enhance the tracking performance, a prefilter (F) was also added to the system. The PID controller, lead network, notch filter and prefilter are all presented below in \eqref{eq:controller}.
 
 \begin{subequations}
   \label{eq:controller}

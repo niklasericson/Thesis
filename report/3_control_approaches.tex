@@ -144,7 +144,7 @@ The IRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ and $
 
 \begin{equation}
   \label{eq:C2}
-  C_2 = \frac{C}{1+CD_f}
+  C_2 = \frac{C}{1+CD_f}\Bigg|_{C = \frac{-k}{s}} = \frac{-k}{s - kD_f}
 \end{equation}
 
 For tracking reference trajectories, the IRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negtive gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}.
@@ -155,7 +155,7 @@ For tracking reference trajectories, the IRC can be enclosed in an outer loop, a
   \caption{\label{fig:irc_int}Block diagram of the tracking control system with IRC included}
 \end{figure}
 
-Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros. To give the reader further information about the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.
+Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros. To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.
 
 Let G be represented as a transfer function with a relative degree of one, with 2 poles and 1 zero as written below,
 
@@ -175,11 +175,11 @@ where  $\alpha_i > 0$ and  $\beta_i > 0$, i.e. a stable and minimum phase system
   \end{split}
 \end{equation}
 
-which illustrates that the number of introduced zeros is equal to the relative degree of the transfer function and that the zeros ($s^z_i$) will have a negative real part if the following conditions are fulfilled.
+which illustrates that the number of introduced zeros is equal to the relative degree of the transfer function. Moreover, all zeros ($s^z_1, s^z_2$) will have negative real part if the coefficients in the numerator in \eqref{eq:irc_sys_d} is bigger than zero i.e. $ \frac{1}{D_f} + \beta_1>0$ and $\frac{\alpha_0}{D_f} + \beta_0>0$. Which can be simplified to the conditions given in \eqref{eq:irc_cond}.
 
 \begin{equation}
   \label{eq:irc_cond}
-  Re(s^z_i) < 0 \quad \text{if }
+  Re(s^z_1) < 0 \text{ and } Re(s^z_2) < 0 \quad \text{if }
   \begin{cases}
     D_f < -\frac{1}{\beta_1}\\
     D_f < -\frac{\alpha_0}{\beta_0}\\
