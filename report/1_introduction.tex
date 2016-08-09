@@ -26,20 +26,40 @@ One major difficulty that arises with the use of bent crystals is that, the high
 First of all, piezoelectric actuators show strong nonlinear properties such as hysteresis and creep (drift), which have to be compensated for.\citep{Piezo:2008} Moreover, the mechanical flexural structure in combination with the piezoelectric characteristics leads to a highly resonant structure, making it difficult to achieve the desired performance while operating the rotational stage within noisy environments with external disturbances such as ground vibrations. Furthermore this rotational stage is attached to a linear stage which is composed by a lead-screw, a stepping motor and an axis. The linear movement adds additional perturbation to the rotational stage due to imperfections in the lead-screw and detent torque and stepping nature of the motor. \citep{ButcherController:2015}. Finally, the system changes drastically due to a number of factors such as linear position, linear speed and angular position in combination with a moving center of rotation. The linear dynamic modeling is thereby limited by all these factors requiring a controller that is robust to such variations.
 
 \section{Related work}
-
 One attempt to achieve the desired performance has already been made. The proposed controller, presented in \citep{ButcherController:2015} delivers reasonable performance but does not fulfill the requirements during movement. The authors proposes a \abbrPID controller in combination with a prefilter, and a hysteresis compensator. The controller has shown high disturbance rejection at the first resonance peak as well as good tracking performance.
 
+<<<<<<< HEAD
 \section{Method}
 This thesis
 
+=======
+\section{Approach}
+This thesis aims to provide answers for the following two questions.
+>>>>>>> 3af2f7c97aa20f4c8dde50c7455ecb3f9a8fa0bb
 
 \begin{itemize}
-  \item What are the possible control approaches that can be used to achieve the desired performance?
+  \item What control approaches can be used to achieve the desired performance?
   \item Which one is the most promising approach with respect to simulated/benchmarked results and ease of implementation on the real device?
 \end{itemize}
 
+\section{Method}
+The method used in this thesis is presented in chronological order below.
+
+\begin{itemize}
+  \item Literature study.
+  \item Further investigation in the selected control approaches.
+  \item Benchmarking the selected control approaches in simulations.
+  \item Implementation of the most promising approach.
+  \item Proposal of a controller.
+\end{itemize}
+
+The findings made in the literature study where summarized in a table, see Appendix A, and used to select approaches for further investigation.
+All investigated approaches were benchmarked in simulations carried out in Matlab and Simulink, with a linear model of the system. Finally, with performance, stability and implementation considerations, one approach was selected and implemented in LabVIEW to operate on the real device. The final results were used to verify the simulation performance and to give a final evaluation of the controller's applicability and effectiveness.
+
 \section{Limitations}
-This thesis will solely focus on the control approaches
+This thesis will solely focus on control approaches and excludes thereby all modeling of the system. Extensive modeling have already been carried out on the device, motivating the exclusion. Due to time limitations, only a few control approaches will been selected for simulation and only one will been implemented on the real device. For the same reason, the controller tuning will be carried out until a sufficient set of parameters is found, even though a more optimal set of parameters might exist.
+
+All simulations will be performed on a linear system model, assuming perfect inverse hysteresis cancellation and a sufficient closed loop to compensate for the creep effect, motivated by the extensive hysteresis model. Furthermore, all controllers will be discretized with a 2kHz sampling frequency for the sake of comparison, even though the number of operations might allow for a higher execution rate.
 
 \section{Outline}
 This thesis plan presents an overview of the thesis, including method, literature base and expected results. The method and work flow of the thesis as well as a comprehensive literature review is given in Chapter~\ref{cha:method}. In Chapter~\ref{cha:result} the results that can be expected half way through the project is discussed while a brief summary of the thesis can be found in Chapter~\ref{cha:conclusion}.
