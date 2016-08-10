@@ -283,15 +283,15 @@ To further verify the controller capability of handling disturbances with variou
 \end{figure}
 
 
-The standard deviations for the output signal with the disturbance added to both the output and input for the \abbrIRC and the present approach are summarized in
+The standard deviations of the output signal with a disturbance with $\sigma$ = \unit{1.41\micro\radian} added to both the output and input for the \abbrIRC and the present approach are summarized in Table~\ref{tab:std}.
 
 \begin{table}[h!]
   \centering
   \begin{tabular}{| l | l | l |}
     \hline
     Disturbance applied to: & input & output \\ \hline
-      $\sigma_{Present}$ & $6.8097 \times 10^{-7}$ & $1.4336 \times 10^{-6}$ \\
-      $\sigma_{IRC}$ & $4.5074 \times 10^{-7}$  & $ 1.4588 \times 10^{-6}$ \\
+      $\sigma_{Present}$ [\unit{\micro\radian}] & $0.68 $ & $1.43$ \\
+      $\sigma_{IRC}$ [\unit{\micro\radian}] & $0.45$  & $ 1.46$ \\
     \hline
   \end{tabular}
   \caption{\label{tab:std} Standard deviations of the output signal}
@@ -407,7 +407,7 @@ The \abbrFFT of the simulation results can be seen in Figure~\ref{fig:hc_model_e
   \subfloat[][Attenuation of major frequency]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/hc_model_error.eps}}
   \qquad
-  \subfloat[][Impact on 130Hz component]{
+  \subfloat[][Impact on 92.3Hz component]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/hc_model_error92.eps}}
   \caption{\label{fig:hc_model_error} Disturbance cancellation effectiveness with model errors. The attenuation of the major frequency is shown in (a) while the attenuation of the 130Hz component is shown in (b).}
 \end{figure}
@@ -647,22 +647,24 @@ In Table~\ref{tab:comp_h}, the cancellation effectiveness is measured as attenua
   \caption{\label{tab:comp_h} Key parameters for the harmonic cancellation control approaches.}
 \end{table}
 
-In Table~\ref{tab:comp_h}, the closed-loop bandwidth is presented for each approach, where "-" means that a theoretical bandwidth is missing for the \abbrMRACPE. The tracking error is presented as the standard deviation of the difference between reference and output signal, taken after each approach has settled. The tracking error with model errors being present is shown in nr 4-7. Here, infinite tracking error means that the system is unstable. First resonance peak frequencies are selected to put the system on the border of instability. Nr 7 presents the disturbance rejection with a disturbance added to the system output, measured in settling time from that the disturbance was added.
+In Table~\ref{tab:comp}, the closed-loop bandwidth is presented for each approach, where "-" means that a theoretical bandwidth is missing for the \abbrMRACPE. The tracking error is presented as the standard deviation of the difference between reference and output signal, taken after each approach has settled. The tracking error with model errors being present is shown in nr 4-7. Here, infinite tracking error means that the system is unstable. First resonance peak frequencies are selected to put the system on the border of instability. Nr 7 presents the disturbance rejection with a disturbance added to the system output, measured in settling time from that the disturbance was added.
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{| l | P{4cm} | P{2.2cm} | P{2.2cm} | P{2.2cm} |}
+  \begin{tabular}{| l | P{3.4cm} | P{2.2cm} | P{2.2cm} | P{2.8cm} |}
     \hline
     \bf{Nr} & \bf{Aspect}  & \bf{Present} & \bf{\abbrIRC} & \bf{\abbrMRACPE} \\ \hline
     1 & Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
-    2 & Tracking error, periodic input $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
-    3 & Tracking error with model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.21\\ \hline
-    4 & Tracking error with model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
-    5 & Tracking error with model errors (model's 1st resonance at 17.6Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.47\\ \hline
-    6 & Tracking error with model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.11\\ \hline
-    7 & Output disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
-    8 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability\\ \hline
-    9 & Implementation considerations & Straightforward technique, allowing for basic stability and robustness analysis & Same as present & Hard to tune. No high order models. Stability only proven in continuous time. \\ \hline
+    2 & Gain/Phase margin [dB / $^{\circ}$] & 14.4/66.2 & 13.1/49.4 & -\\ \hline
+    3 & Tracking error, periodic input $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
+    4 & Tracking error with model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.21\\ \hline
+    5 & Tracking error with model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
+    6 & Tracking error with model errors (model's 1st resonance at 17.6Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.47\\ \hline
+    7 & Tracking error with model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.11\\ \hline
+    8 & Output disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
+    9 & Input/Output disturbance rejection, $\sigma$-[\unit{\micro\radian}] & $0.68 $/$1.43$ & $0.45$/$1.46$ & $1.95$/$1.41$\\ \hline
+    10 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability.  Stability only proven in continuous time. \\ \hline
+    11 & Design and implementation considerations & Straight- forward technique, allowing for basic stability analysis & Same as present & Hard to tune. High computational burden for higher order models.\\ \hline
   \end{tabular}
   \caption{\label{tab:comp} Key parameters for the stand-alone control approaches.}
 \end{table}
