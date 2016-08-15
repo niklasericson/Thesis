@@ -219,7 +219,7 @@ The \abbrIRC sensitivity function also shows that the \abbrIRC scheme attenuates
 \end{figure}
 
 \FloatBarrier
-The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}. One can conclude that neither the present nor the \abbrIRC eliminate the constant ramp tracking error. However the \abbrIRC performs better due to its high bandwidth, see Figure~\ref{fig:irc_periodic} for the response and the tracking error in Figure~\ref{fig:irc_tracking}.
+The \abbrIRC tracking performance is shown in Figure~\ref{fig:irc_tracking}, which has reduced the tracking error considerably due to its high bandwidth.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
@@ -297,7 +297,7 @@ The standard deviations of the output signal with a disturbance with $\sigma$ = 
   \caption{\label{tab:std} Standard deviations of the output signal}
 \end{table}
 
-Since the \abbrIRC closed loop bandwidth is a lot higher than the present controller, it is expected that the \abbrIRC is more sensitive to measurement noise and to model errors in terms of stability. Both approaches uses a static notch filter to cancel higher order harmonics, which makes the cancellation sensitive for model changes in the higher resonances. Both make it interesting to see how robust the controller are to model changes in the higher frequencies. A disturbance rejection test was performed on the systems showed in Figure~\ref{fig:high_model_error}, where the highest resonance peak has been moved 83Hz and 97Hz, respectively. An impulse was applied to the output and the resulting response is presented in Figure~\ref{fig:model_dist_high_order}. The \abbrIRC is clearly more sensitive to model errors and becomes unstable when the highest resonance peak has moved by 97Hz.
+Both approaches uses a static notch filter to cancel higher order harmonics, which makes the cancellation sensitive for model changes in the higher resonances. Both make it interesting to see how robust the controller are to model changes in the higher frequencies. A disturbance rejection test was performed on the systems showed in Figure~\ref{fig:high_model_error}, where the highest resonance peak has been moved 83Hz and 97Hz, respectively. An impulse was applied to the output and the resulting response is presented in Figure~\ref{fig:model_dist_high_order}. The \abbrIRC is clearly more sensitive to model errors and becomes unstable when the highest resonance peak has moved by 97Hz.
 
 \begin{figure}[h!]
   \centering
