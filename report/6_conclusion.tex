@@ -1,12 +1,19 @@
 %Sätt av ett kort kapitel sist i rapporten till att avrunda och föreslå rikningar för framtida utveckling av arbetet.
 % !TEX root = main.tex
-\chapter{Conclusions and Future Work}\label{cha:conclusion}
+\chapter{Conclusion}\label{cha:conclusion}
 
-\section{Conclusions}
 
+\subsection{Simulation results}
 As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. In reality it would be plenty of  higher resonance (all are not modeled) that will lead to more ringing and bad disturbance rejection.
 
-Easy to amplify instead of cancel, disturbance feedforward.  In general, this method is not robust to model changes and can easily amplify non-modeled disturbance behavior. Not the same behavior for in and out. 
+Easy to amplify instead of cancel, disturbance feedforward.  In general, this method is not robust to model changes and can easily amplify non-modeled disturbance behavior. Not the same behavior for in and out.
+
+\subsection{Experimental results}
+All experimental tests were performed on a damaged rotational stage, which implied in a standard deviation varying between \unit{1}{\micro\radian} and \unit{5}{\micro\radian} in closed loop operation. Such a large varying standard deviation makes it difficult to compare 2 acquisitions that was not successively acquired directly after one another. Hence, the reduction of the yaw angle shown in for instance Figure~\ref{fig:yl_closedloop_80} and \ref{fig:yl_closedloop_50} should only be taken as an indication of the harmonic cancellation capability. This also explains the big difference between the open and closed loop performance, shown in Figure~\ref{fig:fft_openloop_80} and Figure~\ref{fig:fft_closedloop_80}, that in theory should have the same , cancellation performance after the response has settled.
+
+Acquisitions were also taken under non-optimal circumstances with ongoing construction work close to the laboratory area. This explains some of the quick oscillations in the cancellation effectiveness seen as a temporarily increase in the yaw angle deviation in Figure~\ref{fig:transient_closedloop_50}. However, these disturbances are usually very low frequent and does not affect the high frequency region in the \abbrFFT.
+
+\subsection{Method}
 
 
 \section{Future work}
