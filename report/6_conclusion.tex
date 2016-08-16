@@ -18,8 +18,14 @@ All experimental tests were performed on a damaged rotational stage, which impli
 
 Acquisitions were also taken under non-optimal circumstances with ongoing construction work close to the laboratory area. This explains some of the quick oscillations in the cancellation effectiveness seen as a temporarily increase in the yaw angle deviation in Figure~\ref{fig:transient_closedloop_50}. However, these disturbances are usually very low frequent and does not affect the high frequency region in the \abbrFFT.
 
+beat effect
+
+The observer cannot be on all time, creating feedback
 
 
 \section{Future work}
+In the future, the tracking capability could be enhanced even further by combining some of the methods used in this thesis. For example to increase bandwidth and tracking capability the \abbrIRC could be implemented, and for the rejection of specific induced harmonics, the \abbrRFDC could be used without deteriorating the sensitivity to disturbances and model errors. Also an adaptive approach might be valuable to measure and adapt the controller parameters to long term effects such as thermal effects and aging of the piezoelectric actuator.
 
-To achieve intersample disturbance rejection, a multi rate control technique with a control period shorter than the sampling rate can be implemented, as proposed in \citep{fujimoto2009rro}. However if
+Improvement in the mechanical design could also be done. In fact, a new, high stiffness rotational stage has already been manufactured with the aim of increasing the stiffness of the system and thereby also extending the bandwidth, allowing for a more precise tracking and a better disturbance rejection. Even though it has a higher bandwidth than the previous stage, different angular and linear positions still changes the linear model drastically. The \abbrIRC is a promising control technique for handling these kind of model changes since it only uses a negative feedforward to damp out the first resonance peak and has no direct information of where the first resonance peak may be located. However, further investigation has to be carried out on this in order to gain a better knowledge about the controller's behavior and applicability.
+
+To improve the already implemented \abbrRFDC method, several of adjustments can be made. For instance, a big drawback is that the frequencies that can be selected as subject for cancellation must have an integer number of periods that is a multiple of the sampling time. To achieve intersample disturbance rejection, a multi rate control technique with a control period shorter than the sampling period can be implemented, as proposed in \citep{fujimoto2009rro}. To get rid of the beat effect, a technique trying to regularly synchronize the observed and replicated disturbance could be implemented. One way could be to observe the disturbance all the time and only use a few elements to synchronize the phase of the replicated disturbance. Another could just be to do new observations and replications regularly, but how this technique would work in its full is left for future investigation.
