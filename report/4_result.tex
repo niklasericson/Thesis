@@ -73,7 +73,7 @@ Even though the rotational stage has been modeled by \eqref{eq:tf}, a second ord
   \caption{\label{tab:adaptive_param} Parameters of the system model and the tuned adaptive controller.}
 \end{table}
 
-Figure~\ref{fig:step_adaptive} shows the step response to different step sizes. Here it is clear that the system becomes unstable if the step size $\geq$ \unit{26}{\milli\radian}. The controller has been tuned to handle the maximum step size, i.e the rotational range of \unit{20}{\milli\radian}, which results in a longer rise time for the smaller step sizes. The simulation was performed without any saturation on the input signal, indicating that amplitude dependent behavior might be due to numerical errors. Note that the responses are produced with initial values $k_i = 0$, if the initial values would be set to the values that $k_i$ settles to, a faster step response could be expected. This can be seen in Figure~\ref{fig:periodic_resp} where the controller performs better for the second period.
+Figure~\ref{fig:step_adaptive} shows the step response to different step sizes. Here it is clear that the system becomes unstable if the step size $\geq$ \unit{26}{\milli\radian}. Note that all tests were produced with initial values $k_i = 0$.
 
 \begin{figure}[h!]
   \centering
