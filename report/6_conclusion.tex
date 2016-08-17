@@ -10,19 +10,21 @@ The adaptive controller was tuned to handle a maximum step size of \unit{20}{\mi
 The \abbrIRC method performed well in the simulations showing good attenuation of the first resonance peak. Due to its high bandwidth, it was expected that the \abbrIRC should outperform the present controller with respect to tracking performance. However, neither the present nor the \abbrIRC eliminates the constant ramp tracking error completely due to non existing pure integrator in the controller. The high bandwidth also implies in a controller that is more sensitive to measurement noise and to model errors in terms of stability, as shown in Figure~\ref{fig:model_dist_high_order}.
 
 
-As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. In reality it would be plenty of  higher resonance (all are not modeled) that will lead to more ringing and bad disturbance rejection.
-
-Easy to amplify instead of cancel, disturbance feedforward. In general, this method is not robust to model changes and can easily amplify non-modeled disturbance behavior. Not the same behavior for in and out.
+% As seen in the zoom-in, the \abbrIRC is slightly more damped but has a high frequency ringing in 448Hz, the same frequency as the model's second resonance peak. In reality it would be plenty of  higher resonance (all are not modeled) that will lead to more ringing and bad disturbance rejection.
+%
+% Easy to amplify instead of cancel, disturbance feedforward. In general, this method is not robust to model changes and can easily amplify non-modeled disturbance behavior. Not the same behavior for in and out.
+%
+% RFDC - A converging time of 2 seconds might be considered as fairly high. Increasing the gain in G in Table~\ref{tab:kalman} would lead to a quicker convergence but would also imply in more noise added to the observed model, especially for high frequency models with frequencies close to the Nyquist frequency. This phenomenon is illustrated in Figure~\ref{fig:ph_lowgain} and \ref{fig:ph_highgain}, where the value of G for the 200Hz model was increased 7 times. - filter and cancellation performance
 
 
 All experimental tests were performed on a damaged rotational stage, which implied in a standard deviation varying between \unit{1}{\micro\radian} and \unit{5}{\micro\radian} in closed loop operation. Such a large varying standard deviation makes it difficult to compare 2 acquisitions that was not successively acquired directly after one another. Hence, the reduction of the yaw angle shown in for instance Figure~\ref{fig:yl_closedloop_80} and \ref{fig:yl_closedloop_50} should only be taken as an indication of the harmonic cancellation capability. This also explains the big difference between the open and closed loop performance, shown in Figure~\ref{fig:fft_openloop_80} and Figure~\ref{fig:fft_closedloop_80}, that in theory should have the same , cancellation performance after the response has settled.
 
 Acquisitions were also taken under non-optimal circumstances with ongoing construction work close to the laboratory area. This explains some of the quick oscillations in the cancellation effectiveness seen as a temporarily increase in the yaw angle deviation in Figure~\ref{fig:transient_closedloop_50}. However, these disturbances are usually very low frequent and does not affect the high frequency region in the \abbrFFT.
 
-beat effect
-
-The observer cannot be on all time, creating feedback
-
+% beat effect
+%
+% The observer cannot be on all time, creating feedback
+%
 
 \section{Future work}
 In the future, the tracking capability could be enhanced even further by combining some of the methods used in this thesis. For example to increase bandwidth and tracking capability the \abbrIRC could be implemented, and for the rejection of specific induced harmonics, the \abbrRFDC could be used without deteriorating the sensitivity to disturbances and model errors. Also an adaptive approach might be valuable to measure and adapt the controller parameters to long term effects such as thermal effects and aging of the piezoelectric actuator.
