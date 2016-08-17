@@ -1,6 +1,6 @@
 % !TEX root = main.tex
 \chapter{Theory}\label{cha:controlApproach}
-This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis.
+This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis. In the first two sections, an adaptive controller and an integral resonance controller is presented in detailed. In the last and following section, harmonic cancellation is discussed, where three different approaches is described and motivated.
 
 \section{Model Reference Adaptive Control}
 An adaptive controller has the ability to adjust the system response by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (\abbrMRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The \abbrMRAC scheme can be extended to include perturbation estimation (\abbrMRACPE), giving the controller the ability to compensate for various non-modeled effects, including both linear and nonlinear perturbations. Nonlinear effects such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and output signal. The \abbrMRACPE also allows the maximum tracking error to be predefined.
@@ -52,7 +52,7 @@ Recalling~\eqref{eq:sysmodel}, replacing $f(t)$ with the estimation $\hat{f}(t)$
 
 Transforming it into state-space form
 \begin{equation}
-  \label{eq:refmodel}
+  \label{eq:stateSpaceError}
   \mathbf{\dot{E} = AE} + \beta_0\mathbf{B}u + \Delta
 \end{equation}
 where
@@ -130,29 +130,29 @@ A block diagram of the final controller, with inspiration from Figure 9.1 in ~\c
 \newpage~\newpage~
 \FloatBarrier
 \section{Integral Resonance Control}\label{sec:irc}
-The integral resonace control (IRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant artificial feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0 dB. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase between $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinite gain margin.
+The integral resonace control (\abbrIRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0 dB. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase between $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinite gain margin.
 
 The negative gain $D_f$ is straight forward to manually select for introducing a complex pair of zeros below the first resonance. The integral gain $k$ can be chosen by using the root locus technique and select a gain that maximizes damping.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim=5.5cm 3cm 5.1cm 9.5cm, clip=true]{fig/matlab/irc}
-  \caption{\label{fig:irc}Block diagram of IRC damping loop}
+  \caption{\label{fig:irc}Block diagram of \abbrIRC damping loop}
 \end{figure}
 
-The IRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ and $D_f$ in the same block, the resulting scheme is shown in the inner loop in Figure~\ref{fig:irc_int}, where
+The \abbrIRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ and $D_f$ in the same block, the resulting scheme is shown in the inner loop in Figure~\ref{fig:irc_int}, where
 
 \begin{equation}
   \label{eq:C2}
   C_2 = \frac{C}{1+CD_f}\Bigg|_{C = \frac{-k}{s}} = \frac{-k}{s - kD_f}
 \end{equation}
 
-For tracking reference trajectories, the IRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negtive gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}.
+For tracking reference trajectories, the \abbrIRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negative gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{fig/matlab/irc_int}
-  \caption{\label{fig:irc_int}Block diagram of the tracking control system with IRC included}
+  \caption{\label{fig:irc_int}Block diagram of the tracking control system with \abbrIRC included}
 \end{figure}
 
 Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros. To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.
@@ -187,7 +187,7 @@ which illustrates that the number of introduced zeros is equal to the relative d
 \end{equation}
 
 \section{Harmonic cancellation}
-Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro} \citep{fujimoto2004repetitive} \citep{vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel the periodic disturbances that are introduced by the movement of the linear stage. The period lengths of the introduced harmonics can be found  from characterizing tests and should correlate with the stepping rate of the linear axis motor. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
+Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro, fujimoto2004repetitive, vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However, including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel periodic disturbances that are introduced by environmental disturbances. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
 
 \subsection{Feedforward Disturbance Cancellation}\label{subsec:distff}
 If a disturbance is measurable during operation, a feedforward of the disturbance model response can be used to eliminate the disturbance before it gets present in the output signal \citep{industrial}. A simple block diagram of the structure is shown in Figure~\ref{fig:ffdist}, where $G, C, P_d$ and $K_f$ represents the system, the controller, the disturbance model and the feedforward block respectively.
@@ -208,7 +208,7 @@ The output is described by the following expression
 and hence a ideal choice of $K_f$ would be $K_f=P_d/G$ which would eliminate the disturbance completely. It is worth noting that the ideal $K_f$ might not be fully implementable (stable, proper and causal) and that the inverse of G has to be approximated, leading to merely partial cancellation of the disturbance. This approximation can still be sufficient if the inverse is constructed in a way so that $(P_d - K_fG)/(1+CG)$ becomes small for the frequencies where the disturbance has the most impact on the system.
 
 \subsection{Cancellation with Internal Model Principle}\label{subsec:distimp}
-The \abbrIMP says that if a disturbance (entering the system on the output or input) can be described by a generating polynomial $\Gamma(s)$ then a standard one \abbrDOF-controller $C_{t}(s) = P(s)/\Gamma(s)\bar{L}(s)$ can be used to asymptotically reject the effect of a modeled disturbance.  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$, is derived by taking the Laplace transform of the differential equation describing the disturbance where f(0,s) arises from non-zero initial conditions. To show the principle of \abbrIMP parts of the evidence derived in \citep{IMP:Perry} is presented here.
+The \abbrIMP says that if a disturbance (entering the system on the output or input) can be described by a generating polynomial $\Gamma(s)$ then a standard one \abbrDOF-controller $C_{t}(s) = P(s)/(\Gamma(s)\bar{L}(s))$ can be used to asymptotically reject the effect of a modeled disturbance.  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$, is derived by taking the Laplace transform of the differential equation describing the disturbance where f(0,s) arises from non-zero initial conditions. To show the principle of \abbrIMP parts of the evidence derived in \citep{IMP:Perry} is presented here.
 
 Consider the system model $G(s) = A(s)/B(s)$. Using this system with the controller $C_t$ in closed loop yields the sensitivity function in \eqref{eq:s_imp}, which is the transfer function from output disturbance to output.
 \begin{equation}
@@ -234,12 +234,12 @@ A basic block scheme is shown in Figure~\ref{fig:imp} where $G$ is the system, $
 \end{figure}
 
 \subsection{Repetitive Feedforward Disturbance Cancellation}
-Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. With respect to this drawback, a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the novel control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
+Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. With respect to this drawback, a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim=6cm 5.5cm 5.2cm 5.5cm, clip=true]{fig/matlab/ffrep}
-  \caption{\label{fig:ffrep}Block diagram of the feedforward switching mechanism including observer and feedback controller.}
+  \caption{\label{fig:ffrep}Block diagram of a feedforward switching mechanism including an observer and a feedback controller.}
 \end{figure}
 
 This method uses an observer to estimate the states of the disturbance. When the states have converged the switch is turned on for one period $T_d$ of the disturbance. This period is then replicated and used to subtract the disturbance from the input signal as illustrated in the block diagram. The delay constant $d$ and the switching on and off time have to be set in advance, hence $T_d$ must be known. Note that if the disturbance frequency is not a multiple of the sampling frequency $T_s$ then extra care has to be taken when setting the delay and switching times. Multiple periods should preferably be used to get a full number of oscillations within the switching timespan that is switched with a period of $T_s$.
@@ -338,7 +338,7 @@ where $\mathbf{A, B}$ and $\mathbf{C}$ are the augmented system matrices and $\m
 
 The observer gain should be tuned (placing the eigenvalues of $\mathbf{A-KC}$) with respect to the tradeoff between the quickness in the state reconstruction and the sensitivity to measurement noise. An optimal choice of K can be calculated by the Kalman filter if the noise intensities are known. By deriving the closed loop system, it is shown in \citep{fujimoto2004repetitive} that the disturbance rejection will be achieved at every sampling point in steady state.
 
-The method can be extended to estimate and reject $n$ harmonics by extending $\mathbf{A_d}$ as shown in \eqref{eq:sinexten}, adding $n$ delay loops for each estimated disturbance and by  summing all replicated disturbances i.e. $d_i = \sum_{k=1}^{n} d_k$.
+The method can be extended to estimate and reject $n$ harmonics by extending $\mathbf{A_d}$ as shown in \eqref{eq:sinexten}, adding $n$ delay loops for each estimated disturbance and by summing all replicated disturbances i.e. $d_i = \sum_{k=1}^{n} d_k$.
 
 \begin{equation}
   \label{eq:sinexten}
@@ -351,6 +351,29 @@ The method can be extended to estimate and reject $n$ harmonics by extending $\m
     \begin{bmatrix}
        \mathbf{C_{d1}}  &  \mathbf{C_{d2}} & \hdots & \mathbf{C_{dn}} \\
     \end{bmatrix}
+\end{equation}
+
+To reduce the amount of non-modeled disturbances entering the disturbance estimation, the authors in \citep{fujimoto2004repetitive} suggest a bandpass filter to be added after the replication. This could be any type of bandpass filter but it needs to have zero-phase for the selected frequencies, making the range of applicable filters much more narrow. One example of bandpass filter, with zero phase for the selected frequency $\omega$ is
+
+\begin{equation}
+  \label{eq:bandpass}
+  BP = k\frac{s^2 + 2\xi_a\omega s + \omega^2}{s^2 + 2\xi_b\omega s + \omega^2}
+\end{equation}
+
+which has to be discretized before implementation.
+
+\subsection{Beat Effect}\label{subsec:beat}
+When canceling one harmonic with another, one might encounter an oscillating effect in the performance known as the "beat effect".
+A beat is a interference pattern that occurs due to constructive and destructive interference between two signals that propagate with slightly different frequencies. The summation of the 2 signals forms an envelope oscillating with a frequency of half the difference between the two frequencies \citep{beat:2016}. Assume two signals with amplitude one and frequencies $f_1$ and $f_2$ i.e. $y_1 = cos(2\pi f_1t)$ and $y_2 = cos(2\pi f_2t)$. Adding these signals and using trigonometric identities yields
+
+\begin{equation}
+  y_1 + y_2 = 2cos(2\pi\frac{f_1+f_2}{2}t)cos(2\pi\frac{f_1-f_2}{2}t)
+\end{equation}
+
+where the last cosine describes the envelope which oscillates with the frequency $f_{beat}$ shown below.
+
+\begin{equation}
+  f_{beat} = \frac{f_1-f_2}{2}
 \end{equation}
 
 %\begin{chapter-appendix}
