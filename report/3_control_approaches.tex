@@ -130,9 +130,9 @@ A block diagram of the final controller, with inspiration from Figure 9.1 in ~\c
 \newpage~\newpage~
 \FloatBarrier
 \section{Integral Resonance Control}\label{sec:irc}
-The integral resonace control (\abbrIRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. For stability, the phase response of the loop-gain $CG_d$ must be within $\pm180^{\circ}$ while the gain is greater than 0 dB. The negative sign in $G_d$ subtracts a phase of $-180^{\circ}$. Using this knowledge, the phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead. This results in a phase between $\pm90^{\circ}$ which gives the system highly desired properties such as a $90^{\circ}$ phase margin and an infinite gain margin.
+The integral resonace control (\abbrIRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. The addition of a negative feedforward will subtract, in the low frequency domain, a phase of $-180^{\circ}$. The phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead.
 
-The negative gain $D_f$ is straight forward to manually select for introducing a complex pair of zeros below the first resonance. The integral gain $k$ can be chosen by using the root locus technique and select a gain that maximizes damping.
+The negative gain $D_f$ can be manually selected to introduce a complex pair of zeros below the first resonance. The integral gain $k$ can be chosen by using the root locus technique and select a gain that maximizes damping.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
@@ -147,7 +147,15 @@ The \abbrIRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ 
   C_2 = \frac{C}{1+CD_f}\Bigg|_{C = \frac{-k}{s}} = \frac{-k}{s - kD_f}
 \end{equation}
 
-For tracking reference trajectories, the \abbrIRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negative gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}.
+For tracking reference trajectories, the \abbrIRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negative gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}. The closed loop system and the sensitivity function for the \abbrIRC is written below.
+
+\begin{subequations}
+  \label{eq:discrsys}
+  \begin{alignat}{2}
+    & Gc = \frac{C_1C_2G}{1 + C_2G + C_1C_2G} \\
+    & S = \frac{1}{1 + C_2G + C_1C_2G}
+  \end{alignat}
+\end{subequations}
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
@@ -155,9 +163,9 @@ For tracking reference trajectories, the \abbrIRC can be enclosed in an outer lo
   \caption{\label{fig:irc_int}Block diagram of the tracking control system with \abbrIRC included}
 \end{figure}
 
-Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros. To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.
+Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros.
 
-Let G be represented as a transfer function with a relative degree of one, with 2 poles and 1 zero as written below,
+To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.Let G be represented as a transfer function with a relative degree of one, with 2 poles and 1 zero as written below,
 
 \begin{equation}
   \label{eq:irc_sys}
@@ -187,7 +195,7 @@ which illustrates that the number of introduced zeros is equal to the relative d
 \end{equation}
 
 \section{Harmonic cancellation}
-Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro, fujimoto2004repetitive, vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However, including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function making the system more sensitive to other frequencies. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel periodic disturbances that are introduced by environmental disturbances. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
+Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro, fujimoto2004repetitive, vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However, including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel periodic disturbances that are introduced by environmental disturbances. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
 
 \subsection{Feedforward Disturbance Cancellation}\label{subsec:distff}
 If a disturbance is measurable during operation, a feedforward of the disturbance model response can be used to eliminate the disturbance before it gets present in the output signal \citep{industrial}. A simple block diagram of the structure is shown in Figure~\ref{fig:ffdist}, where $G, C, P_d$ and $K_f$ represents the system, the controller, the disturbance model and the feedforward block respectively.
@@ -234,7 +242,7 @@ A basic block scheme is shown in Figure~\ref{fig:imp} where $G$ is the system, $
 \end{figure}
 
 \subsection{Repetitive Feedforward Disturbance Cancellation}
-Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. With respect to this drawback, a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
+Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. However, this approach will make the system more sensitive to other frequencies implying in a overall worsen total tracking accuracy. With respect to this drawback a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
