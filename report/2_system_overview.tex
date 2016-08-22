@@ -75,10 +75,10 @@ The creep effect is another nonlinear effect that is present during the operatio
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
-  \subfloat[][\label{fig:hysteresis} Hysteresis]{
+  \subfloat[][\label{fig:hysteresis} Hysteresis loop]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/hysteresis.eps}}
   \qquad
-  \subfloat[][\label{fig:creep} Creep]{
+  \subfloat[][\label{fig:creep} Creep effect]{
   \includegraphics[width=0.46\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{fig/matlab/creep.eps}}
   \caption{\label{fig:effects} Illustration of the hysteresis effect (a) and creep effect (b). Note that the creep effect can last up to 10-15 minutes even if the plot only shows the development over 4 seconds.}
 \end{figure}
@@ -96,7 +96,7 @@ The piezo-actuated rotational stage is modeled by a Hammerstein structure, adopt
 
 \subsection{Maxwell-slip Model}
 \label{sec:maxwell}
-A generalized Maxwell-slip is used to model the hysteresis effect. It uses a parallel $n^{th}$ order elasto-slide element system with a friction force acting on each element, to create a nonlinear model. An elasto-slide element consist of a massless spring connected in series with a massless block that is subject to Coulomb friction. The model is summarized in the following equations and described more thoroughly in \citep{Ru:2016},
+A generalized Maxwell-slip is used to model the hysteresis effect. It uses a parallel $n^{th}$ order elasto-slide element system with a friction force acting on each element, to create a nonlinear model. An elasto-slide element consist of a massless spring connected in series with a massless block that is subject to Coulomb friction. The inverse hysteresis model is summarized in the following equations and described more thoroughly in \citep{Ru:2016},
 
 \begin{equation}
   \label{eq:maxwell_slip}
@@ -113,7 +113,7 @@ A generalized Maxwell-slip is used to model the hysteresis effect. It uses a par
 \end{equation}
 
 where $F_i$ is the output force, $k_i$ the spring constant, $f_i$ the break-away force and $x_b$ is the block position where $i=1 \hdots n$. In terms of the rotational stage $F_i$ represents the applied voltage, $x$ the input (rotational) displacement, $x_b$ angular position and $k_i, f_i$ are unknown parameters
-The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \citep{ButcherIdentification:2015,ButcherController:2015}. The result is presented in Figure~\ref{fig:maxwell} and Table~\ref{tab:maxwell} where $n=10$.
+The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \citep{ButcherIdentification:2015,ButcherController:2015}. The identified set of parameters is presented in Table~\ref{tab:maxwell} where $n=10$. The model fit of the hysteresis model, which uses the same set of parameters as the inverse hysteresis model, is shown Figure~\ref{fig:maxwell}.
 
 \begin{figure}[h]
   \centering
