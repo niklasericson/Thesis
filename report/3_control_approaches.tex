@@ -12,7 +12,7 @@ Using a second order model, the adaptive laws can be derived as follows. Conside
   \ddot{x}(t) + \alpha_1\dot{x}(t) +  \alpha_0x(t) = \beta_0u(t) + f(t)
 \end{equation}
 
-where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\cite{Elmali:1996}, for a simple second order SISO model the perturbation estimation is derived to
+where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\cite{Elmali:1996}, for a simple second order SISO-model the perturbation estimation is derived to
 
 \begin{equation}
   \label{eq:perturbation}
@@ -123,20 +123,20 @@ A block diagram of the final controller, with inspiration from Figure 9.1 in ~\c
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=4cm 0cm 3.8cm 0cm, clip=true]{fig/matlab/adaptive_scheme}
+  \includegraphics[width=0.85\textwidth, trim=5cm 0cm 3.8cm 0cm, clip=true]{fig/matlab/adaptive_scheme}
   \caption{\label{fig:adaptive}Block diagram of the adaptive controller}
 \end{figure}
 
 \newpage~\newpage~
 \FloatBarrier
 \section{Integral Resonance Control}\label{sec:irc}
-The integral resonace control (\abbrIRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. The addition of a negative feedforward will subtract, in the low frequency domain, a phase of $-180^{\circ}$. The phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead.
+The integral resonance control (\abbrIRC) can be efficiently used to damp out the first resonant mode of the system, allowing for larger controller gains and a higher control bandwidth. The \abbrIRC scheme is illustrated in Figure~\ref{fig:irc} and consist of a constant feed-through term $D_f<0$ and an negative integral controller $C=\frac{-k}{s}$ where $k>0$. The negative feed-forward term will, if sufficiently large and negative, introduce a pair of complex zeros below the first resonance frequency and ensure zero-pole cancellation for higher resonance modes as shown in \citep{Aphale:2007}. The addition of a negative feedforward will subtract, in the low frequency domain, a phase of $-180^{\circ}$. The phase margin can easily be increased by applying a simple negative integral controller to provide a 90 degrees phase lead.
 
 The negative gain $D_f$ can be manually selected to introduce a complex pair of zeros below the first resonance. The integral gain $k$ can be chosen by using the root locus technique and select a gain that maximizes damping.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=5.5cm 3cm 5.1cm 9.5cm, clip=true]{fig/matlab/irc}
+  \includegraphics[width=0.85\textwidth, trim=5.5cm 4cm 5.1cm 9.5cm, clip=true]{fig/matlab/irc}
   \caption{\label{fig:irc}Block diagram of \abbrIRC damping loop}
 \end{figure}
 
@@ -159,11 +159,11 @@ For tracking reference trajectories, the \abbrIRC can be enclosed in an outer lo
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{fig/matlab/irc_int}
+  \includegraphics[width=0.95\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{fig/matlab/irc_int}
   \caption{\label{fig:irc_int}Block diagram of the tracking control system with \abbrIRC included}
 \end{figure}
 
-Proof for the zero-pole interlacement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros.
+Proof for the zero-pole entanglement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros.
 
 To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below.Let G be represented as a transfer function with a relative degree of one, with 2 poles and 1 zero as written below,
 
@@ -216,9 +216,7 @@ The output is described by the following expression
 and hence a ideal choice of $K_f$ would be $K_f=P_d/G$ which would eliminate the disturbance completely. It is worth noting that the ideal $K_f$ might not be fully implementable (stable, proper and causal) and that the inverse of G has to be approximated, leading to merely partial cancellation of the disturbance. This approximation can still be sufficient if the inverse is constructed in a way so that $(P_d - K_fG)/(1+CG)$ becomes small for the frequencies where the disturbance has the most impact on the system.
 
 \subsection{Cancellation with Internal Model Principle}\label{subsec:distimp}
-The \abbrIMP says that if a disturbance (entering the system on the output or input) can be described by a generating polynomial $\Gamma(s)$ then a standard one \abbrDOF-controller $C_{t}(s) = P(s)/(\Gamma(s)\bar{L}(s))$ can be used to asymptotically reject the effect of a modeled disturbance.  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$, is derived by taking the Laplace transform of the differential equation describing the disturbance where f(0,s) arises from non-zero initial conditions. To show the principle of \abbrIMP parts of the evidence derived in \citep{IMP:Perry} is presented here.
-
-Consider the system model $G(s) = A(s)/B(s)$. Using this system with the controller $C_t$ in closed loop yields the sensitivity function in \eqref{eq:s_imp}, which is the transfer function from output disturbance to output.
+The \abbrIMP says that if a disturbance (entering the system on the output or input) can be described by a generating polynomial $\Gamma(s)$ then a standard one \abbrDOF-controller $C_{t}(s) = P(s)/(\Gamma(s)\bar{L}(s))$ can be used to asymptotically reject the effect of a modeled disturbance.  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$, is derived by taking the Laplace transform of the differential equation describing the disturbance where f(0,s) arises from non-zero initial conditions. To show the principle of \abbrIMP parts of the evidence derived in \citep{IMP:Perry} is presented here. Consider the system model $G(s) = A(s)/B(s)$. Using this system with the controller $C_t$ in closed loop yields the sensitivity function in \eqref{eq:s_imp}, which is the transfer function from output disturbance to output.
 \begin{equation}
   \label{eq:s_imp}
   S(s) = \frac{A(s)\Gamma(s)\bar{L}(s)}{A(s)\Gamma(s)\bar{L}(s) + B(s)P(s)}
@@ -235,18 +233,19 @@ The inverse Laplace transform y(t) converges to 0 if the controller has been tun
 
 A basic block scheme is shown in Figure~\ref{fig:imp} where $G$ is the system, $C(s) = P(s)/\bar{L}(s)$ the tunable controller, $C_{imp} = 1/\Gamma(s)$ is the compensator and $d_o$ is the considered disturbance.
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=6.5cm 5.5cm 5.97cm 11cm, clip=true]{fig/matlab/imp}
+  \includegraphics[width=0.8\textwidth, trim=6.5cm 5.5cm 5.97cm 11cm, clip=true]{fig/matlab/imp}
   \caption{\label{fig:imp}Block diagram of the \abbrIMP control structure.}
 \end{figure}
-
+\newpage
 \subsection{Repetitive Feedforward Disturbance Cancellation}
-Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. However, this approach will make the system more sensitive to other frequencies implying in a overall worsen total tracking accuracy. With respect to this drawback a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. A block scheme of the control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
+Repetitive control can sufficiently be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons but mostly for the inclusion of a low-pass filter which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. However, this approach will make the system more sensitive to other frequencies implying in a overall worsen total tracking accuracy. With respect to this drawback a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive}, for the purpose of head-tracking control in hard disk drives. This method is refereed to as \emph{Feedforward disturbance rejection with switching
+scheme} in the paper but will in this thesis simply be called \abbrRFDC (Repetitive Feedforward Disturbance Cancellation). A block scheme of the control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represents the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=6cm 5.5cm 5.2cm 5.5cm, clip=true]{fig/matlab/ffrep}
+  \includegraphics[width=0.95\textwidth, trim=6cm 5.5cm 5.2cm 5.5cm, clip=true]{fig/matlab/ffrep}
   \caption{\label{fig:ffrep}Block diagram of a feedforward switching mechanism including an observer and a feedback controller.}
 \end{figure}
 
