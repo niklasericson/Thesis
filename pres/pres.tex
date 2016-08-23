@@ -1,0 +1,139 @@
+\documentclass[10pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[swedish, english]{babel}
+\usepackage{epstopdf}
+\epstopdfsetup{update} % only regenerate pdf files when eps file is newer
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+%\setbeamertemplate{frame footer}{Niklas Ericson - Linköping University}
+\setbeamercolor{progress bar}{ fg = CERNBlue , bg = CERNBlue!30 }
+\setbeamercolor{alerted text}{ fg = CERNBlue , bg = CERNBlue!30 }
+
+\title{Presentation of Master's Thesis}
+\subtitle{Investigation of Control Approaches for a High Precision, \\ Piezo-actuated Rotational Stage}
+\date{\today}
+\author{Niklas Ericson}
+\institute{Linköping University | European Organization for Nuclear Research}
+\titlegraphic{\hfill\includegraphics[height=1cm, trim=0cm 0.65cm 0cm 0cm, clip=true]{../fig/LiU_primary_black}
+              \hspace{0.2cm}\includegraphics[height=1.2cm]{../fig/CERNLogoBadge}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{Purpose}
+  {\textsc{hsrm} bold text}
+\end{frame}
+\begin{frame}[fragile]{Goal}
+  Sections group slides of the same topic
+
+  \begin{verbatim}    \section{Elements}\end{verbatim}
+
+  for which \themename provides a nice progress indicator \ldots
+\end{frame}
+
+\begin{frame}[fragile]{Challenges}
+  {\textsc{hsrm} bold text}
+\end{frame}
+
+\begin{frame}[fragile]{Method}
+  {\textsc{hsrm} bold text}
+\end{frame}
+
+\section{System Overview}
+
+\begin{frame}[fragile]{Crystal Collimators}
+  The theme provides sensible defaults to \emph{emphasize} text,
+  \alert{accent} parts or show \textbf{bold} results.
+\end{frame}
+
+\begin{frame}{Rotational stage}
+  \begin{itemize}
+    \item Regular
+    \item \textit{Italic}
+    \item \textsc{SmallCaps}
+    \item \textbf{Bold}
+    \item \textbf{\textit{Bold Italic}}
+    \item \textbf{\textsc{Bold SmallCaps}}
+    \item \texttt{Monospace}
+    \item \texttt{\textit{Monospace Italic}}
+    \item \texttt{\textbf{Monospace Bold}}
+    \item \texttt{\textbf{\textit{Monospace Bold Italic}}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Modeling}
+\end{frame}
+
+\begin{frame}{Present Control Approach}
+  \begin{equation*}
+    e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
+  \end{equation*}
+\end{frame}
+
+\section{Approaches and Simulation Results}
+
+\begin{frame}{Integral Resonance Control}
+\end{frame}
+
+\begin{frame}{Model Reference Adaptive Controller}
+\end{frame}
+
+\begin{frame}{Harmonic Cancellation}
+\end{frame}
+
+\begin{frame}{Comparison}
+\end{frame}
+
+\section{Implementation}
+
+\begin{frame}{Setup}
+\end{frame}
+
+\begin{frame}{Experimental Results}
+\end{frame}
+
+
+\section{Conclusion}
+
+\begin{frame}{Simulation Results}
+\end{frame}
+
+\begin{frame}{Experimental Results}
+\end{frame}
+
+\begin{frame}{Summary}
+\end{frame}
+
+\begin{frame}[standout]
+  Questions?
+\end{frame}
+
+\appendix
+
+\begin{frame}[allowframebreaks]{References}
+
+  \bibliography{demo}
+  \bibliographystyle{abbrv}
+
+\end{frame}
+
+\end{document}
