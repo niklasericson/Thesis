@@ -3,7 +3,7 @@
 This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis. In the first two sections, an adaptive controller and an integral resonance controller is presented in detailed. In the last and following section, harmonic cancellation is discussed, where three different approaches is described and motivated.
 
 \section{Model Reference Adaptive Control}
-An adaptive controller has the ability to adjust the system response by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which the adaptive laws will aim for, this approach is known as the Model Reference Adaptive Controller (\abbrMRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The \abbrMRAC scheme can be extended to include perturbation estimation (\abbrMRACPE), giving the controller the ability to compensate for various non-modeled effects, including both linear and nonlinear perturbations. Nonlinear effects such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and output signal. The \abbrMRACPE also allows the maximum tracking error to be predefined.
+An adaptive controller has the ability to adjust the system response by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which serves as a target for the adaptive laws. This approach is known as the Model Reference Adaptive Controller (\abbrMRAC). This model does not require any prior knowledge about the model uncertainties, implying in a more straight forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The \abbrMRAC scheme can be extended to include perturbation estimation (\abbrMRACPE), giving the controller the ability to compensate for various non-modeled effects, including both linear and nonlinear perturbations. Nonlinear effects such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as linear, using the knowledge of the system and the previous measurement and output signal. The \abbrMRACPE also allows the maximum tracking error to be predefined.
 
 \subsection{Perturbation Estimation}\label{sec:pertest}
 Using a second order model, the adaptive laws can be derived as follows. Consider the system model stated below.
@@ -12,7 +12,7 @@ Using a second order model, the adaptive laws can be derived as follows. Conside
   \ddot{x}(t) + \alpha_1\dot{x}(t) +  \alpha_0x(t) = \beta_0u(t) + f(t)
 \end{equation}
 
-where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\cite{Elmali:1996}, for a simple second order SISO-model the perturbation estimation is derived to
+where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\citep{Elmali:1996}, for a simple second order SISO-model the perturbation estimation is derived to
 
 \begin{equation}
   \label{eq:perturbation}
@@ -44,7 +44,7 @@ The tracking error is defined as below.
   e(t) = x(t) - x_m(t)
 \end{equation}
 
-Recalling~\eqref{eq:sysmodel}, replacing $f(t)$ with the estimation $\hat{f}(t)$ and subtracting it from~\eqref{eq:refmodel} gives the following expression, more details can be found in~\cite{Qingson:2016}.
+Recalling~\eqref{eq:sysmodel}, replacing $f(t)$ with the estimation $\hat{f}(t)$ and subtracting it from~\eqref{eq:refmodel} gives the following expression, more details can be found in~\citep{Qingson:2016}.
 
 \begin{equation}
   \ddot{e}(t) + a_1\dot{e}(t) + a_0\dot{e}(t) =  (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) - \beta_0u(t) + \hat{f}(t)
@@ -81,7 +81,7 @@ where
 \end{equation}
 with $\delta = (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) + \hat{f}(t)$.
 
-If all the eigenvalues of A have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Moreover, according to Lyaponov theory \cite{Ljung:2003}, for each positive-semidefinite matrix Q, there exist one positive-semidefinite matrix P which solves \eqref{eq:lyap}.
+If all the eigenvalues of A have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Moreover, according to Lyaponov theory \citep{Ljung:2003}, for each positive-semidefinite matrix Q, there exist one positive-semidefinite matrix P which solves \eqref{eq:lyap}.
 
 \begin{equation}
   \label{eq:lyap}
@@ -137,7 +137,7 @@ The negative gain $D_f$ can be manually selected to introduce a complex pair of 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=0.85\textwidth, trim=5.5cm 4cm 5.1cm 9.5cm, clip=true]{fig/matlab/irc}
-  \caption{\label{fig:irc}Block diagram of \abbrIRC damping loop}
+  \caption{\label{fig:irc}Block diagram of the \abbrIRC damping loop.}
 \end{figure}
 
 The \abbrIRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ and $D_f$ in the same block, the resulting scheme is shown in the inner loop in Figure~\ref{fig:irc_int}, where
@@ -147,20 +147,20 @@ The \abbrIRC scheme in Figure~\ref{fig:irc} can be simplified, by combining $C$ 
   C_2 = \frac{C}{1+CD_f}\Bigg|_{C = \frac{-k}{s}} = \frac{-k}{s - kD_f}
 \end{equation}
 
-For tracking reference trajectories, the \abbrIRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negative gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}. The closed loop system and the sensitivity function for the \abbrIRC is written below.
+For tracking reference trajectories, the \abbrIRC can be enclosed in an outer loop, also seen in Figure~\ref{fig:irc_int}, utilizing a second controller $C_1$ to compensate for disturbances and model errors. For the outer controller $C_1$, a PI controller is sufficient but must include a negative gain to compensate for the inversion that is caused by $D_f$ \citep{gu:2014}. The closed loop system ($r$ to $y$) and the sensitivity function ($d_0$ to $y$) for the \abbrIRC is written below.
 
 \begin{subequations}
   \label{eq:discrsys}
   \begin{alignat}{2}
     & Gc = \frac{C_1C_2G}{1 + C_2G + C_1C_2G} \\
-    & S = \frac{1}{1 + C_2G + C_1C_2G}
+    & S = \frac{1}{1 + C_2G + C_1C_2G} \label{eq:discrsys1}
   \end{alignat}
 \end{subequations}
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=0.95\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{fig/matlab/irc_int}
-  \caption{\label{fig:irc_int}Block diagram of the tracking control system with \abbrIRC included}
+  \caption{\label{fig:irc_int}Block diagram of the tracking control system with \abbrIRC included.}
 \end{figure}
 
 Proof for the zero-pole entanglement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros.
@@ -195,7 +195,7 @@ which illustrates that the number of introduced zeros is equal to the relative d
 \end{equation}
 
 \section{Harmonic cancellation}
-Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro, fujimoto2004repetitive, vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However, including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. This approach aims to cancel periodic disturbances that are introduced by environmental disturbances. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
+Cancellation of specific harmonics can be utilized to increase the tracking capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro, fujimoto2004repetitive, vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However, including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
 
 \subsection{Feedforward Disturbance Cancellation}\label{subsec:distff}
 If a disturbance is measurable during operation, a feedforward of the disturbance model response can be used to eliminate the disturbance before it gets present in the output signal \citep{industrial}. A simple block diagram of the structure is shown in Figure~\ref{fig:ffdist}, where $G, C, P_d$ and $K_f$ represents the system, the controller, the disturbance model and the feedforward block respectively.

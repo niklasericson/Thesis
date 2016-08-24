@@ -65,10 +65,10 @@ For the measurement system, three interferometric heads are placed on top of the
 \end{figure}
 
 \section{Piezoelectric Stack Actuators}
-The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to -20 and +150V, respectively. The actuators are made of many thin, stacked electro-active ceramic disks, electrically connected in parallel. This construction allows for a high stiffness actuator that still can exhibit long displacement ranges \cite{Piezo:2008}.
+The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to -20 and +150V, respectively. The actuators are made of many thin, stacked electro-active ceramic disks, electrically connected in parallel. This construction allows for a high stiffness actuator that still can exhibit long displacement ranges \citep{Piezo:2008}.
 
 \subsection{Hysteresis Effect}
-The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of the input signal \cite{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage, e.g. 60V, corresponds to an angular position of \unit{5.2}{\micro\rad} in one direction and to \unit{7.2}{\micro\rad} in the opposite direction.
+The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of the input signal \citep{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage, e.g. 60V, corresponds to an angular position of \unit{5.2}{\micro\rad} in one direction and to \unit{7.2}{\micro\rad} in the opposite direction.
 
 \subsection{Creep Effect}
 The creep effect is another nonlinear effect that is present during the operation of piezoelectric actuators. The effect is a slow elongation or contraction of the actuator displacement over time with a constant driving signal and is caused by thermal effects in the piezo-ceramics. Figure~\ref{fig:creep} illustrates the creep effect. One can see how the rotational stage slightly drifts off from the reference after the applied negative step, increasing the tracking error over time.
@@ -86,7 +86,7 @@ The creep effect is another nonlinear effect that is present during the operatio
 The creep effect is in this project (and many others) efficiently suppressed by the feedback controller requiring no precise modeling and cancellation technique.
 
 \section{Rotational Stage Modeling}
-The piezo-actuated rotational stage is modeled by a Hammerstein structure, adopted by the authors in \cite{ButcherController:2015}, allowing them in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The employed Hammerstein structure is depicted in Figure~\ref{fig:hammerstein} and consists of a \emph{Static Hysteresis} (rate independent) model and a \emph{Linear Dynamics} model. {\abbrPEA}s are known to show hysteretic behavior with a nonlocal memory (the current output does not only depend on the current input voltage but also on its history) as described in \cite{ButcherIdentification:2015}. This behavior is modeled by a generalized Maxwell-slip compensation model, described in \ref{sec:maxwell}. The extracted linear dynamics is identified using the described procedure in \ref{sec:linsys}
+The piezo-actuated rotational stage is modeled by a Hammerstein structure, adopted by the authors in \citep{ButcherController:2015}, allowing them in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The employed Hammerstein structure is depicted in Figure~\ref{fig:hammerstein} and consists of a \emph{Static Hysteresis} (rate independent) model and a \emph{Linear Dynamics} model. {\abbrPEA}s are known to show hysteretic behavior with a nonlocal memory (the current output does not only depend on the current input voltage but also on its history) as described in \citep{ButcherIdentification:2015}. This behavior is modeled by a generalized Maxwell-slip compensation model, described in \ref{sec:maxwell}. The extracted linear dynamics is identified using the described procedure in \ref{sec:linsys}
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
@@ -118,7 +118,7 @@ The model parameters have been estimated by fitting the model to the major hyste
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/maxwell.eps}
-  \caption{\label{fig:maxwell} The plot shows the model fit of the Maxwell slip model to the acquired hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
+  \caption{\label{fig:maxwell} Model fit of the Maxwell slip model to the acquired hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
 \end{figure}
 
 \begin{table}[h!]
@@ -143,30 +143,32 @@ The model parameters have been estimated by fitting the model to the major hyste
 
 \subsection{Linear System Identification}
 \label{sec:linsys}
-The extracted linear dynamics have been identified as a $6^{th}$ order transfer function using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. Figure~\ref{fig:model} shows a comparison between the model and the real system in the frequency domain, where the Fast Fourier Transform (\abbrFFT) identification is calculated by taking the \abbrFFT of the output divided by the \abbrFFT of the input.
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.7\textwidth]{fig/matlab/model.eps}
-  \caption{\label{fig:model} The plot shows the model fit of a transfer function estimation with 5 zeros and 6 poles.}
-\end{figure}
-The transfer function of the model, discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
+The extracted linear dynamics have been identified as a $6^{th}$ order transfer function using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. The transfer function of the model, discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
 
 \begin{equation}
   \label{eq:tf}
   G(z) = \frac{21.05z^{-1} - 6.85z^{-2} + 8.52z^{-3} - 0.71z^{-4} + 9.30z^{-5}}{1344 - 2481z^{-1} + 1469z^{-2} + 21.64z^{-3} - 1767z^{-4} + 2084z^{-5} - 639.5z^{-6}}
 \end{equation}
 
+The transfer function uses five zeros and and six poles to model two of the major resonances as seen in Figure~\ref{fig:model}, which shows a comparison between the model and the calculated Fast Fourier Transform (\abbrFFT) of the real system. The \abbrFFT was calculated by dividing the \abbrFFT of the output with the \abbrFFT of the input.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/matlab/model.eps}
+  \caption{\label{fig:model} Model fit of the system model to the \abbrFFT data.}
+\end{figure}
+
 \FloatBarrier
 \section{Present Control Approach}\label{sec:presentControlApproach}
 The original controller for the rotational stage is a 2-\abbrDOF structure (feedback and prefilter). A schematic overview of the control loop is depicted in Figure~\ref{fig:present}, consisting of a controller block C, a prefilter F, a disturbance d and the linearized rotational stage $G = H^{-1}G_0$, where $G_0 = HG$ is the linear and nonlinear dynamics and $H^{-1}$ is the hysteresis compensator.
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim=4cm 3cm 2.1cm 10cm, clip=true]{fig/matlab/present_controller}
-  \caption{\label{fig:present}Block diagram of the present control loop, inlcuding controller, prefilter and hysteresis compensator.}
+  \caption{\label{fig:present}Block diagram of the present control loop, including controller, prefilter and hysteresis compensator.}
 \end{figure}
 
-The controller block (C) is a series combination of a \abbrPID controller, notch filter and a lead filter, aiming to stabilize the system (\abbrPID), increase the sufficient phase margin (lead) and make the system more robust to high frequency oscillations (notch). Since the open loop bandwidth is relatively low, $f_b = 58 Hz$ according to Figure~\ref{fig:model}, it was decided to exclude cancellation of the first resonance peak in order to maintain the bandwidth as high as possible and to have sufficient attenuation of the resonance peak \citep{ButcherController:2015}. Finally, to enhance the tracking performance, a prefilter (F) was also added to the system. The PID controller, lead network, notch filter and prefilter are all presented below in \eqref{eq:controller}.
+The controller block (C) is a series combination of a \abbrPID controller, notch filter and a lead filter, which stabilizes the system (\abbrPID), increases the phase margin (lead) and makes the system more robust to high frequency oscillations (notch). Since the open loop bandwidth is relatively low, $f_b = 58 Hz$ according to Figure~\ref{fig:model}, it was decided to exclude cancellation of the first resonance peak in order to maintain the bandwidth as high as possible and to have sufficient attenuation of the resonance peak \citep{ButcherController:2015}. Finally, to enhance the tracking performance, a prefilter (F) was also added to the system. The PID controller, lead network, notch filter and prefilter are all presented below in \eqref{eq:controller}.
 
 \begin{subequations}
   \label{eq:controller}
