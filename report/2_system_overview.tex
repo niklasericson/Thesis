@@ -1,17 +1,17 @@
 % !TEX root = main.tex
 \chapter{System Overview}\label{cha:systemOverview}
-This chapter provides the reader with a brief overview of the whole collimator system used in the \abbrLHC at \abbrCERN as well as a more detailed description of the rotational stage, which is the device in focus in this thesis. It also gives a short description of the piezoelectric actuator and its nonlinear effects. In the end of this chapter the present control approach is described in detail, including modeling of the rotational stage, system identification and controller structure.
+This chapter provides the reader with a brief overview of the whole collimator system used in the \abbrLHC at \abbrCERN as well as a more detailed description of the rotational stage, which is the device in focus in this thesis. It also gives a short description of the piezoelectric actuator and its nonlinear effects. At the end of this chapter the present control approach is described in detail, including modeling of the rotational stage, system identification and controller structure.
 
 \section{Crystal collimators}
 A collimator is a specially designed device, built to interfere with the beam and clean it from surrounding halo particles. To be able to meet the future demand of higher energy levels, a more efficient collimator is being developed at CERN. This new collimator will utilize a crystalline solid to extract particles from the beam. A very simplified illustration of the crystal collimation principle is shown in Figure~\ref{fig:collimation}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim= 2cm 15cm 1cm 10cm, clip=true]{fig/matlab/collimation}
-  \caption{\label{fig:collimation}Illustration of the crystal collimation principle as seen from above. The green dashed line represents the linear and the rotational stage movement.}
+  \includegraphics[width=1\textwidth, trim= 2cm 15.5cm 1cm 10cm, clip=true]{fig/matlab/collimation}
+  \caption{\label{fig:collimation}Illustration of the crystal collimation principle as seen from above. The dashed lines represent the linear and the rotational stage movement.}
 \end{figure}
 
-The block named "C" represents the bent crystal which can be moved into the beam by the linear stage and rotated by the rotational stage that is attached to the linear axis. The crystal's linear and rotational movement are indicated in the figure as green dashed lines. During operation, physicists will drive the crystal close to the beam, enter it with an angle and rotate it slightly (in the range of \unit{1}{\milli\rad}) until the channeling effect is detected. Channeled particles (illustrated as arrowed lines in Figure~\ref{fig:collimation}) will then bend off from the beam core to be absorbed further down the beam pipe.
+The block named "C" in Figure~\ref{fig:collimation} represents the bent crystal which can be moved into the beam by the linear stage and rotated by the rotational stage which is attached to the linear axis. The crystal's linear and rotational movement are indicated in the figure as green dashed lines. During operation, physicists will drive the crystal close to the beam, enter it with an angle and rotate it slightly (in the range of \unit{1}{\milli\rad}) until the channeling effect is detected. Channeled particles (illustrated as arrowed lines in Figure~\ref{fig:collimation}) will then bend off from the beam core to be absorbed further down the beam pipe.
 
 The collimator unit consists of a T-shape structure containing two linear and one rotational stage, as partly illustrated in Figure~\ref{fig:goniometer}.
 
@@ -23,7 +23,7 @@ The collimator unit consists of a T-shape structure containing two linear and on
 
 Each linear stage is driven by a stepping motor, labeled as \emph{M1} in Figure~\ref{fig:collimation} and \emph{M2} in Figure~\ref{fig:goniometer}, separately controlled in open-loop by an individual drive unit. The motor driving the vertical axis, \emph{M2}, is used to move a piece of beam pipe inside the T-shape, giving access to the crystal to enter and to close it when the collimation system is out of operation. This movement is illustrated in Figure~\ref{fig:goniometer} with a green dashed line.
 
-Figure~\ref{fig:collimator} shows the new collimator. In the top view the rotational and the linear horizontal stage is indicated by labels. In this figure, the rotational stage is in its outer position. During operation it will be pushed forward by the linear axis into the beam pipe. Figure~\ref{fig:collimator-through} shows the inside of the beam pipe during movement of the beam pipe piece, the same movement that Figure~\ref{fig:goniometer} is illustrating. In Figure~\ref{fig:collimator-mirror} the crystal support has been injected into the beam pipe, note that the crystal itself is in this picture replaced by a small circular mirror.
+Figure~\ref{fig:collimator} shows the new collimator. In the top view the rotational and the linear horizontal stage is indicated with labels. In this figure, the rotational stage is in its outer position. During operation it will be pushed forward by the linear axis into the beam pipe. Figure~\ref{fig:collimator-through} shows the inside of the beam pipe during movement of the beam pipe piece, the same movement that Figure~\ref{fig:goniometer} is illustrating. In Figure~\ref{fig:collimator-mirror} the crystal support has been injected into the beam pipe. Note that the crystal itself is in this picture replaced by a small circular mirror.
 
 \begin{figure}[tpb]
   \centering %crop: left bottom right top
@@ -65,10 +65,10 @@ For the measurement system, three interferometric heads are placed on top of the
 \end{figure}
 
 \section{Piezoelectric Stack Actuators}
-The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to -20 and +150V, respectively. The actuators are made of many thin, stacked electro-active ceramic disks, electrically connected in parallel. This construction allows for a high stiffness actuator that still can exhibit long displacement ranges \citep{Piezo:2008}.
+The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to -20 and +150 V, respectively. The actuators are made of many thin, stacked electro-active ceramic disks, electrically connected in parallel. This construction allows for a high stiffness actuator that still can exhibit long displacement ranges \citep{Piezo:2008}.
 
 \subsection{Hysteresis Effect}
-The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of the input signal \citep{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage, e.g. 60V, corresponds to an angular position of \unit{5.2}{\micro\rad} in one direction and to \unit{7.2}{\micro\rad} in the opposite direction.
+The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of the input signal \citep{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage, e.g. 60 V, corresponds to an angular position of \unit{5.2}{\micro\rad} in one direction and to \unit{7.2}{\micro\rad} in the opposite direction.
 
 \subsection{Creep Effect}
 The creep effect is another nonlinear effect that is present during the operation of piezoelectric actuators. The effect is a slow elongation or contraction of the actuator displacement over time with a constant driving signal and is caused by thermal effects in the piezo-ceramics. Figure~\ref{fig:creep} illustrates the creep effect. One can see how the rotational stage slightly drifts off from the reference after the applied negative step, increasing the tracking error over time.
@@ -86,7 +86,7 @@ The creep effect is another nonlinear effect that is present during the operatio
 The creep effect is in this project (and many others) efficiently suppressed by the feedback controller requiring no precise modeling and cancellation technique.
 
 \section{Rotational Stage Modeling}
-The piezo-actuated rotational stage is modeled by a Hammerstein structure, adopted by the authors in \citep{ButcherController:2015}, allowing them in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The employed Hammerstein structure is depicted in Figure~\ref{fig:hammerstein} and consists of a \emph{Static Hysteresis} (rate independent) model and a \emph{Linear Dynamics} model. {\abbrPEA}s are known to show hysteretic behavior with a nonlocal memory (the current output does not only depend on the current input voltage but also on its history) as described in \citep{ButcherIdentification:2015}. This behavior is modeled by a generalized Maxwell-slip compensation model, described in \ref{sec:maxwell}. The extracted linear dynamics is identified using the described procedure in \ref{sec:linsys}
+The piezo-actuated rotational stage is modeled by a Hammerstein structure, adop-ted by the authors in \citep{ButcherController:2015}, allowing them in principal, to decouple the nonlinear hysteresis from the linear system dynamics. The employed Hammerstein structure is depicted in Figure~\ref{fig:hammerstein} and consists of a \emph{Static Hysteresis} (rate independent) model and a \emph{Linear Dynamics} model. {\abbrPEA}s are known to show hysteretic behavior with a nonlocal memory (the current output does not only depend on the current input voltage but also on its history) as described in \citep{ButcherIdentification:2015}. This behavior is modeled by a generalized Maxwell-slip compensation model, described in \ref{sec:maxwell}. The extracted linear dynamics is identified using the described procedure in \ref{sec:linsys}
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
@@ -103,7 +103,7 @@ A generalized Maxwell-slip is used to model the hysteresis effect. It uses a par
   F_i =
   \begin{cases}
     k_i(x - x_{bi}) & \quad \text{if }  k_i|x - x_{bi}| < f_i\\
-    f_isgn(\dot{x}) \text{ and } x_{bi} = x - \frac{f_i}{k_i}sgn(\dot{x})  & \quad \text{else}\\
+    f_i\sgn(\dot{x}) \text{ where }  x = x_{bi} + \frac{f_i}{k_i}\sgn(\dot{x})  & \quad \text{else}\\
   \end{cases}
 \end{equation}
 
@@ -155,7 +155,7 @@ The transfer function uses five zeros and and six poles to model two of the majo
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/model.eps}
-  \caption{\label{fig:model} Model fit of the system model to the \abbrFFT data.}
+  \caption{\label{fig:model} Model fit of the system model with 5 zeros and 6 poles shown in \eqref{eq:tf} to the \abbrFFT of the acquired data.}
 \end{figure}
 
 \FloatBarrier
@@ -164,27 +164,27 @@ The original controller for the rotational stage is a 2-\abbrDOF structure (feed
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
-  \includegraphics[width=1\textwidth, trim=4cm 3cm 2.1cm 10cm, clip=true]{fig/matlab/present_controller}
+  \includegraphics[width=0.95\textwidth, trim=4cm 4cm 2.1cm 10cm, clip=true]{fig/matlab/present_controller}
   \caption{\label{fig:present}Block diagram of the present control loop, including controller, prefilter and hysteresis compensator.}
 \end{figure}
 
-The controller block (C) is a series combination of a \abbrPID controller, notch filter and a lead filter, which stabilizes the system (\abbrPID), increases the phase margin (lead) and makes the system more robust to high frequency oscillations (notch). Since the open loop bandwidth is relatively low, $f_b = 58 Hz$ according to Figure~\ref{fig:model}, it was decided to exclude cancellation of the first resonance peak in order to maintain the bandwidth as high as possible and to have sufficient attenuation of the resonance peak \citep{ButcherController:2015}. Finally, to enhance the tracking performance, a prefilter (F) was also added to the system. The PID controller, lead network, notch filter and prefilter are all presented below in \eqref{eq:controller}.
+The controller block (C) is a series combination of a \abbrPID controller, a notch filter and a lead filter, which stabilizes the system (\abbrPID), increases the phase margin (lead) and makes the system more robust to high frequency oscillations (notch). Since the open loop bandwidth is relatively low, $f_b$ = 58 Hz according to Figure~\ref{fig:model}, it was decided to exclude cancellation of the first resonance peak in order to maintain the bandwidth as high as possible and to have sufficient attenuation of the resonance peak \citep{ButcherController:2015}. Finally, to enhance the tracking performance, a prefilter (F) was also added to the system. The PID controller, lead network, notch filter and prefilter are all presented below in \eqref{eq:controller}.
 
 \begin{subequations}
   \label{eq:controller}
 \begin{alignat}{2}
   \label{eq:pre}
-  & F = \frac{0.0029z - 0.0029}{z^3 - 2.91z^2 + 2.816 z - 0.91} \\
+  & F(z) = \frac{0.0029z - 0.0029}{z^3 - 2.91z^2 + 2.816 z - 0.91} \\
   \label{eq:pid}
-  & C_{PID} = \frac{0.47z^2 - 0.94z + 0.47}{z^2 - 1.78 z + 0.78} \\
+  & C_{PID}(z) = \frac{0.47z^2 - 0.94z + 0.47}{z^2 - 1.78 z + 0.78} \\
   \label{eq:lead}
-  & C_{lead} = \frac{4.20 z^2 - 7.72z + 3.55}{z^2 - 1.67z + 0.69} \\
+  & C_{lead}(z) = \frac{4.20 z^2 - 7.72z + 3.55}{z^2 - 1.67z + 0.69} \\
   \label{eq:notch}
-  & C_{notch} = \frac{0.28z^4 - 0.62z^3 + 0.75z^2 - 0.59z + 0.26}{z^4 - 1.95z^3 + 1.39z^2 - 0.40z + 0.039}
+  & C_{notch}(z) = \frac{0.28z^4 - 0.62z^3 + 0.75z^2 - 0.59z + 0.26}{z^4 - 1.95z^3 + 1.39z^2 - 0.40z + 0.039}
 \end{alignat}
 \end{subequations}
 
-The effect of each filter can be seen in Figure~\ref{fig:opensys}, where the open loop system is plotted with one filter added at a time. One can see that the high resonance peak is mitigated after the notch filter have been added, that the lead filter rises the phase and that the \abbrPID controller provides good phase and gain margin. Also the closed loop system is presented in Figure~\ref{fig:closedsys}, proving that the prefilter increases the closed loop bandwidth. The final closed loop bandwidth is 9.7 Hz.
+The effect of each filter can be seen in Figure~\ref{fig:opensys}, where the open loop system is plotted with one filter added at a time. One can see that the high resonance peak is mitigated after the notch filter has been added, the lead filter rises the phase and that the \abbrPID controller provides good phase as well as good gain margin. Also the closed loop system is presented in Figure~\ref{fig:closedsys}, proving that the prefilter increases the closed loop bandwidth. The final closed loop bandwidth is 9.7 Hz.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
