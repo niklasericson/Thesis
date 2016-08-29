@@ -1,6 +1,7 @@
 \documentclass[10pt]{beamer}
 
-\usetheme[progressbar=frametitle]{metropolis}
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
@@ -16,7 +17,7 @@
 \date{\today}
 \author{Matthias Vogelgesang}
 \institute{Center for modern beamer themes}
-\titlegraphic{\hfill\includegraphics[height=1.5cm]{logo}}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
 \begin{document}
 
@@ -289,7 +290,7 @@ or show \textbf{bold} results.\end{verbatim}
 }
 
 \begin{frame}{References}
-  Some references to showcase [allowframebreaks] \citep{knuth92,ConcreteMath,Simpson,Er01,greenwade93}
+  Some references to showcase [allowframebreaks] \cite{knuth92,ConcreteMath,Simpson,Er01,greenwade93}
 \end{frame}
 
 \section{Conclusion}
