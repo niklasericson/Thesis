@@ -5,6 +5,7 @@
 \usepackage{epstopdf}
 \epstopdfsetup{update} % only regenerate pdf files when eps file is newer
 \usepackage[squaren]{SIunits}
+\usepackage{subfig}
 
 \usetheme[progressbar=frametitle]{metropolis}
 
@@ -92,7 +93,6 @@ Source: \cite{youtube}.
   Implies in a more efficient cleaning, a less complex system and a reduction of the machine impedance.
 \end{frame}
 
-
 \begin{frame}[fragile]{Purpose and Goal}
   The \textbf{ higher the energy} of the particle the \textbf{lower the angular acceptance} for channeling.
   \begin{itemize}
@@ -112,32 +112,108 @@ Source: \cite{youtube}.
 \end{frame}
 
 \begin{frame}[fragile]{Method}
-  Hello
+  \begin{itemize}
+    \item Literature study
+    \item Further investigation of selected control approaches
+    \item Benchmarking tests of selected control approaches in simulations
+    \item Implementation of the most promising approach
+    \item Proposal of controller
+  \end{itemize}
 \end{frame}
 
 \section{System Overview}
 
-\begin{frame}[fragile]{Crystal Collimators}
-  The theme provides sensible defaults to \emph{emphasize} text,
-  \alert{accent} parts or show \textbf{bold} results.
+\begin{frame}[fragile]{Crystal Collimator}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:collimator-side}Side view]{
+    \includegraphics[width=0.4\textwidth, trim=2cm 11cm 2cm 5cm, clip=true]{../fig/collimator-side}}
+    \qquad
+    \subfloat[][\label{fig:collimator-top}Top view]{
+    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-top}}
+    \caption{\label{fig:collimator} The new collimator from the side (a) and the top (b).}
+  \end{figure}
 \end{frame}
 
-\begin{frame}{Rotational stage}
+\begin{frame}[fragile]{Crystal Collimator}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:collimator-through} Giving access]{
+    \includegraphics[width=0.4\textwidth, trim=3cm 12.8cm 2cm 5cm, clip=true]{../fig/collimator-through}}
+    \qquad
+    \subfloat[][\label{fig:collimator-mirror} Insertion of crystal]{
+    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-mirror}}
+    \caption{\label{fig:collimator-t} The new collimator with the beam pipe piece half-way out (a) and the crystal inserted into the beam pipe (b).}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Rotational Stage}
+   Displacement: 0 to \unit{30}{\micro\meter} (-20 and +150 V) $\implies$ 0 to 20 mrad.
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../fig/rotational-stage.jpg}
+    \caption{\label{fig:rotationalstage} Piezo-actuated rotational stage used in the new collimator.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Rotational Stage}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../fig/rotational-stage-interferometer.jpg}
+    \caption{\label{fig:rotationalstage-side} Rotational stage with the crystal support and the interferometric system mounted on top.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Piezoelectric stack actuators}
   \begin{itemize}
-    \item Regular
-    \item \textit{Italic}
-    \item \textsc{SmallCaps}
-    \item \textbf{Bold}
-    \item \textbf{\textit{Bold Italic}}
-    \item \textbf{\textsc{Bold SmallCaps}}
-    \item \texttt{Monospace}
-    \item \texttt{\textit{Monospace Italic}}
-    \item \texttt{\textbf{Monospace Bold}}
-    \item \texttt{\textbf{\textit{Monospace Bold Italic}}}
+    \item Piezoelectric effect
+    \item Many thin electro-active ceramic disks connected in parallel
+    \item Provides high stiffness and long displacement ranges
+    \item Nonlinear effects
   \end{itemize}
+
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:hysteresis} Hysteresis loop]{
+    \includegraphics[width=0.3\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/hysteresis.eps}}
+    \qquad
+    \subfloat[][\label{fig:creep} Creep effect]{
+    \includegraphics[width=0.3\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/creep.eps}}
+    \caption{\label{fig:effects} Illustration of the hysteresis effect (a) and creep effect (b).}
+  \end{figure}
 \end{frame}
 
 \begin{frame}{Modeling}
+  \begin{itemize}
+    \item \alert{Hysteresis effect} - Modeled by a Maxwell slip model
+    \item \alert{Creep effect} - Efficiently eliminated in closed loop
+    \item \alert{Rotational stage} - modeled as a Hammerstein structure
+  \end{itemize}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \includegraphics[width=0.7\textwidth, trim=8cm 8cm 7.73cm 8cm, clip=true]{../fig/matlab/hammerstein}
+    \caption{\label{fig:hammerstein}Block diagram of a Hammerstein structure, consisting of two blocks in series, modeling the static hysteresis and the linear dynamics, respectively.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Linear System Identification}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../fig/matlab/model.eps}
+    \caption{\label{fig:model} Model fit of the system model with 5 zeros and 6 poles to the \textsc{FFT} of the acquired data.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Linear System Identification}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:different_angles}Different rotational head positions]{
+    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0.8cm 1cm, clip=true]{../fig/matlab/modelcomparison_diffvolt2.eps}}
+    \qquad
+    \subfloat[][\label{fig:different_lin_pos}Different linear axis positions]{
+    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0.8cm 1cm, clip=true]{../fig/matlab/modelcomparison2.eps}}
+    \caption{\label{fig:different_lin_angle} Identified models with different rotational positions (linear axis in 54.24 mm) is shown in (a) and with different linear axis positions (rotational position corresponding to 3.25 V) is shown in (b).}
+  \end{figure}
 \end{frame}
 
 \begin{frame}{Present Control Approach}

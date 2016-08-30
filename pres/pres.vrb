@@ -1,3 +1,10 @@
-\frametitle{Crystal Collimators}
-The theme provides sensible defaults to \emph{emphasize} text,
-  \alert{accent} parts or show \textbf{bold} results.
+\frametitle{Crystal Collimator}
+\begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:collimator-through} Giving access]{
+    \includegraphics[width=0.4\textwidth, trim=3cm 12.8cm 2cm 5cm, clip=true]{../fig/collimator-through}}
+    \qquad
+    \subfloat[][\label{fig:collimator-mirror} Insertion of crystal]{
+    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-mirror}}
+    \caption{\label{fig:collimator-t} The new collimator with the beam pipe piece half-way out (a) and the crystal inserted into the beam pipe (b).}
+  \end{figure}
