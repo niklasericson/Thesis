@@ -23,9 +23,11 @@
 
 \usepackage{media9}
 
+
 %\setbeamertemplate{frame footer}{Niklas Ericson - Linköping University}
 \setbeamercolor{progress bar}{ fg = CERNBlue , bg = CERNBlue!30 }
 \setbeamercolor{alerted text}{ fg = CERNBlue , bg = CERNBlue!30 }
+\setbeamercolor{background canvas}{ fg = white , bg = white }
 
 \title{Presentation of Master's Thesis}
 \subtitle{Investigation of Control Approaches for a High Precision, \\ Piezo-actuated Rotational Stage}
@@ -153,38 +155,20 @@ Source: \cite{youtube}.
 \end{frame}
 
 \begin{frame}{Rotational Stage}
-   Displacement: 0 to \unit{30}{\micro\meter} (-20 and +150 V) $\implies$ 0 to 20 mrad.
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/rotational-stage.jpg}
-    \caption{\label{fig:rotationalstage} Piezo-actuated rotational stage used in the new collimator.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Rotational Stage}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/rotational-stage-interferometer.jpg}
-    \caption{\label{fig:rotationalstage-side} Rotational stage with the crystal support and the interferometric system mounted on top.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Piezoelectric stack actuators}
   \begin{itemize}
-    \item Piezoelectric effect
-    \item Many thin electro-active ceramic disks connected in parallel
-    \item Provides high stiffness and long displacement ranges
+    \item Monolithic structure to avoid sliding parts
+    \item Piezoelectric stack actuator
+    \item Displacement: 0 to \unit{30}{\micro\meter} $\implies$ 0 to 20 mrad
     \item Nonlinear effects
   \end{itemize}
 
   \begin{figure}[h!]
     \centering %crop: left bottom right top
-    \subfloat[][\label{fig:hysteresis} Hysteresis loop]{
-    \includegraphics[width=0.3\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/hysteresis.eps}}
+    \subfloat[][]{
+    \includegraphics[width=0.45\textwidth]{../fig/rotational-stage.jpg}}
     \qquad
-    \subfloat[][\label{fig:creep} Creep effect]{
-    \includegraphics[width=0.3\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/creep.eps}}
-    \caption{\label{fig:effects} Illustration of the hysteresis effect (a) and creep effect (b).}
+    \subfloat[][]{
+    \includegraphics[width=0.45\textwidth]{../fig/rotational-stage-interferometer.jpg}}
   \end{figure}
 \end{frame}
 
@@ -194,10 +178,24 @@ Source: \cite{youtube}.
     \item \alert{Creep effect} - Efficiently eliminated in closed loop
     \item \alert{Rotational stage} - modeled as a Hammerstein structure
   \end{itemize}
+
   \begin{figure}[h]
     \centering %crop: left bottom right top
-    \includegraphics[width=0.7\textwidth, trim=8cm 8cm 7.73cm 8cm, clip=true]{../fig/matlab/hammerstein}
-    \caption{\label{fig:hammerstein}Block diagram of a Hammerstein structure, consisting of two blocks in series, modeling the static hysteresis and the linear dynamics, respectively.}
+    \includegraphics[width=0.55\textwidth, trim=8cm 8cm 7.73cm 8cm, clip=true]{../fig/matlab/hammerstein}
+    %\caption{\label{fig:hammerstein}Block diagram of a Hammerstein structure, consisting of two blocks in series, modeling the static hysteresis and the linear dynamics, respectively.}
+  \end{figure}
+  \vspace{-1cm}
+
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \subfloat[][]{
+    \includegraphics[width=0.27\textwidth]{../fig/matlab/hysteresis.eps}}
+    \qquad
+    \subfloat[][]{
+    \includegraphics[width=0.27\textwidth]{../fig/matlab/creep.eps}}
+    \qquad
+    \subfloat[][]{
+    \includegraphics[width=0.27\textwidth]{../fig/matlab/model.eps}}
   \end{figure}
 \end{frame}
 
