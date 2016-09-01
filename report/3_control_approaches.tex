@@ -3,7 +3,7 @@
 This chapter presents the motivation and the theory behind each of the control approaches investigated in this thesis. In the first two sections, an adaptive controller and an integral resonance controller is presented in detail. In the last and following section, harmonic cancellation is discussed, where three different approaches are described and motivated.
 
 \section{Model Reference Adaptive Control}
-An adaptive controller has the ability to adjust the system response by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which serves as a target for the adaptive laws. This approach is known as the Model Reference Adaptive Controller (\abbrMRAC). This model does not require any prior knowledge about the model uncertainties, implying a more straight-forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The \abbrMRAC scheme can be extended to include perturbation estimation (\abbrMRACPE), giving the controller the ability to compensate for various non-modeled effects, including both linear and nonlinear perturbations. Nonlinear effects such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as for linear disturbances, using the knowledge of the system and the previous measurement and output signal. The \abbrMRACPE also allows the maximum tracking error to be predefined.
+An adaptive controller has the ability to adjust the system response by updating the parameters of a feedback controller in real time, resulting in a controller that is less sensitive to changes in the model and aging of the system. One approach is to use a reference model to create the desired system response which serves as a target for the adaptive laws. This approach is known as the Model Reference Adaptive Controller (\abbrMRAC). This model does not require any prior knowledge about the model uncertainties, implying a more straight-forward way to implement precision control to nanopositioning systems. Moreover, this scheme allows for the use of a lower order model (in relation to the system model) since the online parameter estimation can be used sufficiently with a lower order model. The \abbrMRAC scheme can be extended to include perturbation estimation (\abbrMRACPE), giving the controller the ability to compensate for various non-modeled effects, including both linear and nonlinear perturbations. Nonlinear effects such as the hysteresis are treated as lumped perturbations to the nominal system model and can be compensated for in the same manner as for linear disturbances, using the knowledge of the system and the previous measurement and output signal.
 
 \subsection{Perturbation Estimation}\label{sec:pertest}
 Using a second order model, the adaptive laws can be derived as follows. Consider the system model stated below.
@@ -81,7 +81,7 @@ where
 \end{equation}
 with $\delta = (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) + \hat{f}(t)$.
 
-If all eigenvalues of $\mathbf{A}$ have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Moreover, according to Lyaponov theory \citep{Ljung:2003}, for each positive-semidefinite matrix $\mathbf{Q}$ there exists one positive-semidefinite matrix $\mathbf{P}$ which solves \eqref{eq:lyap}.
+If all eigenvalues of $\mathbf{A}$ have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. Moreover, according to Lyapunov theory \citep{Ljung:2003}, for each positive-semidefinite matrix $\mathbf{Q}$ there exists one positive-semidefinite matrix $\mathbf{P}$ which solves \eqref{eq:lyap}.
 
 \begin{equation}
   \label{eq:lyap}
@@ -351,9 +351,9 @@ The method can be extended to estimate and reject $n$ harmonics by extending $\m
 \begin{equation}
   \label{eq:sinexten}
   \mathbf{A_{de}} =
-    \diag(\begin{bmatrix}
+    \diag\bigg(\begin{bmatrix}
       \mathbf{A_{d1}}  &  \mathbf{A_{d2}} & \hdots & \mathbf{A_{dn}} \\
-     \end{bmatrix})
+     \end{bmatrix}\bigg)
      \qquad
   \mathbf{C_{de}} =
     \begin{bmatrix}
