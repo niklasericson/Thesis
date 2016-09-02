@@ -116,6 +116,16 @@ Source: \cite{youtube}.
     \item The linear movement adds additional perturbation
     \item System changes due to rotational and linear position, moving center of rotation.
   \end{itemize}
+  \vspace{-0.7cm}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:different_angles}Molde at different angles]{
+    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison_diffvolt2.eps}}
+    \qquad
+    \subfloat[][\label{fig:different_lin_pos}Model at different linear positions]{
+    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison2.eps}}
+    %\caption{\label{fig:different_lin_angle} Identified models with different rotational positions (linear axis in 54.24 mm) is shown in (a) and with different linear axis positions (rotational position corresponding to 3.25 V) is shown in (b).}
+  \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]{Method}
@@ -172,7 +182,7 @@ Source: \cite{youtube}.
   \end{figure}
 \end{frame}
 
-\begin{frame}{Modeling}
+\begin{frame}{Modeling and Identification}
   \begin{itemize}
     \item \alert{Hysteresis effect} - Modeled by a Maxwell slip model
     \item \alert{Creep effect} - Efficiently eliminated in closed loop
@@ -195,27 +205,7 @@ Source: \cite{youtube}.
     \includegraphics[width=0.27\textwidth]{../fig/matlab/creep.eps}}
     \qquad
     \subfloat[][]{
-    \includegraphics[width=0.27\textwidth]{../fig/matlab/model.eps}}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Linear System Identification}
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/matlab/model.eps}
-    \caption{\label{fig:model} Model fit of the system model with 5 zeros and 6 poles to the FFT of the acquired data.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Linear System Identification}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:different_angles}Different rotational head positions]{
-    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0.8cm 1cm, clip=true]{../fig/matlab/modelcomparison_diffvolt2.eps}}
-    \qquad
-    \subfloat[][\label{fig:different_lin_pos}Different linear axis positions]{
-    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0.8cm 1cm, clip=true]{../fig/matlab/modelcomparison2.eps}}
-    \caption{\label{fig:different_lin_angle} Identified models with different rotational positions (linear axis in 54.24 mm) is shown in (a) and with different linear axis positions (rotational position corresponding to 3.25 V) is shown in (b).}
+    \includegraphics[width=0.27\textwidth]{../fig/matlab/model_long.eps}}
   \end{figure}
 \end{frame}
 
@@ -421,106 +411,6 @@ Source: \cite{youtube}.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Feedforward Disturbance Cancellation}
-  \alert{Idea}: Use a feedforward approach to cancel out known disturbances coming from the linear axis movement.
-  \begin{itemize}
-    \item Identify a static disturbance model
-    \item Use the stepping signal as input to the model
-    \item Disturbance must be measurable
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Feedforward Disturbance Cancellation}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.8\textwidth, trim=8cm 4.5cm 5.97cm 8.5cm, clip=true]{../fig/matlab/ffdist}
-    %\caption{\label{fig:ffdist}Block diagram of a control structure with feedforward from a known modeled disturbance.}
-  \end{figure}
-  \begin{equation}
-    \label{eq:ffdist}
-    Y(s) = \frac{C(s)G(s)}{1+C(s)G(s)}R(s) + \frac{P_d(s) - K_f(s)G(s)}{1+C(s)G(s)}D_0(s)
-  \end{equation}
-  Ideal choice: $K_f(s)=P_d(s)/G(s)$
-
-   $K_f(s)$ not implementable (stable, proper and causal). $\implies$
-   Approximate $G$.
-\end{frame}
-
-\begin{frame}{Feedforward Disturbance Cancellation}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:stepin}Impulse used as input signal]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/ff_impulse.eps}}
-    \qquad
-    \subfloat[][\label{fig:stepout}Mean of impulse responses]{
-    \includegraphics[ width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/yaw_angle_mean_1_step_s.eps}}
-    %\caption{\label{fig:stepinout} Input signal (a) and step response (b) used for modeling the disturbance. The step response was calculated by taking the mean of 50 time-synchronized acquired step responses at a movement of 1 step/s.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Feedforward Disturbance Cancellation}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.6\textwidth,]{../fig/matlab/model_fit_1step_s.eps}
-    %\caption{\label{fig:imp}Block diagram of the \abbrIMP control structure.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Feedforward Disturbance Cancellation}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][Mean as disturbance]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/cancellation_1_step_s.eps}}
-    \qquad
-    \subfloat[][Original acquired signal as disturbance ]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/cancellation_1_step_s_real_dist.eps}}
-    %\caption{\label{fig:benchmark_dist} Feedforward disturbance cancellation with the mean of the acquired response added as disturbance (a) and one period of the acquired response added as disturbance (b). The disturbance cancellation is less effective with a slightly different disturbance.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Cancellation with Internal Model Principle}
-  \alert{Idea}: Include a inverse model of the disturbance in the feedback loop to cancel the harmonic.
-  \begin{itemize}
-    \item Asymptotically reject the modeled disturbance
-    \item Affecting the closed loop system
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Cancellation with Internal Model Principle}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.8\textwidth, trim=6.5cm 5.5cm 5.97cm 11cm, clip=true]{../fig/matlab/imp}
-    %\caption{\label{fig:imp}Block diagram of the \abbrIMP control structure.}
-  \end{figure}
-
-  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$.
-  $C_{t}(s) = P(s)/(\Gamma(s)\bar{L}(s))$.
-\end{frame}
-
-\begin{frame}{Cancellation with Internal Model Principle}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][Closed loop system]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/gc_imp.eps}}
-    \qquad
-    \subfloat[][Sensitivity function]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/s_imp.eps}}
-    %\caption{\label{fig:rfdc_s_gc} Bode plot of the closed loop system shown in (a) and the sensitivity function (from output disturbance to system output) shown in (b) of the \abbrIMP and the present controller. The \abbrIMP is now attenuating disturbances at 50 Hz as seen in (b).}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Cancellation with Internal Model Principle}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:imp_model_error1}Attenuation of selected frequency]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/imp_model_error_real50.eps}}
-    \qquad
-    \subfloat[][\label{fig:imp_model_error2}Impact on 130 Hz component]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/imp_model_error_real.eps}}
-    %\caption{\label{fig:imp_model_error}  Disturbance cancellation effectiveness with model errors. The attenuation of the major frequency is shown in (a) and the unwanted attenuation of the 130 Hz component is shown in (b).}
-  \end{figure}
-\end{frame}
-
 \begin{frame}{Repetitive Feedforward Disturbance Cancellation}
   \alert{Idea}: Use an observer to estimate and cancel known disturbances without affecting the closed loop system.
   \begin{itemize}
@@ -607,8 +497,6 @@ The state space system and observer is given as
     %\caption{\label{fig:3_dist_both} Multiple harmonic cancellation with disturbances added to the output. The cancellation of the 60, 90 and the 200 Hz component can be seen in the time domain in (a). The \abbrFFT in (b) is performed on (a) after $t=$ 2.5 s.}
   \end{figure}
 \end{frame}
-
-
 
 \begin{frame}{Repetitive Feedforward Disturbance Cancellation}
   Multiple harmonic cancellation with real acquired disturbances
@@ -810,6 +698,107 @@ The state space system and observer is given as
 \end{frame}
 
 \appendix
+
+
+\begin{frame}{Feedforward Disturbance Cancellation}
+  \alert{Idea}: Use a feedforward approach to cancel out known disturbances coming from the linear axis movement.
+  \begin{itemize}
+    \item Identify a static disturbance model
+    \item Use the stepping signal as input to the model
+    \item Disturbance must be measurable
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Feedforward Disturbance Cancellation}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \includegraphics[width=0.8\textwidth, trim=8cm 4.5cm 5.97cm 8.5cm, clip=true]{../fig/matlab/ffdist}
+    %\caption{\label{fig:ffdist}Block diagram of a control structure with feedforward from a known modeled disturbance.}
+  \end{figure}
+  \begin{equation}
+    \label{eq:ffdist}
+    Y(s) = \frac{C(s)G(s)}{1+C(s)G(s)}R(s) + \frac{P_d(s) - K_f(s)G(s)}{1+C(s)G(s)}D_0(s)
+  \end{equation}
+  Ideal choice: $K_f(s)=P_d(s)/G(s)$
+
+   $K_f(s)$ not implementable (stable, proper and causal). $\implies$
+   Approximate $G$.
+\end{frame}
+
+\begin{frame}{Feedforward Disturbance Cancellation}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:stepin}Impulse used as input signal]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/ff_impulse.eps}}
+    \qquad
+    \subfloat[][\label{fig:stepout}Mean of impulse responses]{
+    \includegraphics[ width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/yaw_angle_mean_1_step_s.eps}}
+    %\caption{\label{fig:stepinout} Input signal (a) and step response (b) used for modeling the disturbance. The step response was calculated by taking the mean of 50 time-synchronized acquired step responses at a movement of 1 step/s.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Feedforward Disturbance Cancellation}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \includegraphics[width=0.6\textwidth,]{../fig/matlab/model_fit_1step_s.eps}
+    %\caption{\label{fig:imp}Block diagram of the \abbrIMP control structure.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Feedforward Disturbance Cancellation}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][Mean as disturbance]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/cancellation_1_step_s.eps}}
+    \qquad
+    \subfloat[][Original acquired signal as disturbance ]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/cancellation_1_step_s_real_dist.eps}}
+    %\caption{\label{fig:benchmark_dist} Feedforward disturbance cancellation with the mean of the acquired response added as disturbance (a) and one period of the acquired response added as disturbance (b). The disturbance cancellation is less effective with a slightly different disturbance.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Cancellation with Internal Model Principle}
+  \alert{Idea}: Include a inverse model of the disturbance in the feedback loop to cancel the harmonic.
+  \begin{itemize}
+    \item Asymptotically reject the modeled disturbance
+    \item Affecting the closed loop system
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Cancellation with Internal Model Principle}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \includegraphics[width=0.8\textwidth, trim=6.5cm 5.5cm 5.97cm 11cm, clip=true]{../fig/matlab/imp}
+    %\caption{\label{fig:imp}Block diagram of the \abbrIMP control structure.}
+  \end{figure}
+
+  The generating polynomial $\Gamma(s) = f(0,s)/D(s)$.
+  $C_{t}(s) = P(s)/(\Gamma(s)\bar{L}(s))$.
+\end{frame}
+
+\begin{frame}{Cancellation with Internal Model Principle}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][Closed loop system]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/gc_imp.eps}}
+    \qquad
+    \subfloat[][Sensitivity function]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/s_imp.eps}}
+    %\caption{\label{fig:rfdc_s_gc} Bode plot of the closed loop system shown in (a) and the sensitivity function (from output disturbance to system output) shown in (b) of the \abbrIMP and the present controller. The \abbrIMP is now attenuating disturbances at 50 Hz as seen in (b).}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Cancellation with Internal Model Principle}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:imp_model_error1}Attenuation of selected frequency]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/imp_model_error_real50.eps}}
+    \qquad
+    \subfloat[][\label{fig:imp_model_error2}Impact on 130 Hz component]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/imp_model_error_real.eps}}
+    %\caption{\label{fig:imp_model_error}  Disturbance cancellation effectiveness with model errors. The attenuation of the major frequency is shown in (a) and the unwanted attenuation of the 130 Hz component is shown in (b).}
+  \end{figure}
+\end{frame}
 
 \begin{frame}[allowframebreaks]{References}
 
