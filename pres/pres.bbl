@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{cern}
+C.~De~Melis.
+\newblock The cern accelerator complex, 2016.
+\newblock Available at \texttt{https://cds.cern.ch/record/2197559}.
+
 \bibitem{youtube}
 H.~G. Morales.
 \newblock opac hector garcia morales - lhc collimation system optimization,

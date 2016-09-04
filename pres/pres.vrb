@@ -1,10 +1,17 @@
-\frametitle{Crystal Collimator}
-\begin{figure}[h!]
+\frametitle{Challenges}
+\begin{itemize}
+    \item Nonlinear effect such as hysteresis and creep
+    \item Highly resonant structure
+    \item The linear movement adds additional perturbation
+    \item System changes due to rotational and linear position.
+  \end{itemize}
+  \vspace{-0.7cm}
+  \begin{figure}[h]
     \centering %crop: left bottom right top
-    \subfloat[][\label{fig:collimator-through} Giving access]{
-    \includegraphics[width=0.4\textwidth, trim=3cm 12.8cm 2cm 5cm, clip=true]{../fig/collimator-through}}
+    \subfloat[][\label{fig:different_angles}Model at different angles]{
+    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison_diffvolt2.eps}}
     \qquad
-    \subfloat[][\label{fig:collimator-mirror} Insertion of crystal]{
-    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-mirror}}
-    \caption{\label{fig:collimator-t} The new collimator with the beam pipe piece half-way out (a) and the crystal inserted into the beam pipe (b).}
+    \subfloat[][\label{fig:different_lin_pos}Model at different linear positions]{
+    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison2.eps}}
+    %\caption{\label{fig:different_lin_angle} Identified models with different rotational positions (linear axis in 54.24 mm) is shown in (a) and with different linear axis positions (rotational position corresponding to 3.25 V) is shown in (b).}
   \end{figure}

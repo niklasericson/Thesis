@@ -10,7 +10,9 @@
 \usepackage{array}
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 
-\usetheme[progressbar=frametitle]{metropolis}
+\usetheme[progressbar=foot]{metropolis}
+\usepackage{appendixnumberbeamer}
+
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
@@ -23,8 +25,9 @@
 
 \usepackage{media9}
 
+% !TEX program = pdflatex
+% !TEX root = pres.tex
 
-%\setbeamertemplate{frame footer}{Niklas Ericson - Linköping University}
 \setbeamercolor{progress bar}{ fg = CERNBlue , bg = CERNBlue!30 }
 \setbeamercolor{alerted text}{ fg = CERNBlue , bg = CERNBlue!30 }
 \setbeamercolor{background canvas}{ fg = white , bg = white }
@@ -49,43 +52,44 @@
 \section{Introduction}
 
 \begin{frame}[fragile]{CERN}
-  The Large Hadron Collider (LHC) at CERN.
-\center
-\includemedia[
-  width=0.8\linewidth,height=0.5\linewidth,
-  activate=pageopen,
-  flashvars={
-    modestbranding=1 % no YT logo in control bar
-   &autohide=1       % controlbar autohide
-   &autoplay=1
-   &cc_load_policy=1
-   &showinfo=0       % no title and other info before start
-   &start=32
-   &end=55
-  }
-]{}{http://www.youtube.com/v/h2-ocLjUhTU?rel=0}   % Flash file
-\\
-Source: \cite{youtube}.
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \includegraphics[width=1\textwidth, trim= 0cm 7cm 0cm 0cm, clip=true]{../fig/lhc}
+  \end{figure}
+  Source: \cite{cern}.
 \end{frame}
 
 \begin{frame}[fragile]{Collimation}
-  Collimation system used in the LHC.
-\center
-\includemedia[
-  width=0.8\linewidth,height=0.5\linewidth,
-  activate=pageopen,
-  flashvars={
-    modestbranding=1 % no YT logo in control bar
-   &autohide=1       % controlbar autohide
-   &autoplay=1
-   &cc_load_policy=1
-   &showinfo=0       % no title and other info before start
-   &start=76
-   &end=121
-  }
-]{}{http://www.youtube.com/v/h2-ocLjUhTU?rel=0}   % Flash file
-\\
-Source: \cite{youtube}.
+  Collimators used at CERN. Source: \cite{youtube}. \\
+  {\color{white} -}
+  \vspace{-1cm}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/col1}}
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/col2}} \\
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/col3}}
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/col4}}
+  \end{figure}
+
+% \center
+% \includemedia[
+%   width=0.8\linewidth,height=0.5\linewidth,
+%   activate=pageopen,
+%   flashvars={
+%     modestbranding=1 % no YT logo in control bar
+%    &autohide=1       % controlbar autohide
+%    &autoplay=1
+%    &cc_load_policy=1
+%    &showinfo=0       % no title and other info before start
+%    &start=76
+%    &end=121
+%   }
+% ]{}{http://www.youtube.com/v/h2-ocLjUhTU?rel=0}   % Flash file
+% \\
 \end{frame}
 
 \begin{frame}[fragile]{Crystal Collimation}
@@ -94,73 +98,23 @@ Source: \cite{youtube}.
   \begin{figure}[h!]
     \centering %crop: left bottom right top
     \includegraphics[width=1\textwidth, trim= 2cm 15.5cm 1cm 10cm, clip=true]{../fig/matlab/collimation}
-    \caption{\label{fig:collimation}Illustration of the crystal collimation principle.}
+    %\caption{\label{fig:collimation}Illustration of the crystal collimation principle.}
   \end{figure}
 
   Implies in a more efficient cleaning, a less complex system and a reduction of the machine impedance.
-\end{frame}
-
-\begin{frame}[fragile]{Purpose and Goal}
-  The \textbf{ higher the energy} of the particle the \textbf{lower the angular acceptance} for channeling.
-  \begin{itemize}
-    \item have a total range of \unit{20}{\milli\rad}
-    \item be able to track reference trajectories at ramp rates of \unit{100}{\micro\radianpersecond}
-    \item reject external disturbances to maintain a maximum tracking error of $\pm$\unit{1}{\micro\rad} even when the linear axis is moving
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Challenges}
-  \begin{itemize}
-    \item Nonlinear effect such as hysteresis and creep
-    \item Highly resonant structure
-    \item The linear movement adds additional perturbation
-    \item System changes due to rotational and linear position, moving center of rotation.
-  \end{itemize}
-  \vspace{-0.7cm}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:different_angles}Molde at different angles]{
-    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison_diffvolt2.eps}}
-    \qquad
-    \subfloat[][\label{fig:different_lin_pos}Model at different linear positions]{
-    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison2.eps}}
-    %\caption{\label{fig:different_lin_angle} Identified models with different rotational positions (linear axis in 54.24 mm) is shown in (a) and with different linear axis positions (rotational position corresponding to 3.25 V) is shown in (b).}
-  \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Method}
-  \begin{itemize}
-    \item Literature study
-    \item Further investigation of selected control approaches
-    \item Benchmarking tests of selected control approaches in simulations
-    \item Implementation of the most promising approach
-    \item Proposal of controller
-  \end{itemize}
-\end{frame}
-
-\section{System Overview}
-
-\begin{frame}[fragile]{Crystal Collimator}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:collimator-side}Side view]{
-    \includegraphics[width=0.4\textwidth, trim=2cm 11cm 2cm 5cm, clip=true]{../fig/collimator-side}}
-    \qquad
-    \subfloat[][\label{fig:collimator-top}Top view]{
-    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-top}}
-    \caption{\label{fig:collimator} The new collimator from the side (a) and the top (b).}
-  \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]{Crystal Collimator}
   \begin{figure}[h!]
     \centering %crop: left bottom right top
     \subfloat[][\label{fig:collimator-through} Giving access]{
-    \includegraphics[width=0.4\textwidth, trim=3cm 12.8cm 2cm 5cm, clip=true]{../fig/collimator-through}}
-    \qquad
+    \includegraphics[width=0.24\textwidth, trim=3cm 12.8cm 2cm 5cm, clip=true]{../fig/collimator-through}}
     \subfloat[][\label{fig:collimator-mirror} Insertion of crystal]{
-    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-mirror}}
-    \caption{\label{fig:collimator-t} The new collimator with the beam pipe piece half-way out (a) and the crystal inserted into the beam pipe (b).}
+    \includegraphics[width=0.28\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-mirror}}\\
+    \subfloat[][\label{fig:collimator-side}Side view]{
+    \includegraphics[width=0.28\textwidth, trim=2cm 11cm 2cm 5cm, clip=true]{../fig/collimator-side}}
+    \subfloat[][\label{fig:collimator-top}Top view]{
+    \includegraphics[width=0.24\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{../fig/collimator-top}}
   \end{figure}
 \end{frame}
 
@@ -169,24 +123,68 @@ Source: \cite{youtube}.
     \item Monolithic structure to avoid sliding parts
     \item Piezoelectric stack actuator
     \item Displacement: 0 to \unit{30}{\micro\meter} $\implies$ 0 to 20 mrad
-    \item Nonlinear effects
   \end{itemize}
 
   \begin{figure}[h!]
     \centering %crop: left bottom right top
-    \subfloat[][]{
+    \subfloat[][Rotational stage]{
     \includegraphics[width=0.45\textwidth]{../fig/rotational-stage.jpg}}
     \qquad
-    \subfloat[][]{
+    \subfloat[][Interferometric system]{
     \includegraphics[width=0.45\textwidth]{../fig/rotational-stage-interferometer.jpg}}
   \end{figure}
 \end{frame}
 
-\begin{frame}{Modeling and Identification}
+% \begin{frame}[fragile]{Method}
+%   \begin{itemize}
+%     \item Literature study
+%     \item Further investigation of selected control approaches
+%     \item Benchmarking tests of selected control approaches in simulations
+%     \item Implementation of the most promising approach
+%     \item Proposal of controller
+%   \end{itemize}
+% \end{frame}
+
+\section{Project Overview}
+
+\begin{frame}[fragile]{Purpose and Goal}
+  Identify applicable control approaches to improve the overall tracking performance of the rotational stage. \newline
+
+  The \textbf{rotational stage} should:
   \begin{itemize}
+    \item have a total range of \unit{20}{\milli\rad}
+    \item be able to track reference trajectories at ramp rates of \unit{100}{\micro\radianpersecond}
+    \item reject external disturbances to maintain a maximum tracking error of $\pm$\unit{1}{\micro\rad} even with linear axis movement
+  \end{itemize}
+
+  One approach had already been developed.
+
+\end{frame}
+
+\begin{frame}[fragile]{Challenges}
+  \begin{itemize}
+    \item Nonlinear effect such as hysteresis and creep
+    \item Highly resonant structure
+    \item The linear movement adds additional perturbation
+    \item System changes due to rotational and linear position.
+  \end{itemize}
+  \vspace{-0.7cm}
+  \begin{figure}[h]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:different_angles}Model at different angles]{
+    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison_diffvolt2.eps}}
+    \qquad
+    \subfloat[][\label{fig:different_lin_pos}Model at different linear positions]{
+    \includegraphics[width=0.4\textwidth]{../fig/matlab/modelcomparison2.eps}}
+    %\caption{\label{fig:different_lin_angle} Identified models with different rotational positions (linear axis in 54.24 mm) is shown in (a) and with different linear axis positions (rotational position corresponding to 3.25 V) is shown in (b).}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Present Control Approach}
+  \begin{itemize}
+    \item \alert{Hammerstein structure} - Model the rotational stage
     \item \alert{Hysteresis effect} - Modeled by a Maxwell slip model
     \item \alert{Creep effect} - Efficiently eliminated in closed loop
-    \item \alert{Rotational stage} - modeled as a Hammerstein structure
   \end{itemize}
 
   \begin{figure}[h]
@@ -198,30 +196,31 @@ Source: \cite{youtube}.
 
   \begin{figure}[h]
     \centering %crop: left bottom right top
-    \subfloat[][]{
+    \subfloat[][Hysteresis]{
     \includegraphics[width=0.27\textwidth]{../fig/matlab/hysteresis.eps}}
     \qquad
-    \subfloat[][]{
+    \subfloat[][Creep]{
     \includegraphics[width=0.27\textwidth]{../fig/matlab/creep.eps}}
     \qquad
-    \subfloat[][]{
+    \subfloat[][Linear Model]{
     \includegraphics[width=0.27\textwidth]{../fig/matlab/model_long.eps}}
   \end{figure}
 \end{frame}
 
 \begin{frame}{Present Control Approach}
   2-DOF structure, feedback and prefilter.
-  C is a series combination of a:
+  C is a series combination of:
   \begin{itemize}
     \item  \alert{PID} - for stablity
     \item  \alert{Notch filter} - to cancel high frequency oscillations
     \item  \alert{Lead filter} - to increase the phase margin
+    \item \alert{Prefilter} - to increase closed loop bandwidth
   \end{itemize}
 
   \begin{figure}[h!]
     \centering %crop: left bottom right top
     \includegraphics[width=0.95\textwidth, trim=4cm 4cm 2.1cm 10cm, clip=true]{../fig/matlab/present_controller}
-    \caption{\label{fig:present}Block diagram of the present control loop, including controller, prefilter and hysteresis compensator.}
+    %\caption{\label{fig:present}Block diagram of the present control loop, including controller, prefilter and hysteresis compensator.}
   \end{figure}
 \end{frame}
 
@@ -234,11 +233,7 @@ Source: \cite{youtube}.
     \item Based on Lyapunov theory
     \item Sufficient with a low order model
     \item Nonlinear effects is seen as lumped perturbations.
-
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Model Reference Adaptive Controller}
   System model
     \begin{equation*}
       \label{eq:sysmodel}
@@ -254,23 +249,6 @@ Source: \cite{youtube}.
         \label{eq:adaplawsfinal}
       u(t) = k_0u_d(t) + (k_1 + k_3\alpha_0)x(t) +  (k_2 + k_3\alpha_1)\dot{x}(t) + k_3\ddot{x}(t) - k_3\beta_0u(t-T_s)
     \end{equation*}
-    where the control law parameters are calculated as outlined below.
-    \begin{equation*}
-      \label{eq:adaplaws1}
-      \dot{k}_0 = -\eta_0\hat{e}u_d
-    \end{equation*}
-    \begin{equation*}
-      \label{eq:adaplaws2}
-      \dot{k}_1 = -\eta_1\hat{e}x
-    \end{equation*}
-    \begin{equation*}
-      \label{eq:adaplaws3}
-      \dot{k}_2 = -\eta_2\hat{e}\dot{x}
-    \end{equation*}
-    \begin{equation*}
-      \label{eq:adaplaws4}
-      \dot{k}_3 = -\eta_3\hat{e}\hat{f}
-    \end{equation*}
 \end{frame}
 
 \begin{frame}{Model Reference Adaptive Controller}
@@ -278,18 +256,6 @@ Source: \cite{youtube}.
     \centering %crop: left bottom right top
     \includegraphics[width=0.75\textwidth, trim=5cm 0cm 3.8cm 0cm, clip=true]{../fig/matlab/adaptive_scheme}
     \caption{\label{fig:adaptive}Block diagram of the adaptive controller}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Model Reference Adaptive Controller}
-  Periodic response with model parameter drift increased linearly from $t=$ 5 s to $t=$ 7 s.
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:modelerrorresponse}Periodic response]{
-    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/modelerrorperiodic.eps}}
-    \qquad
-    \subfloat[][\label{fig:modelerrorbode}Model change]{
-    \includegraphics[width=0.42\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{../fig/matlab/bode_modelerror_pole.eps}}
   \end{figure}
 \end{frame}
 
@@ -305,100 +271,49 @@ Source: \cite{youtube}.
   \end{figure}
 \end{frame}
 
-\begin{frame}{Model Reference Adaptive Controller}
-  Tracking error
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/matlab/modelerrorperiodic_trackingerror.eps}
-    %\caption{\label{fig:modelerror_trackingerror} Tracking error of the periodic response with model errors increased linearly from $t=$ 5 s to $t=$ 7 s shown in Figure~\ref{fig:modelerror}.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Model Reference Adaptive Controller}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:distmeas}Step response]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/distrejection_meas.eps}}
-    \qquad
-    \subfloat[][\label{fig:distmeaszoom}Zoom-in on disturbance]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/distrejection_meas_zoom.eps}}
-    %\caption{\label{fig:distmeasrejection} Step response with a disturbance impulse (amplitude of 5.1 mrad) added to the output of the system at $t=$ 3 s. The whole step response is shown in (a) with a zoom-in on the disturbance in (b).}
-  \end{figure}
-\end{frame}
-
 \begin{frame}{Integral Resonance Control}
-  \alert{Idea}: Increase the tracking accuracy and reduce the sensitiveness to model errors.
+  \alert{Idea}: Increase the yaw angle tracking accuracy.
   \begin{itemize}
-    \item Uses a constant feed-through term to damp out the first resonance peak
-    \item Simple integral controller is used for inner-loop stability
-    \item Increases the closed loop bandwidth implying in a better tracking performance.
-    \item Interesting for long and short term effects.
+    \item Uses a constant negative feed forward to damp out the first resonance peak
+    \item Integral controller is used for inner loop stability
+    \item C1 is designed for reference tracking and attenuating high frequency components
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Integral Resonance Control}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.85\textwidth, trim=5.5cm 4cm 5.1cm 9.5cm, clip=true]{../fig/matlab/irc}
-    \caption{\label{fig:irc}Block diagram of the IRC damping loop.}
-  \end{figure}
-  \begin{equation}
-    \label{eq:C2}
-    C_2(s) = \frac{C(s)}{1+C(s)D_f}\Bigg|_{C(s) = \frac{-k}{s}} = \frac{-k}{s - kD_f}
-  \end{equation}
-\end{frame}
-
-\begin{frame}{Integral Resonance Control}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.95\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{../fig/matlab/irc_int}
-    \caption{\label{fig:irc_int}Block diagram of the tracking control system with IRC included.}
-  \end{figure}
-  \begin{subequations}
-    \label{eq:discrsys}
-    \begin{alignat}{2}
-      & G_c(s) = \frac{C_1(s)C_2(s)G(s)}{1 + C_2(s)G(s) + C_1(s)C_2(s)G(s)} \\
-      & S(s) = \frac{1}{1 + C_2(s)G(s) + C_1(s)C_2(s)G(s)} \label{eq:discrsys1}
-    \end{alignat}
-  \end{subequations}
-\end{frame}
-
-\begin{frame}{Integral Resonance Control}
-  IRC-damping. Bode diagram of inner loop.
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/matlab/bodedamped2}
-    %\caption{\label{fig:bodedamped} Bode plot of the discretized open and closed loop of the \abbrIRC damping loop i.e. the inner loop of the total control loop depicted in Figure~\ref{fig:irc}.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Integral Resonance Control}
-  Increased the closed loop bandwidth from 11 Hz to 73 Hz.
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/matlab/totalclosedloop.eps}
-    %\caption{\label{fig:irc_totalclosed} Bode plot of the discretized closed loop system of the outer control loop for the IRC depicted in Figure~\ref{fig:irc_int} and the present closed loop system.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Integral Resonance Control}
-  Periodic response with model parameter drift increased linearly from $t=$ 5 s to $t=$ 7 s.
+  \vspace{-1cm}
   \begin{figure}[h!]
     \centering %crop: left bottom right top
-    \subfloat[][\label{fig:irc_dist_model}Periodic response]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/irc_periodic_drift.eps}}
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth, trim=5.5cm 4cm 5.1cm 9.5cm, clip=true]{../fig/matlab/irc}} \\ \vspace{-1cm}
+    \subfloat[][]{
+    \includegraphics[width=0.7\textwidth, trim=4cm 5cm 3.6cm 9.5cm, clip=true]{../fig/matlab/irc_int}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Integral Resonance Control}
+  \begin{itemize}
+    \item Effect of IRC-damping.
+    \item Increased closed loop bandwidth from 11 Hz to 73 Hz implying in a better tracking performance.
+  \end{itemize}
+  \vspace{-1cm}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][IRC-damping]{
+    \includegraphics[width=0.5\textwidth]{../fig/matlab/bodedamped2}}
+    \subfloat[][Closed loop bandwidth]{
+    \includegraphics[width=0.5\textwidth]{../fig/matlab/totalclosedloop.eps}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Tracking performance comparison}
+  Tracking error from periodic input with model parameter drift increased linearly from $t=$ 5 s to $t=$ 7 s.
+  \\ {\color{white} -} \\
+  \vspace{-1cm}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:modelerrorbode}Model change]{
+    \includegraphics[width=0.47\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{../fig/matlab/bode_modelerror_pole.eps}}
     \qquad
     \subfloat[][\label{fig:irc_dist_model_drift}Tracking error]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/irc_periodic_trackingerror.eps}}
-    %\caption{\label{fig:irc_dist} Periodical input response with induced model errors for the \abbrIRC and the present controller. The model error is increased linearly from $t=$ 5 s to $t=$ 7 s. The resulting responses are shown in (a) with the tracking error is shown in (b).}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Integral Resonance Control}
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{../fig/matlab/whitenoiseoutput.eps}
-    %\caption{\label{fig:fft_in} The \abbrFFT of the output signal from the \abbrIRC and the present closed loop system when applying white noise to the output of the system.}
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/tracking_error_lowf_model_change}}
   \end{figure}
 \end{frame}
 
@@ -409,15 +324,11 @@ Source: \cite{youtube}.
     \item Cancellation with Internal Model Principle
     \item Repetitive Feedforward Disturbance Cancellation
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
-  \alert{Idea}: Use an observer to estimate and cancel known disturbances without affecting the closed loop system.
+  \alert{Repetitive Feedforward Disturbance Cancellation}: Use an observer to estimate and cancel known disturbances without affecting the closed loop system.
   \begin{itemize}
     \item First introduced for the control of hard disks
     \item Feedforward switching mechanism with an observer
-    \item Disturbance is observed, saved and replicated
-    \item Reject multiple disturbances
+    \item Not affecting the closed loop system
   \end{itemize}
 \end{frame}
 
@@ -437,8 +348,10 @@ The state space system and observer is given as
     \end{alignat}
   \end{subequations}
 
-  \begin{equation}
+  \begin{equation*}
     \label{eq:sinm}
+    \frac{1}{w}\sin(wt)
+    \implies
     \mathbf{A_d} =
       \begin{bmatrix}
          0 & 1\\[0.3em]
@@ -449,14 +362,14 @@ The state space system and observer is given as
       \begin{bmatrix}
           1 & 0\\
       \end{bmatrix}
-  \end{equation}
+  \end{equation*}
 
-  \begin{equation}
+  \begin{equation*}
     \label{eq:obs}
     \mathbf{\hat{x}}[n + 1] = \mathbf{A\hat{x}}[n] + \mathbf{B}u[n] + \mathbf{K}(\mathbf{y}[n] - \mathbf{C\hat{x}}[n])
-  \end{equation}
+  \end{equation*}
 
-  \begin{equation}
+  \begin{equation*}
     \label{eq:augumented}
     \mathbf{A} =
       \begin{bmatrix}
@@ -474,231 +387,225 @@ The state space system and observer is given as
       \begin{bmatrix}
           \mathbf{C_{zs}} & \mathbf{0}\\
       \end{bmatrix}
-  \end{equation}
+  \end{equation*}
 \end{frame}
 
 \begin{frame}{Repetitive Feedforward Disturbance Cancellation}
   \begin{figure}[h]
     \centering %crop: left bottom right top
-    \includegraphics[width=0.95\textwidth, trim=6cm 5.5cm 5.2cm 5.5cm, clip=true]{../fig/matlab/ffrep}
-    %\caption{\label{fig:ffrep}Block diagram of a feedforward switching mechanism including an observer and a feedback controller.}
+    \includegraphics[width=0.7\textwidth, trim=6cm 5.5cm 5.2cm 5.5cm, clip=true]{../fig/matlab/ffrep}
   \end{figure}
-\end{frame}
-
-\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
-  Cancellation of the 60, 90 and the 200 Hz
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][\label{fig:3_dist} Time domain]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/3_dist.eps}}
-    \qquad
-    \subfloat[][\label{fig:3_dist_fft} FFT]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/3_dist_fft.eps}}
-    %\caption{\label{fig:3_dist_both} Multiple harmonic cancellation with disturbances added to the output. The cancellation of the 60, 90 and the 200 Hz component can be seen in the time domain in (a). The \abbrFFT in (b) is performed on (a) after $t=$ 2.5 s.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
-  Multiple harmonic cancellation with real acquired disturbances
+  \vspace{-1cm}
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\textwidth]{../fig/matlab/3real_dist_fft.eps}
-    %\caption{\label{fig:fft_linear} Multiple harmonic cancellation with real acquired disturbances added to the output of the system. The figure shows the \abbrFFT with and without the \abbrRFDC active. When it is active, it attenuates the 60, 90 and the 200 Hz component efficiently. The \abbrFFT was performed after the cancellation had settled.}
+    \subfloat[][]{
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/3_dist.eps}}
+    \subfloat[][]{
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/3_dist_fft.eps}}
   \end{figure}
-\end{frame}
-
-\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][Time domain]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv.eps}}
-    \qquad
-    \subfloat[][FFT]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv_fft.eps}}
-    %\caption{\label{fig:ph_lowgain} Observer convergence of the 200Hz harmonic with low gain, $G = [1, 0, 0, 0, 0, 0, 10, 0, 8, 0, 10, 0]^T$. The \abbrFFT of the time domain convergence (a) is presented in (b) which shows a good model of the 200 Hz harmonic.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][Time domain]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv_w.eps}}
-    \qquad
-    \subfloat[][FFT]{
-    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv_fft_w.eps}}
-    %\caption{\label{fig:ph_highgain} Observer convergence of the 200Hz harmonic with high gain, $G = [1, 0, 0, 0, 0, 0, 10, 0, 8, 0, 70, 0]^T$. The \abbrFFT of the time domain convergence (a) is presented in (b) which shows a less good model of the 200 Hz harmonic with a lot of other modeled frequency components in the region of 200 Hz.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Comparison}
-  \scriptsize
-  \begin{table}[h!]
-    \centering
-    \begin{tabular}{| l | P{3cm} | P{1.8cm} | P{1.8cm} | P{1.8cm} |}
-      \hline
-      \bf{No} & \bf{Aspect}  & \bf{Present} & \bf{IRC} & \bf{MRACPE} \\ \hline
-      1 & Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
-      2 & Gain/Phase margin [dB / $^{\circ}$] & 14.4/66.2 & 13.1/49.4 & -\\ \hline
-      3 & Tracking error, periodic input $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
-      4 & Tracking error with model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.21\\ \hline
-      5 & Tracking error with model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
-      6 & Tracking error with model errors (model's 1st resonance at 17.6Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.47\\ \hline
-      7 & Tracking error with model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.11\\ \hline
-    \end{tabular}
-    %\caption{\label{tab:comp} Key parameters for the \abbrIRC, the \abbrMRACPE and the present control approach.}
-  \end{table}
-\end{frame}
-
-\begin{frame}{Comparison}
-  \scriptsize
-  \begin{table}[h!]
-    \centering
-    \begin{tabular}{| l | P{3cm} | P{1.8cm} | P{1.8cm} | P{1.8cm} |}
-      \hline
-      \bf{No} & \bf{Aspect}  & \bf{Present} & \bf{IRC} & \bf{MRACPE} \\ \hline
-      8 & Output disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
-      9 & Input/Output disturbance rejection, $\sigma$-[\unit{\micro\radian}] & $0.68 $/$1.43$ & $0.45$/$1.46$ & $1.95$/$1.41$\\ \hline
-      10 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability.  Stability only proven in continuous time. \\ \hline
-      11 & Design and implementation considerations & Straight- forward technique, allowing for basic stability analysis & Same as present & Hard to tune. High computational burden for higher order models.\\ \hline
-    \end{tabular}
-    %\caption{\label{tab:comp} Key parameters for the \abbrIRC, the \abbrMRACPE and the present control approach.}
-  \end{table}
-\end{frame}
-
-\begin{frame}{Comparison}
-  \scriptsize
-  \begin{table}[h!]
-    \centering
-    \begin{tabular}{| l | P{3cm} | P{1.8cm} | P{1.8cm} | P{1.8cm} |}
-      \hline
-        \bf{No} & \bf{Aspect} & \bf{FDC} & \bf{RFDC} & \bf{IMP} \\ \hline
-      1 & Affecting closed loop system & No & No & Yes\\ \hline
-      2 & Cancellation effectiveness of major frequency, attenuation-[\%]                & 64.6 & 88.4 & 83.3\\ \hline
-      3 & Cancellation with model errors (model's 1st resonance at 28.2Hz), attenuation-[\%] & 40.5 & 26.6 & 73.5\\ \hline
-      4 & Cancellation with model errors (model's 1st resonance at 43.4Hz), attenuation-[\%] & 57.7 & 5.0 & 83.4\\ \hline
-      5 & Implementation considerations & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned when selecting a new frequency. \\ \hline
-    \end{tabular}
-    %\caption{\label{tab:comp_h} Key parameters for the harmonic cancellation methodologies.}
-  \end{table}
 \end{frame}
 
 \section{Implementation}
 
 \begin{frame}{Setup}
-  \begin{figure}[h]
-   \centering %crop: left bottom right top
-   \subfloat[][Setup]{
-   \includegraphics[width=0.43\textwidth]{../fig/setup}}
-   \qquad
-   \subfloat[][Shaker]{
-   \includegraphics[width=0.43\textwidth]{../fig/shaker}}
-   %\caption{\label{fig:beateffect} Cancellation performance in closed loop of the 50 Hz component suffering from the beat effect. The standard deviation, calculated as an average of the standard deviation of (a) every 5 s, is shown in (b).}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Labview Implementation}
-  \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.8\textwidth]{../fig/HC_gui}
-    \caption{\label{fig:gui}Graphical user interface of the RFDC implementation.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Single Disturbance}
-  RFDC cancellation verification with disturbance added by shaker.
-  80 Hz component is reduced by 76\% of its original amplitude.
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.85\textwidth]{../fig/matlab/fft_closedloop_ext_disturbance_80Hz_with_zoom_2}
-    %\caption{\label{fig:fft_closedloop_80} \abbrFFT of the yaw angle response acquired in closed loop with and without the \abbrRFDC active. Cancellation of the 80 Hz component generated by the shaker.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Single Disturbance}
-  ... which reduces the standard deviation significantly.
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.8\textwidth, trim=0cm 0cm 0cm 0.7cm, clip=true]{../fig/matlab/yl_closedloop_ext_disturbance_80Hz_2}
-    %\caption{\label{fig:yl_closedloop_80} Closed loop response showing the development of the yaw angle over time, with and without the \abbrRFDC active. Cancellation of the 80 Hz component generated by the shaker.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Multiple Disturbances}
-  The cancellation of 50Hz and 80 Hz component under the first 10 s.
   \begin{itemize}
-    \item 50Hz component reduced by 75\%
-    \item  80Hz component reduced by 66\%
+    \item Implementation in LabVIEW
+    \item Deployed on a National Instruments PXI (2kHz)
+    \item Shaker
   \end{itemize}
-
   \begin{figure}[h]
-    \centering %crop: left bottom right top
-    \includegraphics[width=0.85\textwidth]{../fig/matlab/mult_50_80_closed_loop}
+    \centering
+    \subfloat[][Shaker]{
+    \includegraphics[width=0.27\textwidth]{../fig/shaker}}
+    \subfloat[][GUI]{
+    \includegraphics[width=0.59\textwidth]{../fig/HC_gui}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Cancellation verification}
+  \begin{itemize}
+    \item \alert(Single disturbance) 80 Hz (76\%)
+    \item \alert(Multiple disturbances) 50Hz (75\%) 80Hz (66\%)
+  \end{itemize}
+  \vspace{-1cm}
+  \begin{figure}[h]
+    \centering
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/matlab/fft_closedloop_ext_disturbance_80Hz_with_zoom_2}}
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/matlab/mult_50_80_closed_loop}}
     %\caption{\label{fig:mult5080} Multiple cancellation in closed loop of the 50 and the 80 Hz component. The plot is based on a 10 s long acquisition.}
   \end{figure}
 \end{frame}
 
 \begin{frame}{Beat effect}
-   Cancellation performance in closed loop over 2 minutes.
-  \begin{figure}[h!]
-    \centering %crop: left bottom right top
-    \subfloat[][Yaw angle displacement]{
-    \includegraphics[width=0.43\textwidth]{../fig/matlab/beat_effect_yl}}
-    \qquad
-    \subfloat[][Standard deviation]{
-    \includegraphics[width=0.43\textwidth]{../fig/matlab/beat_effect}}
-    %\caption{\label{fig:beateffect} Cancellation performance in closed loop of the 50 Hz component suffering from the beat effect. The standard deviation, calculated as an average of the standard deviation of (a) every 5 s, is shown in (b).}
-  \end{figure}
-\end{frame}
+  Cancellation performance varies, esp. for cancellation close to the resonance.
 
-\begin{frame}{Beat effect}
-  Cancellation of artificial disturbances
+  \vspace{-1cm}
   \begin{figure}[h!]
     \centering %crop: left bottom right top
-    \subfloat[][Yaw angle displacement]{
-    \includegraphics[width=0.43\textwidth]{../fig/matlab/no_beat_effect_yl}}
-    \qquad
-    \subfloat[][Standard deviation]{
-    \includegraphics[width=0.43\textwidth]{../fig/matlab/no_beat_effect}}
-    %\caption{\label{fig:nobeat}Cancellation of artificial disturbances in open loop not suffering from beat effect. The yaw angle is shown in (a) with the standard deviation in (b). The change in the data without \abbrRFDC is due to environmental changes.}
+    \subfloat[][]{
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/beat_effect_yl}}
+    \subfloat[][]{
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/beat_effect}} \\ {\color{white} -} \\ \vspace{-1cm}
+    \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/matlab/yl_closedloop_ext_disturbance_80Hz_2}}
   \end{figure}
 \end{frame}
 
 \section{Conclusion}
 
-\begin{frame}{Simulation}
+\begin{frame}{Summary of Findings}
   IRC
   \begin{itemize}
     \item  Can be used to efficiently increase the closed loop bandwidth
-    \item  80Hz component reduced by 66\%
+    \item  No direct information of the first resonance peak
+    \item  Tradeoff: Tracking performance - Controller robustness
   \end{itemize}
   MRACPE
   \begin{itemize}
-    \item Can be used to adapt to large model changes and thereby prevent instability (way too significant)
-    \item Stability depending on the step size
-    \item Better for long term parameter adaption
+    \item Can be used to adapt to large model changes and thereby prevent instability
+    \item Tradeoff: Adaption time - Stability
   \end{itemize}
   RFDC
   \begin{itemize}
-    \item Can be used to efficiently damp out known harmonic oscillations
-    \item 80Hz component reduced by 66\%
+    \item Can be used to efficiently damp out known harmonic oscillations (even outside the closed loop bandwidth)
+    \item Beat effect. Less obvious for generated disturbance
+    \item Tradeoff: Convergence time - Cancellation effectiveness
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Implementation}
-
+\begin{frame}{Future Work}
+  IRC + Adaptive + RFDC
+  \begin{itemize}
+    \item Combination of two or three approaches
+    \item Increasing tracking performance
+    \item Adaptive to long term changes such as temperature and radiation
+  \end{itemize}
+  Improvement of the RFDC
+  \begin{itemize}
+    \item More investigation in the cancellation performance.
+    \item Beat effect solutions:
+    \begin{itemize}
+      \item Increase observation time
+      \item Use a few elements to synchronize the replicated signal.
+    \end{itemize}
+  \end{itemize}
+  Improvement of the mechanical design
+  \begin{itemize}
+    \item CERN is now developing a new rotational stage
+    \item Applies the force directly to the rotational head
+    \item More stiff $\implies$ higher bandwidth, easier to design a sufficient controller
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Summary}
 
-\end{frame}
-
+%\section{Questions?}[standout]
 \begin{frame}[standout]
-  Questions?
+   Thank you!
 \end{frame}
 
 \appendix
 
+\begin{frame}{Model Reference Adaptive Controller}
+  \begin{equation*}
+    \label{eq:stateerror}
+    e(t) = x(t) - x_m(t)
+  \end{equation*}
+
+  \begin{equation*}
+    \ddot{e}(t) + a_1\dot{e}(t) + a_0\dot{e}(t) =  (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) - \beta_0u(t) + \hat{f}(t)
+  \end{equation*}
+  \begin{equation*}
+    \label{eq:stateSpaceError}
+    \mathbf{\dot{E} = AE} + \beta_0\mathbf{B}u + \Delta
+  \end{equation*}
+  where
+  \begin{equation*}
+    \label{eq:matrices}
+    \mathbf{E} =
+      \begin{bmatrix}
+         e\\[0.3em]
+         \dot{e}
+       \end{bmatrix},
+    \mathbf{A} =
+      \begin{bmatrix}
+         0 & 1\\[0.3em]
+         -a_0 & -a_1
+       \end{bmatrix},
+    \mathbf{B} =
+      \begin{bmatrix}
+          0\\[0.3em]
+          1
+      \end{bmatrix},
+      \mathbf{\Delta} =
+        \begin{bmatrix}
+            0\\[0.3em]
+            \delta
+        \end{bmatrix}
+  \end{equation*}
+  with $\delta = (a_1-\alpha_1)\dot{x}(t) + (a_0-\alpha_0)x(t) - b_0u_d(t) + \hat{f}(t)$.
+
+  If all eigenvalues of $\mathbf{A}$ have negative real parts, then $\mathbf{E}$ will tend to zero as  $t \to \infty$, i.e. the system is asymptotically stable. According to Lyapunov theory, for each positive-semidefinite matrix $\mathbf{Q}$ there exists one positive-semidefinite matrix $\mathbf{P}$ which solves \eqref{eq:lyap}.
+\end{frame}
+
+\begin{frame}{Model Reference Adaptive Controller}
+
+  \begin{equation*}
+    \label{eq:lyap}
+    \mathbf{A^TP + PA = -Q}
+  \end{equation*}
+
+  With the auxiliary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws are given by
+
+  \begin{equation*}
+    \label{eq:adaplaws}
+    u = k_0u_d + k_1x + k_2\dot{x} + k_3\hat{f}
+  \end{equation*}
+  where the control law parameters are calculated as outlined below.
+  \begin{equation*}
+    \label{eq:adaplaws1}
+    \dot{k}_0 = -\eta_0\hat{e}u_d
+  \end{equation*}
+  \begin{equation*}
+    \label{eq:adaplaws2}
+    \dot{k}_1 = -\eta_1\hat{e}x
+  \end{equation*}
+  \begin{equation*}
+    \label{eq:adaplaws3}
+    \dot{k}_2 = -\eta_2\hat{e}\dot{x}
+  \end{equation*}
+  \begin{equation*}
+    \label{eq:adaplaws4}
+    \dot{k}_3 = -\eta_3\hat{e}\hat{f}
+  \end{equation*}
+
+  \begin{equation*}
+      \label{eq:adaplawsfinal}
+    u(t) = k_0u_d(t) + (k_1 + k_3\alpha_0)x(t) +  (k_2 + k_3\alpha_1)\dot{x}(t) + k_3\ddot{x}(t) - k_3\beta_0u(t-T_s)
+  \end{equation*}
+\end{frame}
+
+\begin{frame}{Model Reference Adaptive Controller}
+  Periodic response with model parameter drift increased linearly from $t=$ 5 s to $t=$ 7 s.
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][\label{fig:modelerrorresponse}Periodic response]{
+    \includegraphics[width=0.4\textwidth, trim=0cm 0cm 1cm 0cm, clip=true]{../fig/matlab/modelerrorperiodic.eps}}
+    \qquad
+    \subfloat[][\label{fig:modelerrorbode}Model change]{
+    \includegraphics[width=0.42\textwidth, trim=0cm 0cm 0.7cm 0cm, clip=true]{../fig/matlab/bode_modelerror_pole.eps}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Model Reference Adaptive Controller}
+  Tracking error
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../fig/matlab/modelerrorperiodic_trackingerror.eps}
+    %\caption{\label{fig:modelerror_trackingerror} Tracking error}
+  \end{figure}
+\end{frame}
 
 \begin{frame}{Feedforward Disturbance Cancellation}
   \alert{Idea}: Use a feedforward approach to cancel out known disturbances coming from the linear axis movement.
@@ -715,10 +622,10 @@ The state space system and observer is given as
     \includegraphics[width=0.8\textwidth, trim=8cm 4.5cm 5.97cm 8.5cm, clip=true]{../fig/matlab/ffdist}
     %\caption{\label{fig:ffdist}Block diagram of a control structure with feedforward from a known modeled disturbance.}
   \end{figure}
-  \begin{equation}
+  \begin{equation*}
     \label{eq:ffdist}
     Y(s) = \frac{C(s)G(s)}{1+C(s)G(s)}R(s) + \frac{P_d(s) - K_f(s)G(s)}{1+C(s)G(s)}D_0(s)
-  \end{equation}
+  \end{equation*}
   Ideal choice: $K_f(s)=P_d(s)/G(s)$
 
    $K_f(s)$ not implementable (stable, proper and causal). $\implies$
@@ -800,11 +707,103 @@ The state space system and observer is given as
   \end{figure}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{References}
+\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
+  \begin{itemize}
+    \item Cancellation of the 60, 90 and the 200 Hz
+    \item Real acquired data used in simulations
+    \item Not affecting other frequency components
+  \end{itemize}
+  \begin{figure}[h!]
+    %\centering %crop: left bottom right top
+    \subfloat[][]{
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/3_dist.eps}}
+    \subfloat[][]{
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/3_dist_fft.eps}}
+    \subfloat[][]{
+    \includegraphics[width=0.45\textwidth]{../fig/matlab/3real_dist_fft.eps}}
+  \end{figure}
+\end{frame}
 
+\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][Time domain]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv.eps}}
+    \qquad
+    \subfloat[][FFT]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv_fft.eps}}
+    %\caption{\label{fig:ph_lowgain} Observer convergence of the 200Hz harmonic with low gain, $G = [1, 0, 0, 0, 0, 0, 10, 0, 8, 0, 10, 0]^T$. The \abbrFFT of the time domain convergence (a) is presented in (b) which shows a good model of the 200 Hz harmonic.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Repetitive Feedforward Disturbance Cancellation}
+  \begin{figure}[h!]
+    \centering %crop: left bottom right top
+    \subfloat[][Time domain]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv_w.eps}}
+    \qquad
+    \subfloat[][FFT]{
+    \includegraphics[width=0.43\textwidth, trim=0cm 0cm 1cm 0.8cm, clip=true]{../fig/matlab/model_conv_fft_w.eps}}
+    %\caption{\label{fig:ph_highgain} Observer convergence of the 200Hz harmonic with high gain, $G = [1, 0, 0, 0, 0, 0, 10, 0, 8, 0, 70, 0]^T$. The \abbrFFT of the time domain convergence (a) is presented in (b) which shows a less good model of the 200 Hz harmonic with a lot of other modeled frequency components in the region of 200 Hz.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Comparison}
+  \scriptsize
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}{| l | P{3cm} | P{1.8cm} | P{1.8cm} | P{1.8cm} |}
+      \hline
+      \bf{No} & \bf{Aspect}  & \bf{Present} & \bf{IRC} & \bf{MRACPE} \\ \hline
+      1 & Closed-loop Bandwidth [Hz] & 9.7 & 73.3 & -\\ \hline
+      2 & Gain/Phase margin [dB / $^{\circ}$] & 14.4/66.2 & 13.1/49.4 & -\\ \hline
+      3 & Tracking error, periodic input $\sigma$-[mrads] & $0.29$ & $0.03$ & $0.11$\\ \hline
+      4 & Tracking error with model errors (model's 1st resonance at 22.0Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.21\\ \hline
+      5 & Tracking error with model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
+      6 & Tracking error with model errors (model's 1st resonance at 17.6Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.47\\ \hline
+      7 & Tracking error with model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.11\\ \hline
+    \end{tabular}
+    %\caption{\label{tab:comp} Key parameters for the \abbrIRC, the \abbrMRACPE and the present control approach.}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Comparison}
+  \scriptsize
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}{| l | P{3cm} | P{1.8cm} | P{1.8cm} | P{1.8cm} |}
+      \hline
+      \bf{No} & \bf{Aspect}  & \bf{Present} & \bf{IRC} & \bf{MRACPE} \\ \hline
+      8 & Output disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
+      9 & Input/Output disturbance rejection, $\sigma$-[\unit{\micro\radian}] & $0.68 $/$1.43$ & $0.45$/$1.46$ & $1.95$/$1.41$\\ \hline
+      10 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability.  Stability only proven in continuous time. \\ \hline
+      11 & Design and implementation considerations & Straight- forward technique, allowing for basic stability analysis & Same as present & Hard to tune. High computational burden for higher order models.\\ \hline
+    \end{tabular}
+    %\caption{\label{tab:comp} Key parameters for the \abbrIRC, the \abbrMRACPE and the present control approach.}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Comparison}
+  \scriptsize
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}{| l | P{3cm} | P{1.8cm} | P{1.8cm} | P{1.8cm} |}
+      \hline
+        \bf{No} & \bf{Aspect} & \bf{FDC} & \bf{RFDC} & \bf{IMP} \\ \hline
+      1 & Affecting closed loop system & No & No & Yes\\ \hline
+      2 & Cancellation effectiveness of major frequency, attenuation-[\%]                & 64.6 & 88.4 & 83.3\\ \hline
+      3 & Cancellation with model errors (model's 1st resonance at 28.2Hz), attenuation-[\%] & 40.5 & 26.6 & 73.5\\ \hline
+      4 & Cancellation with model errors (model's 1st resonance at 43.4Hz), attenuation-[\%] & 57.7 & 5.0 & 83.4\\ \hline
+      5 & Implementation considerations & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned when selecting a new frequency. \\ \hline
+    \end{tabular}
+    %\caption{\label{tab:comp_h} Key parameters for the harmonic cancellation methodologies.}
+  \end{table}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References for Graphics}
   \bibliography{pres}
   \bibliographystyle{abbrv}
-
+  All other references are listed in the Master's Thesis report.
 \end{frame}
 
 \end{document}
