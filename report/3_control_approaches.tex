@@ -12,7 +12,7 @@ Using a second order model, the adaptive laws can be derived as follows. Conside
   \ddot{x}(t) + \alpha_1\dot{x}(t) +  \alpha_0x(t) = \beta_0u(t) + f(t)
 \end{equation}
 
-where $x(t)$ denotes the output rotation at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\citep{Elmali:1996}. For a simple second order SISO-model the perturbation estimation becomes
+where $x(t)$ denotes the output angle at time t, $u(t)$ the input voltage at time t and $\alpha_1, \alpha_0, \beta_0 \in \mathbb{R}$ are known system constants. $f(t)$ is a function describing the unknown perturbations of the system, including the hysteresis and creep effect. The general equations for deriving the perturbation function are described more thoroughly in~\citep{Elmali:1996}. For a simple second order SISO-model the perturbation estimation becomes
 
 \begin{equation}
   \label{eq:perturbation}
@@ -28,7 +28,7 @@ Each state is, for its computational efficiency, computed by a simple backward d
   x_{cal}^{(n)}(t) = \frac{x_{cal}^{(n-1)}(t) - x_{cal}^{(n-1)}(t-T_s)}{T_s}
 \end{equation}
 
-\subsection{Adaptive laws}
+\subsection{Adaptive Laws}
 The objective of the adaptive laws is to calculate the control parameter so that they converge to ideal values resulting in a system response that matches the reference. The adaptive laws can be derived using Lyaponov theory which is outlined in this section. Consider the second order reference model below
 
 \begin{equation}
@@ -36,7 +36,7 @@ The objective of the adaptive laws is to calculate the control parameter so that
   \ddot{x}_m(t) + a_1\dot{x}_m(t) +  a_0x_m(t) = b_0u_d(t)
 \end{equation}
 
-where $x_m(t)$ denotes the output rotation, $u(t)$ the input voltage and $a_0, a_1, b_0$ are known positive constants.
+where $x_m(t)$ denotes the output angle, $u_d(t)$ the input voltage and $a_0, a_1, b_0$ are known positive constants.
 
 The tracking error is defined as below.
 \begin{equation}
@@ -94,7 +94,7 @@ With the auxiliary item $\hat{e} = \mathbf{E^TPB}$, the adaptive laws are given 
   \label{eq:adaplaws}
   u = k_0u_d + k_1x + k_2\dot{x} + k_3\hat{f}
 \end{equation}
-and the control law parameters are calculated as outlined below where \eta are tuning variables.
+and the control law parameters are calculated as outlined below where $\eta_i$ are tuning variables.
 \begin{equation}
   \label{eq:adaplaws1}
   \dot{k}_0 = -\eta_0\hat{e}u_d
@@ -165,7 +165,7 @@ For tracking reference trajectories, the \abbrIRC can be enclosed in an outer lo
 
 Proof for the zero-pole entanglement and the insertion of the complex conjugate zeros can be found in \citep{Aphale:2007}, but note that the proof is only given for causal systems with a relative degree of two i.e two more poles than zeros.
 
-To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below. Let G be represented as a transfer function with a relative degree of one, with two poles and one zero as written below,
+To give the reader an intuitive explanation of the \abbrIRC and for a system with a relative degree of one, a brief example of a low order system is provided below. Let G be represented by a transfer function with a relative degree of one, with two poles and one zero as written below,
 
 \begin{equation}
   \label{eq:irc_sys}
@@ -195,7 +195,7 @@ which illustrates that the number of introduced zeros is equal to the relative d
 \end{equation}
 \newpage
 
-\section{Harmonic cancellation}
+\section{Harmonic Cancellation}
 Cancellation of specific harmonics can be utilized to increase the regulation capability of a controller. A known or estimated disturbance can in many cases be efficiently eliminated by a number of methods \citep{fujimoto2009rro, fujimoto2004repetitive, vilanova2008disturbance}. Many of these approaches are based on the Internal Model Principle (\abbrIMP) meaning that the controller incorporates a known model of the disturbance within the control loop itself. However, including the disturbance model for effective cancellation in the feedback loop will deteriorate the sensitivity function. Although the sensitivity function is zero for the selected frequencies, it is increased for the other nearby frequencies, leading to severe damage in the total tracking accuracy. This phenomenon can be explained by Bode's integral constraints \citep{Ljung:2003}. Hence, a feedforward approach is preferable to preserve the fine closed loop characteristics. For the sake of completeness, the \abbrIMP feedback approach is included in this chapter and evaluated in simulations to verify the expected results.
 
 \subsection{Feedforward Disturbance Cancellation}\label{subsec:distff}
@@ -241,7 +241,7 @@ A basic block scheme is shown in Figure~\ref{fig:imp} where $G(s)$ is the system
 \end{figure}
 \newpage
 \subsection{Repetitive Feedforward Disturbance Cancellation}
-Repetitive control can be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons, but mostly for the inclusion of a low-pass filter, which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. However, this approach will make the system more sensitive to other frequencies implying in a reduction of the total tracking accuracy. With respect to this drawback a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive} for the purpose of head-tracking control in hard disk drives. This method is referred to as \emph{Feedforward disturbance rejection with switching
+Repetitive control can be used to track and reject periodic disturbances with relatively long periods. For higher frequency modes, it fails to do so due to a number of reasons, but mostly for the inclusion of a low-pass filter, which is needed to maintain stability \citep{fujimoto2009rro}. The conventional repetitive approach uses the \abbrIMP to include a discrete time disturbance model in the feedback controller. However, this approach will make the system more sensitive to other frequencies implying a reduction of the overall tracking capability. With respect to this drawback a novel control scheme with a feedforward switching mechanism and an observer was introduced by the authors in \citep{fujimoto2004repetitive} for the purpose of head-tracking control in hard disk drives. This method is referred to as \emph{Feedforward disturbance rejection with switching
 scheme} in the paper but will in this thesis simply be called \abbrRFDC (Repetitive Feedforward Disturbance Cancellation). A block diagram of the control scheme is presented in Figure~\ref{fig:ffrep}, where $G$ and $C$ represent the system and the feedback controller as before. The output disturbance and the observed and replicated compensation signal are denoted $d_o$ and $d_i$, respectively.
 
 \begin{figure}[h]
