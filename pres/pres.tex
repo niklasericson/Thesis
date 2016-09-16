@@ -165,8 +165,8 @@
   \begin{itemize}
     \item Nonlinear effect such as hysteresis and creep
     \item Highly resonant structure
-    \item The linear movement adds additional perturbation
-    \item System changes due to rotational and linear position.
+    \item The linear movement adds additional disturbance
+    \item System changes due to rotational and linear position
   \end{itemize}
   \vspace{-0.7cm}
   \begin{figure}[h]
@@ -211,7 +211,7 @@
   2-DOF structure, feedback and prefilter.
   C is a series combination of:
   \begin{itemize}
-    \item  \alert{PID} - for stablity
+    \item  \alert{PID} - for stablity and reference tracking
     \item  \alert{Notch filter} - to cancel high frequency oscillations
     \item  \alert{Lead filter} - to increase the phase margin
     \item \alert{Prefilter} - to increase closed loop bandwidth
@@ -229,10 +229,10 @@
 \begin{frame}{Model Reference Adaptive Controller}
   \alert{Idea}: Adapt to model changes and compensate for nonlinear effects.
   \begin{itemize}
-    \item Uses a reference model to create the desired system response.
+    \item Uses a reference model to create the desired system response
     \item Based on Lyapunov theory
     \item Sufficient with a low order model
-    \item Nonlinear effects is seen as lumped perturbations.
+    \item Nonlinear effects is seen as lumped disturbances
   \end{itemize}
   System model
     \begin{equation*}
@@ -325,7 +325,8 @@
     \item Cancellation with Internal Model Principle
     \item Repetitive Feedforward Disturbance Cancellation
   \end{itemize}
-  \alert{Repetitive Feedforward Disturbance Cancellation}: Use an observer to estimate and cancel known disturbances without affecting the closed loop system.
+  \alert{Repetitive Feedforward Disturbance Cancellation}: Use an observer to estimate and cancel known disturbances.
+
   \begin{itemize}
     \item First introduced for the control of hard disks
     \item Feedforward switching mechanism with an observer
@@ -446,11 +447,12 @@ The state space system and observer is given as
   \begin{figure}[h!]
     \centering %crop: left bottom right top
     \subfloat[][]{
+    \includegraphics[width=0.5\textwidth]{../fig/matlab/yl_closedloop_ext_disturbance_80Hz_2}} \\ {\color{white} -} \\ \vspace{-1cm}
+    \subfloat[][]{
     \includegraphics[width=0.3\textwidth]{../fig/matlab/beat_effect_yl}}
     \subfloat[][]{
-    \includegraphics[width=0.3\textwidth]{../fig/matlab/beat_effect}} \\ {\color{white} -} \\ \vspace{-1cm}
-    \subfloat[][]{
-    \includegraphics[width=0.5\textwidth]{../fig/matlab/yl_closedloop_ext_disturbance_80Hz_2}}
+    \includegraphics[width=0.3\textwidth]{../fig/matlab/beat_effect}}
+
   \end{figure}
 \end{frame}
 
@@ -496,7 +498,7 @@ The state space system and observer is given as
   \begin{itemize}
     \item CERN is now developing a new rotational stage
     \item Applies the force directly to the rotational head
-    \item More stiff $\implies$ higher bandwidth, easier to design a sufficient controller
+    \item More stiff $\implies$ Higher bandwidth
   \end{itemize}
 \end{frame}
 

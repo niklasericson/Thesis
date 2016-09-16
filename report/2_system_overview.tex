@@ -1,29 +1,29 @@
 % !TEX root = main.tex
 \chapter{System Overview}\label{cha:systemOverview}
-This chapter provides the reader with a brief overview of the whole collimator system used in the \abbrLHC at \abbrCERN as well as a more detailed description of the rotational stage, which is the device in focus in this thesis. It also gives a short description of the piezoelectric actuator and its nonlinear effects. At the end of this chapter the present control approach is described in detail, including modeling of the rotational stage, system identification and controller structure.
+This chapter provides the reader with a brief overview of the collimation system used in the \abbrLHC at \abbrCERN as well as a more detailed description of the rotational stage, which is the device in focus in this thesis. It also gives a short description of the piezoelectric actuator and its nonlinear effects. At the end of this chapter the present control approach is described in detail, including modeling of the rotational stage, system identification and controller structure.
 
 \section{Crystal Collimators}
-A collimator is a specially designed device, built to interfere with the beam and clean it from surrounding halo particles. To be able to meet the future demand of higher energy levels, a more efficient collimator is being developed at CERN. This new collimator will utilize a crystalline solid to extract particles from the beam. A very simplified illustration of the crystal collimation principle is shown in Figure~\ref{fig:collimation}.
+A collimator is a specially designed device, built to interfere with the beam and clean it from surrounding halo particles. To be able to meet the future demand of higher energy levels, a more efficient collimator is being developed at CERN. This new collimator, named goniometer, will utilize a crystalline solid to extract particles from the beam. A very simplified illustration of the crystal collimation principle is shown in Figure~\ref{fig:collimation}.
 
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim= 2cm 15.5cm 1cm 10cm, clip=true]{fig/matlab/collimation}
-  \caption{\label{fig:collimation}Illustration of the crystal collimation principle as seen from above. The dashed lines represent the linear and the rotational stage movement.}
+  \caption{\label{fig:collimation}Illustration of the crystal collimation principle as seen from above (top view in Figure~\ref{fig:collimator}). The dashed lines represent the linear and the rotational stage movement.}
 \end{figure}
 
 The block named "C" in Figure~\ref{fig:collimation} represents the bent crystal which can be moved into the beam by the linear stage and rotated by the rotational stage which is attached to the linear axis. The crystal's linear and rotational movement are indicated in the figure as green dashed lines. During operation, physicists will drive the crystal close to the beam, enter it with an angle and rotate it slightly (in the range of \unit{1}{\milli\rad}) until the channeling effect is detected. Channeled particles (illustrated as arrowed lines in Figure~\ref{fig:collimation}) will then bend off from the beam core to be absorbed further down the beam pipe.
 
-The collimator unit consists of a T-shape structure containing two linear and one rotational stage, as partly illustrated in Figure~\ref{fig:goniometer}.
+The goniometer unit consists of a T-shape structure containing two linear and one rotational stage, as partly illustrated in Figure~\ref{fig:goniometer}.
 
 \begin{figure}[h]
   \centering %crop: left bottom right top
   \includegraphics[width=1\textwidth, trim= 2cm 12cm 1cm 10cm, clip=true]{fig/matlab/goniometer}
-  \caption{\label{fig:goniometer}Illustration of the crystal collimation principle as seen from the side. The green dashed line represents the movement of the beam pipe piece.}
+  \caption{\label{fig:goniometer}Illustration of the crystal collimation principle as seen from the side (side view in Figure~\ref{fig:collimator}). The green dashed line represents the movement of the beam pipe piece.}
 \end{figure}
 
 Each linear stage is driven by a stepping motor, labeled as \emph{M1} in Figure~\ref{fig:collimation} and \emph{M2} in Figure~\ref{fig:goniometer}, separately controlled in open-loop by an individual drive unit. The motor driving the vertical axis, \emph{M2}, is used to move a piece of beam pipe inside the T-shape, giving access to the crystal to enter and to close it when the collimation system is out of operation. This movement is illustrated in Figure~\ref{fig:goniometer} with a green dashed line.
 
-Figure~\ref{fig:collimator} shows the new collimator. In the top view the rotational and the linear horizontal stage is indicated with labels. In this figure, the rotational stage is in its outer position. During operation it will be pushed forward by the linear axis into the beam pipe. Figure~\ref{fig:collimator-through} shows the inside of the beam pipe during movement of the beam pipe piece, the same movement that Figure~\ref{fig:goniometer} is illustrating. In Figure~\ref{fig:collimator-mirror} the crystal support has been injected into the beam pipe. Note that the crystal itself is in this picture replaced by a small circular mirror.
+Figure~\ref{fig:collimator} shows the new goniometer. In the top view the rotational and the linear horizontal stage is indicated with labels. In this figure, the rotational stage is in its outer position. During operation it will be moved forward by the linear axis into the beam pipe. Figure~\ref{fig:collimator-through} shows the inside of the beam pipe during movement of the beam pipe piece, the same movement that Figure~\ref{fig:goniometer} is illustrating. In Figure~\ref{fig:collimator-mirror} the crystal support has been injected into the beam pipe. Note that the crystal itself is in this picture replaced by a small circular mirror.
 
 \begin{figure}[tpb]
   \centering %crop: left bottom right top
@@ -32,7 +32,7 @@ Figure~\ref{fig:collimator} shows the new collimator. In the top view the rotati
   \qquad
   \subfloat[][\label{fig:collimator-top}Top view]{
   \includegraphics[width=0.42\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{fig/collimator-top}}
-  \caption{\label{fig:collimator} The new collimator from the side (a) and the top (b).}
+  \caption{\label{fig:collimator} The new goniometer from the side (a) and the top (b).}
 \end{figure}
 
 \begin{figure}[tpb]
@@ -42,21 +42,21 @@ Figure~\ref{fig:collimator} shows the new collimator. In the top view the rotati
   \qquad
   \subfloat[][\label{fig:collimator-mirror} Insertion of crystal]{
   \includegraphics[width=0.5\textwidth, trim=0cm 0cm 0cm 0cm, clip=true]{fig/collimator-mirror}}
-  \caption{\label{fig:collimator-t} The new collimator with the beam pipe piece half-way out (a) and the crystal inserted into the beam pipe (b).}
+  \caption{\label{fig:collimator-t} The new goniometer with the beam pipe piece half-way out (a) and the crystal inserted into the beam pipe (b).}
 \end{figure}
 
 \FloatBarrier
 \section{Rotational Stage}
 \label{sec:rotational_stage}
-The rotational stage as shown in Figure~\ref{fig:rotationalstage} is composed by a monolithic amplifying structure, a prestressed piezoelectric stack actuator and an interferometer measurement system. The flexure-hinge based structure, avoids sliding parts and thereby enhance precision by reducing the number of nonlinear effects (e.g. backlash and friction). A piezoelectric stack actuator is exploited to generate the rotational movement by interacting on a amplifying lever that applies the force on the rotational head a few millimeters from the center of rotation, marked as a white "X" in the picture. This amplifying structure gives the rotational stage a range of \unit{20}{\milli\rad} from a nominal linear range of \unit{40}{\micro\meter}.  The \abbrPEA is prestressed in order to enhance the overall stiffness as well as keeping the stack in place (the stack is non-glued to be sufficient in a radioactive area). This combination leads to a clear resonant structure, due to the characteristics of the \abbrPEA and the flexible structure, demanding a properly designed controller.
+The rotational stage as shown in Figure~\ref{fig:rotationalstage} is composed of a monolithic amplifying structure, a prestressed piezoelectric stack actuator and an interferometer measurement system. The flexure-hinge based structure, avoids sliding parts and thereby enhance precision by reducing the number of nonlinear effects (e.g. backlash and friction). A piezoelectric stack actuator is exploited to generate the rotational movement by interacting on a amplifying lever that applies the force on the rotational head a few millimeters from the center of rotation, marked as a white "X" in the picture. This amplifying structure gives the rotational stage a range of \unit{20}{\milli\rad} from a nominal linear range of \unit{40}{\micro\meter}.  The \abbrPEA is prestressed in order to enhance the overall stiffness as well as keeping the stack in place (the stack is non-glued to be sufficient in a radioactive area). This combination leads to a clear resonant structure, due to the characteristics of the \abbrPEA and the flexible structure, demanding a properly designed controller.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/rotational-stage.jpg}
-  \caption{\label{fig:rotationalstage} Piezo-actuated rotational stage used in the new collimator.}
+  \caption{\label{fig:rotationalstage} Piezo-actuated rotational stage used in the new goniometer.}
 \end{figure}
 
-For the measurement system, three interferometric heads are placed on top of the rotational stage as seen Figure~\ref{fig:rotationalstage-side}, pointing towards a mirror that is attached to the crystal support and to the rotational head, perpendicular to the plane of rotation. The setup allows for measurements of both the yaw and roll angle (the coordinate system is defined with respect to the beam), but only the yaw angle is used in the feedback to the rotational stage control loop. Note that the crystal is mounted below the rotational head and that only the top of the crystal support is shown in the picture.
+For the measurement system, three interferometric heads are placed on top of the rotational stage as seen Figure~\ref{fig:rotationalstage-side}, pointing towards a mirror that is attached to the crystal support and to the rotational head, perpendicular to the plane of rotation. The setup allows for measurements of both the yaw, depicted in Figure~\ref{fig:rotationalstage}, and the roll angle (the coordinate system is defined with respect to the beam), but only the yaw angle is used in the feedback to the rotational stage control loop. Note that the crystal is mounted below the rotational head and that only the top of the crystal support is shown in the picture.
 
 \begin{figure}[h!]
   \centering
@@ -68,7 +68,7 @@ For the measurement system, three interferometric heads are placed on top of the
 The rotational stage uses a linear piezoelectric stack actuator to create the movement. It provides a displacement range from 0 to \unit{30}{\micro\meter}, corresponding to -20 and +150 V, respectively. The actuators are made of many thin, stacked electro-active ceramic disks, electrically connected in parallel. This construction allows for a high stiffness actuator that still can exhibit long displacement ranges \citep{Piezo:2008}.
 
 \subsection{Hysteresis Effect}
-The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and origins from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of the input signal \citep{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage, e.g. 60 V, corresponds to an angular position of \unit{5.2}{\micro\rad} in one direction and to \unit{7.2}{\micro\rad} in the opposite direction.
+The hysteresis effect is a nonlinear effect that is present during the operation of piezoelectric actuators. It occurs when the driving direction is reversed and originates from the polarization and the molecular effects in the piezo-ceramic. It depends on the amplitude of the applied voltage but also on the frequency of the input signal \citep{Qingson:2016}. Figure~\ref{fig:hysteresis} illustrates the hysteresis effect. One can see how the same voltage, e.g. 60 V, corresponds to an angular position of \unit{5.2}{\micro\rad} in one direction and to \unit{7.2}{\micro\rad} in the opposite direction.
 
 \subsection{Creep Effect}
 The creep effect is another nonlinear effect that is present during the operation of piezoelectric actuators. The effect is a slow elongation or contraction of the actuator displacement over time with a constant driving signal and is caused by thermal effects in the piezo-ceramics. Figure~\ref{fig:creep} illustrates the creep effect. One can see how the rotational stage slightly drifts off from the reference after the applied negative step, increasing the tracking error over time.
@@ -143,7 +143,7 @@ The model parameters have been estimated by fitting the model to the major hyste
 
 \subsection{Linear System Identification}
 \label{sec:linsys}
-The extracted linear dynamics have been identified as a $6^{th}$ order transfer function using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the System Identification Toolbox in Matlab. A more detail description of the procedure is available in \citep{ButcherController:2015}. The transfer function of the model (at 3.25 V), discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
+The extracted linear dynamics have been identified as a $6^{th}$ order transfer function using a \abbrPRBS as excitation signal, allowing for a valid extraction from the nonlinear dynamics. The system transfer function has been derived in discrete-time using the System Identification Toolbox in Matlab. A more detailed description of the procedure is available in \citep{ButcherController:2015}. The transfer function of the model (at 3.25 V), discretized with a sampling time of \unit{0.5}{\milli\second}, is presented in \eqref{eq:tf}.
 
 \begin{equation}
   \label{eq:tf}

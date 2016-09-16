@@ -2,8 +2,8 @@
 \begin{itemize}
     \item Nonlinear effect such as hysteresis and creep
     \item Highly resonant structure
-    \item The linear movement adds additional perturbation
-    \item System changes due to rotational and linear position.
+    \item The linear movement adds additional disturbance
+    \item System changes due to rotational and linear position
   \end{itemize}
   \vspace{-0.7cm}
   \begin{figure}[h]

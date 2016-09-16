@@ -8,14 +8,14 @@ For the comparison with the present control approach, all evaluated controllers 
 \begin{itemize}
 \item {\bf Step and periodical tracking} - A step and a periodical input is applied to the input to benchmark the tracking capability of the controller.
 \item {\bf Disturbance rejection} - Impulses are added to the input and output signal of the system to benchmark how sensitive the system is to system disturbances.
-\item {\bf Robustness to model errors} - The robustness to model errors is characterized by changing the dynamical model but keeping the model in the controller constant.
+\item {\bf Robustness to model errors} - The robustness to model errors is characterized by changing the plant model but keeping the model in the controller constant.
 \end{itemize}
 
 The \abbrIMP, the \abbrFDC and the \abbrRFDC have been evaluated with respect to cancellation effectiveness and robustness to model errors, as listed below.
 
 \begin{itemize}
 \item {\bf Cancellation performance} -  Sinusoidal signals or acquired noise from the lab is added as disturbance to test the cancellation performance.
-\item {\bf Robustness to model errors} - The robustness to model errors is characterized by changing the dynamical model of the system but keeping the model in the controller constant.
+\item {\bf Robustness to model errors} - The robustness to model errors is characterized by changing the plant model of the system but keeping the model in the controller constant.
 \end{itemize}
 
 The prospective challenges, described in \ref{sec:prospectiveChallanges} shall be kept in mind while reading the results. Since the required ramp rates are relatively low, the disturbance rejection and the robustness to model errors are more of interest when evaluating each method.
@@ -50,7 +50,7 @@ Since the rotational stage controller needs to maintain the required tracking er
 \newpage
 \FloatBarrier
 \section{Model Reference Adaptive Control}
-Even though a high order model of the rotational stage exist as presented in \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables are summarized in Table~\ref{tab:adaptive_param}. The controller was tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for step sizes below 20 mrad.
+Even though a high order model of the rotational stage exists as presented in \eqref{eq:tf}, a second order model approximating the higher order system was used in the adaptive control laws to keep the computational burden low. The discretized reference model can be seen in \eqref{eq:sys_gm} and all parameters and tuning variables are summarized in Table~\ref{tab:adaptive_param}. The controller was tuned to be robust to input disturbances and model changes. The set of parameter presented in Table~\ref{tab:adaptive_param} is not an optimal set but a decent set of parameters that maintains stability for step sizes below 20 mrad.
 
 \begin{equation}
   \label{eq:sys_gm}
@@ -85,7 +85,7 @@ Figure~\ref{fig:step_adaptive} shows the step response to different step sizes. 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/stepresponse.eps}
-  \caption{\label{fig:step_adaptive} Step responses to step sizes of 10, 15, 20 and 26 mrad. The largest step illustrates a nonlinear phenomenon i.e. the controller stability is depending on the step size.}
+  \caption{\label{fig:step_adaptive} Step responses to step sizes of 10, 15, 20 and 26 mrad. The largest step illustrates a nonlinear phenomenon i.e. the controller stability depends on the step size.}
 \end{figure}
 
 The adaptation process of the control parameters $k_i$, for a step response resulting from a 20 mrad step, can be seen in Figure~\ref{fig:adapt_process}. All of the coefficients have converged within 1 s.
@@ -113,7 +113,7 @@ To illustrate the adaptation process better, a periodic response is depicted in 
 
 The tracking error corresponding to the \emph{Adaptive 20mrad} and \emph{Present 20mrad} in Figure~\ref{fig:periodic_resp} can be seen in Figure~\ref{fig:adapt_trackingerror}. The adaptive controller performs better than the present controller after the adaptation process has finished.
 
-A periodic response with model parameter drift is presented in Figure~\ref{fig:modeldrift}. It shows how the adaptive controller manages to adapt to changes in the system dynamics, while the present controller fails to do so, resulting in an unstable system. The change of the model was performed over 2 seconds, resulting in a movement of the first resonance peak, from 38 Hz to 66 Hz in frequency and from 30.1 dB to 23.5 dB in magnitude.
+A periodic response with model parameter drift is presented in Figure~\ref{fig:modeldrift}. It shows how the adaptive controller manages to adapt to changes in the plant, while the present controller fails to do so, resulting in an unstable system. The change of the model was performed over 2 seconds, resulting in a movement of the first resonance peak, from 38 Hz to 66 Hz in frequency and from 30.1 dB to 23.5 dB in magnitude.
 \begin{figure}[h!]
   \centering %crop: left bottom right top
   \subfloat[][\label{fig:modeldriftresponse}Periodic response with model parameter drift.]{
@@ -290,8 +290,7 @@ The standard deviations of the output signal with a disturbance with $\sigma$ = 
   \begin{tabular}{| l | l | l |}
     \hline
     Disturbance applied to: & input & output \\ \hline
-      $\sigma_{Present}$ [\unit{\micro\radian}] & $0.68 $ & $1.43$ \\
-      $\sigma_{IRC}$ [\unit{\micro\radian}] & $0.45$  & $ 1.46$ \\
+      $\frac{\sigma_{IRC}}{\sigma_{Present}}$ [\%] & $66$  & $ 102$ \\
     \hline
   \end{tabular}
   \caption{\label{tab:std} Standard deviations of the output signal with white noise added as a disturbance on the output of the system}
@@ -339,7 +338,7 @@ In a real implementation, the stepping voltage would be used to form a pulse tra
 
 The empirical estimate of the disturbance model $P_d$ is obtained by dividing the \abbrFFT of (b) with the \abbrFFT of (a) in Figure~\ref{fig:stepinout}. The resulting empirical estimate is shown for different positions and speeds in Figure~\ref{fig:fft0_3} and \ref{fig:fft_6_5} . As seen in the figures, there are distinct peaks at around 220, 445, 670 and 890 Hz. The amplitude and the frequency of the resonance peaks are varying with the step rate as seen in Figure~\ref{fig:3vzoomin}.
 
-Figure~\ref{fig:fft_6_5_modelfit} shows the identified model for the data acquired at 6.5 V and 1 step/s. This data was chosen due to its homogeneous shape at different step rates. In order to sufficiently model four resonances, a 19 zeros and 20 poles transfer function was needed. The model was used in the simulations but has to be reduced for a reasonable implementation in terms of computational efficiency. The identification was performed using Matlab System Identification Toolbox with a selected frequency focus from 30-1000 Hz. The identified disturbance model $P_d(z)$ is presented in its final form in Appendix~\ref{app:fdc}. $K_f(z)$ was calculated as $K_f(z)=P_d(z)/G(z)$.
+Figure~\ref{fig:fft_6_5_modelfit} shows the identified model for the data acquired at 6.5 V and 1 step/s. This data was chosen due to its homogeneous shape at different step rates. In order to sufficiently model four resonances, a 19 zeros and 20 poles transfer function was needed. The model was used in the simulations but has to be reduced for a reasonable implementation in terms of computational efficiency. The identification was performed using Matlab System Identification Toolbox with a selected frequency focus from 30-1000 Hz, to avoid modeling low frequency components below the first resonance peak. The identified disturbance model $P_d(z)$ is presented in its final form in Appendix~\ref{app:fdc}. $K_f(z)$ was calculated as $K_f(z)=P_d(z)/G(z)$.
 
 \begin{figure}[h!]
   \centering
@@ -618,8 +617,8 @@ In Table~\ref{tab:comp}, the closed-loop bandwidth is presented for each approac
     5 & Tracking error with model errors (model's 1st resonance at 67.2Hz), $\sigma$-[mrads] & $\infty$ & 0.03 & 0.11\\ \hline
     6 & Tracking error with model errors (model's 1st resonance at 17.6Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.47\\ \hline
     7 & Tracking error with model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.11\\ \hline
-    8 & Output disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
-    9 & Input/Output disturbance rejection, $\sigma$-[\unit{\micro\radian}] & $0.68 $/$1.43$ & $0.45$/$1.46$ & $1.95$/$1.41$\\ \hline
+    8 & Output pulse disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
+    9 & Input/Output noise disturbance rejection, $\sigma$-[\unit{\micro\radian}] & $0.68 $/$1.43$ & $0.45$/$1.46$ & $1.95$/$1.41$\\ \hline
     10 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability.  Stability only proven in continuous time. \\ \hline
     11 & Design and implementation considerations & Straight- forward technique, allowing for basic stability analysis & Same as present & Hard to tune. High computational burden for higher order models.\\ \hline
   \end{tabular}
