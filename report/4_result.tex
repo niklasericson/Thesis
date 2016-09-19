@@ -14,7 +14,7 @@ For the comparison with the present control approach, all evaluated controllers 
 The \abbrIMP, the \abbrFDC and the \abbrRFDC have been evaluated with respect to cancellation effectiveness and robustness to model errors, as listed below.
 
 \begin{itemize}
-\item {\bf Cancellation performance} -  Sinusoidal signals or acquired noise from the lab is added as disturbance to test the cancellation performance.
+\item {\bf Cancellation performance} -  Sinusoidal signals or acquired noise from the laboratory is added as disturbance to test the cancellation performance.
 \item {\bf Robustness to model errors} - The robustness to model errors is characterized by changing the plant model of the system but keeping the model in the controller constant.
 \end{itemize}
 
@@ -290,7 +290,7 @@ The standard deviations of the output signal with a disturbance with $\sigma$ = 
   \begin{tabular}{| l | l | l |}
     \hline
     Disturbance applied to: & input & output \\ \hline
-      $\frac{\sigma_{IRC}}{\sigma_{Present}}$ [\%] & $66$  & $ 102$ \\
+      $\sigma_{IRC}/\sigma_{Present}$ [\%] & $66$  & $ 102$ \\
     \hline
   \end{tabular}
   \caption{\label{tab:std} Standard deviations of the output signal with white noise added as a disturbance on the output of the system}
@@ -365,8 +365,8 @@ To illustrate the model efficiency with different step rates, a benchmarking tes
   \begin{tabular}{| l | l | l | l | l |}
     \hline
       Speed & 1 step/s & 2 step/s & 5 step/s & 10 step/s\\ \hline
-      $\sigma_{Present}$ & 2.15 & 2.23 & 3.90 & 3.76\\
-      $\sigma_{Present + dist.FF.}$ & 1.19 & 2.04 & 2.06 & 2.59\\
+      $\sigma_{Present}$ [urad] & 2.15 & 2.23 & 3.90 & 3.76\\
+      $\sigma_{Present + dist.FF.}$ [urad] & 1.19 & 2.04 & 2.06 & 2.59\\
     \hline
   \end{tabular}
   \caption{\label{tab:std_diff_speed} Standard deviations of the output with and without disturbance feedforward for the different speeds with the mean of the acquired response corresponding to each speed added as disturbance. The model used in the disturbance feedforward was identified from the 6.5 V and 1 step/s data.}
@@ -619,8 +619,8 @@ In Table~\ref{tab:comp}, the closed-loop bandwidth is presented for each approac
     7 & Tracking error with model errors (model's 1st resonance at 77.7Hz), $\sigma$-[mrads] & $\infty$ & $\infty$ & 0.11\\ \hline
     8 & Output pulse disturbance rejection, settling time (1\%) [ms] & 8 & 25 & 260\\ \hline
     9 & Input/Output noise disturbance rejection, $\sigma$-[\unit{\micro\radian}] & $0.68 $/$1.43$ & $0.45$/$1.46$ & $1.95$/$1.41$\\ \hline
-    10 & Stability issues & Unstable with high model errors & Unstable with high model errors, but better than present & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability.  Stability only proven in continuous time. \\ \hline
-    11 & Design and implementation considerations & Straight- forward technique, allowing for basic stability analysis & Same as present & Hard to tune. High computational burden for higher order models.\\ \hline
+    10 & Stability issues. & Unstable with high model errors. & Unstable with high model errors, but better than present. & Good adaption even with model errors, but tuning for quicker adaption easily leads to instability.  Stability only proven in continuous time. \\ \hline
+    11 & Design and implementation considerations. & Straight- forward technique, allowing for basic stability analysis. & Same as present. & Hard to tune. High computational burden for higher order models.\\ \hline
   \end{tabular}
   \caption{\label{tab:comp} Key parameters for the \abbrIRC, the \abbrMRACPE and the present control approach.}
 \end{table}
@@ -637,7 +637,7 @@ In Table~\ref{tab:comp_h}, the cancellation effectiveness is measured as attenua
     2 & Cancellation effectiveness of major frequency, attenuation-[\%]                & 64.6 & 88.4 & 83.3\\ \hline
     3 & Cancellation with model errors (model's 1st resonance at 28.2Hz), attenuation-[\%] & 40.5 & 26.6 & 73.5\\ \hline
     4 & Cancellation with model errors (model's 1st resonance at 43.4Hz), attenuation-[\%] & 57.7 & 5.0 & 83.4\\ \hline
-    5 & Implementation considerations & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned when selecting a new frequency. \\ \hline
+    5 & Implementation considerations. & Requires high order model, computational demanding. & Requires observer, computational demanding. Can be used as add-on.& Controller must be retuned when selecting a new frequency. \\ \hline
   \end{tabular}
   \caption{\label{tab:comp_h} Key parameters for the harmonic cancellation methodologies.}
 \end{table}

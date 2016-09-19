@@ -113,12 +113,12 @@ A generalized Maxwell-slip is used to model the hysteresis effect. It uses a par
 \end{equation}
 
 where $F_i$ is the output force, $k_i$ the spring constant, $f_i$ the break-away force and $x_b$ is the block position where $i=1 \hdots n$. In terms of the rotational stage $F_i$ represents the applied voltage, $x$ the input (rotational) displacement, $x_b$ angular position and $k_i, f_i$ are unknown parameters
-The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \citep{ButcherIdentification:2015,ButcherController:2015}. The identified set of parameters is presented in Table~\ref{tab:maxwell} where $n=10$. The model fit of the hysteresis model, which uses the same set of parameters as the inverse hysteresis model, is shown Figure~\ref{fig:maxwell}.
+The model parameters have been estimated by fitting the model to the major hysteresis loop, obtained by acquiring data from the system with a 0.5 Hz input driving signal as described in \citep{ButcherIdentification:2015,ButcherController:2015}. The identified set of parameters is presented in Table~\ref{tab:maxwell} where $n=10$. The model fit of the hysteresis model, which uses the same set of parameters as the inverse hysteresis model, is shown in Figure~\ref{fig:maxwell}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\textwidth]{fig/matlab/maxwell.eps}
-  \caption{\label{fig:maxwell} Model fit of the Maxwell slip model to the acquired hysteresis of the rotational stage. The fit has a mean squared error of 1.1464.}
+  \caption{\label{fig:maxwell} Model fit of the Maxwell slip model to the acquired hysteresis of the rotational stage.}
 \end{figure}
 
 \begin{table}[h!]
